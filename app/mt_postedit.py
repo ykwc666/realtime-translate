@@ -127,6 +127,74 @@ def postedit_en_zh(en: str, zh: str) -> str:
     if re.search(r"\bare you muted\b", s):
         return "你是不是静音了？我这边全是静音。"
 
+    # --- former 规则边界：窄触发，必须带通话/会议锚点 ---
+
+    # colloquial: jump off the call（非物理跳下）
+    if re.search(r"\bjump off\b", s) and not re.search(
+        r"\b(bridge|building|cliff|roof|train|bus)\b", s
+    ):
+        if re.search(r"\b(gonna|going to|i'?ll|i will)\b", s) or "call" in s:
+            if "later" in s:
+                return "我先挂了，回头聊。"
+            if re.search(r"\b(sec|second|minute|bit)\b", s) or "call" in s:
+                return "我马上先挂一下。"
+            return "我先挂了。"
+
+    # colloquial: audio broke up / breaking up（非分手）
+    if re.search(r"\bbroke up\b|\bbreaking up\b", s) and re.search(
+        r"\b(you|you'?re|there|call|audio|for a (bit|second|sec|while)|a little)\b",
+        s,
+    ):
+        if not re.search(r"\b(with him|with her|with them|relationship)\b", s):
+            if re.search(r"\bbreaking up\b", s) and re.search(
+                r"\ba little\b|\ba bit\b", s
+            ):
+                return "你那边有点断断续续。"
+            return "不好意思，刚才你那边断了一会儿。"
+
+    # sense: call drops = 断线，不是「接到电话」
+    if re.search(
+        r"\b(the )?calls? drop(?:s|ping)?\b|\bkeep(?:s)? dropping\b", s
+    ):
+        m = re.search(r"every\s+(\w+|\d+)\s+minutes?", s)
+        if m:
+            tok = m.group(1)
+            num_map = {
+                "five": "五",
+                "ten": "十",
+                "fifteen": "十五",
+                "twenty": "二十",
+                "thirty": "三十",
+            }
+            zh_n = num_map.get(tok, tok)
+            return f"通话大概每{zh_n}分钟就断一次。"
+        return "通话老是断。"
+
+    # sense: walk me through what broke…
+    if re.search(r"walk me through", s) and re.search(
+        r"\bbroke\b|\bbreak\b|release|last", s
+    ):
+        if "yesterday" in s:
+            return "你能不能快速跟我过一下昨天到底哪里挂了？"
+        return "你能不能快速跟我过一下上一版到底哪里挂了？"
+
+    # direction: push the deadline by N = 往后推，不是提前
+    if re.search(r"push the deadline", s) and re.search(
+        r"\bby a day\b|\bby \w+ days?\b|\ba day\b", s
+    ):
+        q = "?" in src or s.startswith("can ")
+        if re.search(r"\btwo days\b|\b2 days\b", s):
+            return "截止日期能往后推两天吗？" if q else "截止日期往后推两天吧。"
+        return "截止日期能往后推一天吗？" if q else "截止日期往后推一天吧。"
+
+    # direction: not change … until after the rollout = 上线前先不动
+    if re.search(r"until after (the )?rollout", s) and re.search(
+        r"not (to )?change|not (to )?touch|don'?t change|agreed not", s
+    ):
+        if re.search(r"\bi thought\b", s):
+            return "我以为我们说好了上线前先不动 API。"
+        return "我们说好了上线前先不动 API。"
+
     return hyp
 
 

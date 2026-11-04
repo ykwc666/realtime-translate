@@ -112,6 +112,36 @@ def test_en_zh_mute_not_dumb():
     assert postedit_en_zh("Please send the recording after the call.", zh) == zh
 
 
+def test_en_zh_boundary_sense_direction_colloquial():
+    assert "断" in postedit_en_zh(
+        "The call drops every fifteen minutes or so.",
+        "每十五分钟就接到一次电话",
+    )
+    assert "过一下" in postedit_en_zh(
+        "Can you walk me through what broke in the last release real quick?",
+        "你能告诉我 上次发布稿中 打破了什么 很快吗?",
+    )
+    assert "往后" in postedit_en_zh(
+        "Can we push the deadline by a day?", "我们能把最后期限提前一天吗?"
+    )
+    assert "提前" not in postedit_en_zh(
+        "Can we push the deadline by a day?", "我们能把最后期限提前一天吗?"
+    )
+    assert "上线前" in postedit_en_zh(
+        "I thought we agreed not to change the API until after the rollout.",
+        "我以为我们同意在推出后 才会改变API",
+    )
+    assert "挂" in postedit_en_zh("Gonna jump off in a sec.", "马上就跳下来")
+    assert "断" in postedit_en_zh(
+        "Sorry, you broke up there for a bit.", "抱歉 你刚才分手了"
+    )
+    # anti-break: relationship breakup / physical jump must stay
+    rel = "她和他分手了"
+    assert postedit_en_zh("She broke up with him last week.", rel) == rel
+    phys = "别从桥上跳下去"
+    assert postedit_en_zh("Don't jump off the bridge.", phys) == phys
+
+
 def test_reply_message_direction():
     assert (
         postedit_zh_en("他现在没有回我的消息", "He hasn't heard back from me yet.")

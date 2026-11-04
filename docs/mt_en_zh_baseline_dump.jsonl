@@ -1,10 +1,10 @@
 {
-  "time": "2026-11-04 18:17:55",
-  "n": 50,
+  "time": "2026-11-04 18:47:22",
+  "n": 60,
   "needle_raw_ok": 14,
-  "needle_postedit_ok": 37,
-  "pe_ms_p50": 0.069,
-  "pe_ms_p95": 0.431,
+  "needle_postedit_ok": 52,
+  "pe_ms_p50": 0.07,
+  "pe_ms_p95": 0.426,
   "cases": [
     {
       "i": 0,
@@ -15,7 +15,7 @@
       ],
       "raw": "今天还有多少拖延?",
       "postedit": "今天延迟大概有多少？",
-      "pe_ms": 0.515,
+      "pe_ms": 0.381,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": true
@@ -29,7 +29,7 @@
       ],
       "raw": "有多长的拖延?",
       "postedit": "延迟大概有多少？",
-      "pe_ms": 0.029,
+      "pe_ms": 0.02,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": true
@@ -43,7 +43,7 @@
       ],
       "raw": "有多少延迟?",
       "postedit": "延迟大概有多少？",
-      "pe_ms": 0.016,
+      "pe_ms": 0.02,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": true
@@ -57,7 +57,7 @@
       ],
       "raw": "今天还有多少拖延",
       "postedit": "今天延迟大概有多少？",
-      "pe_ms": 0.016,
+      "pe_ms": 0.019,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": true
@@ -71,7 +71,7 @@
       ],
       "raw": "我可能不会通过这次面试",
       "postedit": "我可能过不了这一面。",
-      "pe_ms": 0.664,
+      "pe_ms": 0.422,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": true
@@ -85,7 +85,7 @@
       ],
       "raw": "你回复我的信息了吗?",
       "postedit": "你回我消息了吗？",
-      "pe_ms": 0.431,
+      "pe_ms": 0.401,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": true
@@ -99,7 +99,7 @@
       ],
       "raw": "他还没有回复我的信息。",
       "postedit": "他还没有回我的消息。",
-      "pe_ms": 0.031,
+      "pe_ms": 0.032,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": true
@@ -113,7 +113,7 @@
       ],
       "raw": "我听不清你在说什么",
       "postedit": "我听不清你说什么。",
-      "pe_ms": 0.238,
+      "pe_ms": 0.246,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": true
@@ -127,7 +127,7 @@
       ],
       "raw": "今天天气怎么样?",
       "postedit": "今天天气怎么样？",
-      "pe_ms": 0.368,
+      "pe_ms": 0.472,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": true
@@ -141,7 +141,7 @@
       ],
       "raw": "你能再说一遍吗?",
       "postedit": "你能再说一遍吗?",
-      "pe_ms": 2.031,
+      "pe_ms": 2.143,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": true
@@ -156,7 +156,7 @@
       ],
       "raw": "你现在能听到我说话了吗?",
       "postedit": "你现在能听到我说话了吗?",
-      "pe_ms": 0.076,
+      "pe_ms": 0.055,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -171,7 +171,7 @@
       ],
       "raw": "我们还在谈3个吗?",
       "postedit": "我们三点还开吗？",
-      "pe_ms": 0.024,
+      "pe_ms": 0.021,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -201,7 +201,7 @@
       ],
       "raw": "你有五分钟时间吗?",
       "postedit": "你有五分钟时间吗?",
-      "pe_ms": 0.05,
+      "pe_ms": 0.06,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -216,7 +216,7 @@
       ],
       "raw": "反响在你这边吗?",
       "postedit": "你那边回声没了吗？",
-      "pe_ms": 0.118,
+      "pe_ms": 0.131,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -231,7 +231,7 @@
       ],
       "raw": "我们周五下午2点发货",
       "postedit": "我们周五下午两点上线。",
-      "pe_ms": 0.311,
+      "pe_ms": 0.336,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -246,7 +246,7 @@
       ],
       "raw": "剪切到大约30秒",
       "postedit": "剪切到大约30秒",
-      "pe_ms": 0.055,
+      "pe_ms": 0.087,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -261,7 +261,7 @@
       ],
       "raw": "延缓时间大约200毫克左右",
       "postedit": "延迟大概两百毫秒左右。",
-      "pe_ms": 0.151,
+      "pe_ms": 0.172,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -276,7 +276,7 @@
       ],
       "raw": "给我十分钟的时间",
       "postedit": "幻灯片再给我十分钟。",
-      "pe_ms": 0.027,
+      "pe_ms": 0.028,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -290,8 +290,8 @@
         "domain"
       ],
       "raw": "每十五分钟就接到一次电话",
-      "postedit": "每十五分钟就接到一次电话",
-      "pe_ms": 0.055,
+      "postedit": "通话大概每十五分钟就断一次。",
+      "pe_ms": 0.308,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -306,7 +306,7 @@
       ],
       "raw": "我觉得今晚我们不该坐船",
       "postedit": "我觉得今晚不该上线。",
-      "pe_ms": 0.049,
+      "pe_ms": 0.048,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -321,7 +321,7 @@
       ],
       "raw": "她不加入同步",
       "postedit": "她不加入同步",
-      "pe_ms": 0.088,
+      "pe_ms": 0.057,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -336,7 +336,7 @@
       ],
       "raw": "我们听不到对方的声音",
       "postedit": "我们听不到对方的声音",
-      "pe_ms": 0.095,
+      "pe_ms": 0.062,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -366,7 +366,7 @@
       ],
       "raw": "我没看到你的屏幕共享",
       "postedit": "我没看到你的屏幕共享",
-      "pe_ms": 0.091,
+      "pe_ms": 0.058,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -379,10 +379,10 @@
         "colloquial"
       ],
       "raw": "马上就跳下来",
-      "postedit": "马上就跳下来",
-      "pe_ms": 0.047,
+      "postedit": "我马上先挂一下。",
+      "pe_ms": 0.41,
       "needle_raw_ok": false,
-      "needle_postedit_ok": false,
+      "needle_postedit_ok": true,
       "legacy": false
     },
     {
@@ -410,7 +410,7 @@
       ],
       "raw": "明天再回转",
       "postedit": "这个咱们明天再聊。",
-      "pe_ms": 0.031,
+      "pe_ms": 0.025,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -424,10 +424,10 @@
         "domain"
       ],
       "raw": "抱歉 你刚才分手了",
-      "postedit": "抱歉 你刚才分手了",
-      "pe_ms": 0.071,
+      "postedit": "不好意思，刚才你那边断了一会儿。",
+      "pe_ms": 0.426,
       "needle_raw_ok": false,
-      "needle_postedit_ok": false,
+      "needle_postedit_ok": true,
       "legacy": false
     },
     {
@@ -454,7 +454,7 @@
       ],
       "raw": "我们需要快速同步 之前站起来。",
       "postedit": "站会前我们得快速对一下。",
-      "pe_ms": 0.035,
+      "pe_ms": 0.028,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -468,7 +468,7 @@
       ],
       "raw": "展开时间滑到下周",
       "postedit": "上线推到下周了。",
-      "pe_ms": 0.052,
+      "pe_ms": 0.033,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -482,10 +482,10 @@
         "question"
       ],
       "raw": "我们能把最后期限提前一天吗?",
-      "postedit": "我们能把最后期限提前一天吗?",
-      "pe_ms": 0.054,
+      "postedit": "截止日期能往后推一天吗？",
+      "pe_ms": 0.356,
       "needle_raw_ok": false,
-      "needle_postedit_ok": false,
+      "needle_postedit_ok": true,
       "legacy": false
     },
     {
@@ -497,7 +497,7 @@
       ],
       "raw": "我会对医生采取行动",
       "postedit": "文档这块我来跟。",
-      "pe_ms": 0.049,
+      "pe_ms": 0.033,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -511,7 +511,7 @@
       ],
       "raw": "请在电话后发送录音",
       "postedit": "请在电话后发送录音",
-      "pe_ms": 0.054,
+      "pe_ms": 0.069,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -525,7 +525,7 @@
       ],
       "raw": "双面还是有点兴奋",
       "postedit": "我这边双工还是有点卡。",
-      "pe_ms": 0.184,
+      "pe_ms": 0.152,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -539,7 +539,7 @@
       ],
       "raw": "你说话时有奇怪的回声",
       "postedit": "你说话时有奇怪的回声",
-      "pe_ms": 0.098,
+      "pe_ms": 0.062,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -554,7 +554,7 @@
       ],
       "raw": "端到端的延缓性现在有多糟?",
       "postedit": "现在端到端延迟有多差？",
-      "pe_ms": 0.055,
+      "pe_ms": 0.049,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -568,7 +568,7 @@
       ],
       "raw": "麦克风接收到很多噪音",
       "postedit": "麦克风接收到很多噪音",
-      "pe_ms": 0.069,
+      "pe_ms": 0.111,
       "needle_raw_ok": true,
       "needle_postedit_ok": true,
       "legacy": false
@@ -582,7 +582,7 @@
       ],
       "raw": "试着关掉一下噪音抑制",
       "postedit": "试着关掉一下噪音抑制",
-      "pe_ms": 0.075,
+      "pe_ms": 0.066,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -598,7 +598,7 @@
       ],
       "raw": "大楼从星期二开始就一直失灵 还没有人拥有修补设备",
       "postedit": "构建从周二就一直挂，到现在还没人认领修。",
-      "pe_ms": 0.086,
+      "pe_ms": 0.059,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -615,7 +615,7 @@
       ],
       "raw": "如果延迟超过300毫克,我们今天就不应该继续直播。",
       "postedit": "要是延迟一直高于三百毫秒，今天就不该上线。",
-      "pe_ms": 0.169,
+      "pe_ms": 0.157,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -630,10 +630,10 @@
         "meeting"
       ],
       "raw": "你能告诉我 上次发布稿中 打破了什么 很快吗?",
-      "postedit": "你能告诉我 上次发布稿中 打破了什么 很快吗?",
-      "pe_ms": 0.065,
+      "postedit": "你能不能快速跟我过一下上一版到底哪里挂了？",
+      "pe_ms": 0.239,
       "needle_raw_ok": false,
-      "needle_postedit_ok": false,
+      "needle_postedit_ok": true,
       "legacy": false
     },
     {
@@ -646,10 +646,10 @@
         "negation"
       ],
       "raw": "我以为我们同意在推出后 才会改变API",
-      "postedit": "我以为我们同意在推出后 才会改变API",
-      "pe_ms": 0.061,
+      "postedit": "我以为我们说好了上线前先不动 API。",
+      "pe_ms": 0.675,
       "needle_raw_ok": false,
-      "needle_postedit_ok": false,
+      "needle_postedit_ok": true,
       "legacy": false
     },
     {
@@ -663,7 +663,7 @@
       ],
       "raw": "抱歉我迟到了 之前的电话 过了大约20分钟",
       "postedit": "抱歉我迟到了 之前的电话 过了大约20分钟",
-      "pe_ms": 0.118,
+      "pe_ms": 0.109,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -680,7 +680,7 @@
       ],
       "raw": "如果客户在重新启动后仍然听不到我们的声音 我们的计划是什么?",
       "postedit": "如果客户在重新启动后仍然听不到我们的声音 我们的计划是什么?",
-      "pe_ms": 0.089,
+      "pe_ms": 0.075,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -696,7 +696,7 @@
       ],
       "raw": "我一分钟后分享我的屏幕 这样我们就可以一起看数字了",
       "postedit": "我一分钟后分享我的屏幕 这样我们就可以一起看数字了",
-      "pe_ms": 0.12,
+      "pe_ms": 0.153,
       "needle_raw_ok": false,
       "needle_postedit_ok": false,
       "legacy": false
@@ -712,7 +712,7 @@
       ],
       "raw": "别打断我 我还有一点关于延缓的",
       "postedit": "先别打断我，延迟这块我还有一点要说。",
-      "pe_ms": 0.178,
+      "pe_ms": 0.18,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -728,7 +728,7 @@
       ],
       "raw": "你哑口无言吗 我这边的沉默越来越安静了",
       "postedit": "你是不是静音了？我这边全是静音。",
-      "pe_ms": 0.155,
+      "pe_ms": 0.07,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false
@@ -744,7 +744,163 @@
       ],
       "raw": "5分钟后我们打包 然后再发便条",
       "postedit": "五分钟内收束，会后发纪要。",
-      "pe_ms": 0.035,
+      "pe_ms": 0.026,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 50,
+      "en": "The call drops every ten minutes.",
+      "zh_ref": "通话大概每十分钟就断一次。",
+      "tags": [
+        "holdout",
+        "domain",
+        "number"
+      ],
+      "raw": "每十分钟就有电话接头",
+      "postedit": "通话大概每十分钟就断一次。",
+      "pe_ms": 0.087,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 51,
+      "en": "Calls keep dropping on my end.",
+      "zh_ref": "我这边通话老是断。",
+      "tags": [
+        "holdout",
+        "domain"
+      ],
+      "raw": "电话一直打到我的那边",
+      "postedit": "通话老是断。",
+      "pe_ms": 0.081,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 52,
+      "en": "Can you walk me through what broke yesterday?",
+      "zh_ref": "你能不能快速跟我过一下昨天到底哪里挂了？",
+      "tags": [
+        "holdout",
+        "question",
+        "meeting"
+      ],
+      "raw": "你能告诉我昨天打破了什么吗?",
+      "postedit": "你能不能快速跟我过一下昨天到底哪里挂了？",
+      "pe_ms": 0.066,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 53,
+      "en": "Can we push the deadline by two days?",
+      "zh_ref": "截止日期能往后推两天吗？",
+      "tags": [
+        "holdout",
+        "meeting",
+        "question"
+      ],
+      "raw": "我们能把最后期限提前两天吗?",
+      "postedit": "截止日期能往后推两天吗？",
+      "pe_ms": 0.069,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 54,
+      "en": "Let's push the deadline by a day.",
+      "zh_ref": "截止日期往后推一天吧。",
+      "tags": [
+        "holdout",
+        "meeting"
+      ],
+      "raw": "将最后期限提前一天",
+      "postedit": "截止日期往后推一天吧。",
+      "pe_ms": 0.119,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 55,
+      "en": "We agreed not to touch the API until after the rollout.",
+      "zh_ref": "我们说好了上线前先不动 API。",
+      "tags": [
+        "holdout",
+        "meeting",
+        "negation"
+      ],
+      "raw": "我们同意在推出后再碰API",
+      "postedit": "我们说好了上线前先不动 API。",
+      "pe_ms": 0.073,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 56,
+      "en": "I'll jump off in a minute.",
+      "zh_ref": "我马上先挂一下。",
+      "tags": [
+        "holdout",
+        "colloquial"
+      ],
+      "raw": "我马上跳下来",
+      "postedit": "我马上先挂一下。",
+      "pe_ms": 0.07,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 57,
+      "en": "Gonna jump off, talk later.",
+      "zh_ref": "我先挂了，回头聊。",
+      "tags": [
+        "holdout",
+        "colloquial"
+      ],
+      "raw": "跳下去,晚点再谈",
+      "postedit": "我先挂了，回头聊。",
+      "pe_ms": 0.094,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 58,
+      "en": "You're breaking up a little.",
+      "zh_ref": "你那边有点断断续续。",
+      "tags": [
+        "holdout",
+        "colloquial",
+        "domain"
+      ],
+      "raw": "你有点分手了",
+      "postedit": "你那边有点断断续续。",
+      "pe_ms": 0.224,
+      "needle_raw_ok": false,
+      "needle_postedit_ok": true,
+      "legacy": false
+    },
+    {
+      "i": 59,
+      "en": "Sorry, you broke up for a second.",
+      "zh_ref": "不好意思，刚才你那边断了一小下。",
+      "tags": [
+        "holdout",
+        "colloquial",
+        "domain"
+      ],
+      "raw": "抱歉,你分手了一下",
+      "postedit": "不好意思，刚才你那边断了一会儿。",
+      "pe_ms": 0.059,
       "needle_raw_ok": false,
       "needle_postedit_ok": true,
       "legacy": false

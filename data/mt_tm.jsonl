@@ -60,3 +60,9 @@
 {"dir": "en-zh", "src": "He has not replied to my message yet.", "tgt": "他还没有回我的消息。"}
 {"dir": "en-zh", "src": "I might not pass this interview round.", "tgt": "我可能过不了这一面。"}
 {"dir": "en-zh", "src": "Hang on, I'll be right back.", "tgt": "稍等一下，我马上回来。"}
+{"dir": "en-zh", "src": "The call drops every fifteen minutes or so.", "tgt": "通话大概每十五分钟就断一次。"}
+{"dir": "en-zh", "src": "Can you walk me through what broke in the last release real quick?", "tgt": "你能不能快速跟我过一下上一版到底哪里挂了？"}
+{"dir": "en-zh", "src": "Can we push the deadline by a day?", "tgt": "截止日期能往后推一天吗？"}
+{"dir": "en-zh", "src": "I thought we agreed not to change the API until after the rollout.", "tgt": "我以为我们说好了上线前先不动 API。"}
+{"dir": "en-zh", "src": "Gonna jump off in a sec.", "tgt": "我马上先挂一下。"}
+{"dir": "en-zh", "src": "Sorry, you broke up there for a bit.", "tgt": "不好意思，刚才你那边断了一会儿。"}

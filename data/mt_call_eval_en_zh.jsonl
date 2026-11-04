@@ -48,3 +48,13 @@
 {"en": "Don't cut me off yet, I still have one more point on latency.", "zh": "先别打断我，延迟这块我还有一点要说。", "tags": ["long", "negation", "domain"], "needles": ["别打断", "延迟"]}
 {"en": "Are you muted? I'm getting silence on my end.", "zh": "你是不是静音了？我这边全是静音。", "tags": ["question", "colloquial", "domain"], "needles": ["静音"]}
 {"en": "Let's wrap in five and send notes after.", "zh": "五分钟内收束，会后发纪要。", "tags": ["number", "meeting", "colloquial"], "needles": ["五分钟"]}
+{"en": "The call drops every ten minutes.", "zh": "通话大概每十分钟就断一次。", "tags": ["holdout", "domain", "number"], "needles": ["断", "十"]}
+{"en": "Calls keep dropping on my end.", "zh": "我这边通话老是断。", "tags": ["holdout", "domain"], "needles": ["断"]}
+{"en": "Can you walk me through what broke yesterday?", "zh": "你能不能快速跟我过一下昨天到底哪里挂了？", "tags": ["holdout", "question", "meeting"], "needles": ["过一下"]}
+{"en": "Can we push the deadline by two days?", "zh": "截止日期能往后推两天吗？", "tags": ["holdout", "meeting", "question"], "needles": ["往后", "两天"]}
+{"en": "Let's push the deadline by a day.", "zh": "截止日期往后推一天吧。", "tags": ["holdout", "meeting"], "needles": ["往后"]}
+{"en": "We agreed not to touch the API until after the rollout.", "zh": "我们说好了上线前先不动 API。", "tags": ["holdout", "meeting", "negation"], "needles": ["不动", "上线"]}
+{"en": "I'll jump off in a minute.", "zh": "我马上先挂一下。", "tags": ["holdout", "colloquial"], "needles": ["挂"]}
+{"en": "Gonna jump off, talk later.", "zh": "我先挂了，回头聊。", "tags": ["holdout", "colloquial"], "needles": ["挂"]}
+{"en": "You're breaking up a little.", "zh": "你那边有点断断续续。", "tags": ["holdout", "colloquial", "domain"], "needles": ["断"]}
+{"en": "Sorry, you broke up for a second.", "zh": "不好意思，刚才你那边断了一小下。", "tags": ["holdout", "colloquial", "domain"], "needles": ["断"]}

@@ -1,10 +1,10 @@
 {
-  "time": "2026-11-04 18:19:39",
-  "n": 50,
+  "time": "2026-11-04 18:47:46",
+  "n": 60,
   "totals": {
     "ok": 17,
-    "wrong": 6,
-    "fixed": 27,
+    "wrong": 0,
+    "fixed": 43,
     "broken": 0
   },
   "by_tag": {
@@ -18,123 +18,70 @@
     },
     "question": {
       "ok": 3,
-      "n": 10,
-      "pass": 8,
+      "n": 12,
+      "pass": 12,
       "raw_ok": 3,
-      "postedit_ok": 8,
-      "fixed": 5,
-      "wrong": 2
+      "postedit_ok": 12,
+      "fixed": 9
     },
     "domain": {
       "ok": 7,
-      "n": 16,
-      "pass": 14,
+      "n": 20,
+      "pass": 20,
       "raw_ok": 7,
-      "postedit_ok": 14,
-      "fixed": 7,
-      "wrong": 2
+      "postedit_ok": 20,
+      "fixed": 13
     },
     "number": {
-      "fixed": 6,
-      "n": 11,
-      "pass": 10,
-      "postedit_ok": 10,
+      "fixed": 8,
+      "n": 12,
+      "pass": 12,
+      "postedit_ok": 12,
       "ok": 4,
-      "raw_ok": 4,
-      "wrong": 1
+      "raw_ok": 4
     },
     "meeting": {
-      "fixed": 12,
-      "n": 19,
-      "pass": 16,
-      "postedit_ok": 16,
+      "fixed": 19,
+      "n": 23,
+      "pass": 23,
+      "postedit_ok": 23,
       "ok": 4,
-      "raw_ok": 4,
-      "wrong": 3
+      "raw_ok": 4
     },
     "negation": {
-      "fixed": 5,
-      "n": 10,
-      "pass": 9,
-      "postedit_ok": 9,
+      "fixed": 7,
+      "n": 11,
+      "pass": 11,
+      "postedit_ok": 11,
       "ok": 4,
-      "raw_ok": 4,
-      "wrong": 1
+      "raw_ok": 4
     },
     "colloquial": {
-      "fixed": 6,
-      "n": 9,
-      "pass": 7,
-      "postedit_ok": 7,
-      "wrong": 2,
+      "fixed": 12,
+      "n": 13,
+      "pass": 13,
+      "postedit_ok": 13,
       "ok": 1,
       "raw_ok": 1
     },
     "long": {
-      "fixed": 3,
+      "fixed": 5,
       "n": 8,
-      "pass": 6,
-      "postedit_ok": 6,
-      "wrong": 2,
+      "pass": 8,
+      "postedit_ok": 8,
       "ok": 3,
       "raw_ok": 3
+    },
+    "holdout": {
+      "fixed": 10,
+      "n": 10,
+      "pass": 10,
+      "postedit_ok": 10,
+      "raw_ok": 0
     }
   },
-  "fail_classes": {
-    "sense_loss": 2,
-    "colloquial_literal": 2,
-    "direction_reverse": 2
-  },
-  "fail_examples": {
-    "sense_loss": [
-      {
-        "en": "The call drops every fifteen minutes or so.",
-        "raw": "每十五分钟就接到一次电话",
-        "pe": "每十五分钟就接到一次电话",
-        "ref": "通话大概每十五分钟就断一次。",
-        "verdict": "wrong"
-      },
-      {
-        "en": "Can you walk me through what broke in the last release real quick?",
-        "raw": "你能告诉我 上次发布稿中 打破了什么 很快吗?",
-        "pe": "你能告诉我 上次发布稿中 打破了什么 很快吗?",
-        "ref": "你能不能快速跟我过一下上一版到底哪里挂了？",
-        "verdict": "wrong"
-      }
-    ],
-    "colloquial_literal": [
-      {
-        "en": "Gonna jump off in a sec.",
-        "raw": "马上就跳下来",
-        "pe": "马上就跳下来",
-        "ref": "我马上先挂一下。",
-        "verdict": "wrong"
-      },
-      {
-        "en": "Sorry, you broke up there for a bit.",
-        "raw": "抱歉 你刚才分手了",
-        "pe": "抱歉 你刚才分手了",
-        "ref": "不好意思，刚才你那边断了一会儿。",
-        "verdict": "wrong"
-      }
-    ],
-    "direction_reverse": [
-      {
-        "en": "Can we push the deadline by a day?",
-        "raw": "我们能把最后期限提前一天吗?",
-        "pe": "我们能把最后期限提前一天吗?",
-        "ref": "截止日期能往后推一天吗？",
-        "verdict": "wrong"
-      },
-      {
-        "en": "I thought we agreed not to change the API until after the rollout.",
-        "raw": "我以为我们同意在推出后 才会改变API",
-        "pe": "我以为我们同意在推出后 才会改变API",
-        "ref": "我以为我们说好了上线前先不动 API。",
-        "verdict": "wrong"
-      }
-    ]
-  },
-  "pe_ms_p50": 0.069,
-  "pe_ms_p95": 0.431
+  "fail_classes": {},
+  "fail_examples": {},
+  "pe_ms_p50": 0.07,
+  "pe_ms_p95": 0.426
 }
