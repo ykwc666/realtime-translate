@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+.venv-dml/
+
+# 模型与音频缓存（数 GB，绝不入库）
+models/
+cache/
+
+# 运行产物
+logs/
+output/
+*.log
+
+# 编辑器/系统
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini

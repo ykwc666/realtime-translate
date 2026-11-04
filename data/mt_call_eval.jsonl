@@ -1,0 +1,22 @@
+{"id": "msg_back_1", "zh": "他现在没有回我的消息", "en": "He hasn't replied to my messages yet.", "note": "实机拧成 heard back from me"}
+{"id": "msg_back_2", "zh": "啊现在没有回我的消息", "en": "Ah, he hasn't replied to my messages yet.", "note": "实机拧成 no news of me"}
+{"id": "msg_back_3", "zh": "你回我消息了吗", "en": "Did you reply to my message?"}
+{"id": "interview_1", "zh": "我现在面试的这个公司只有一面", "en": "The company I'm interviewing with only has one round.", "note": "一面≠one side"}
+{"id": "interview_2", "zh": "我现在不是很想去面试", "en": "I don't really want to go to the interview right now."}
+{"id": "interview_3", "zh": "我可能过不了这一面", "en": "I might not pass this interview round."}
+{"id": "delay_1", "zh": "延迟大概有多少", "en": "About how much delay is there?"}
+{"id": "delay_2", "zh": "翻译延迟大概有多少", "en": "About how much translation delay is there?"}
+{"id": "weather_1", "zh": "今天天气怎么样", "en": "How's the weather today?"}
+{"id": "hello_1", "zh": "你好", "en": "Hello."}
+{"id": "weekday_1", "zh": "现在是星期二", "en": "It's Tuesday."}
+{"id": "weekday_2", "zh": "现在是星期五", "en": "It's Friday."}
+{"id": "weekday_3", "zh": "这是星期", "en": "This is a week.", "note": "半截可接受怪译"}
+{"id": "call_1", "zh": "我听不清你说什么", "en": "I can't hear what you're saying clearly."}
+{"id": "call_2", "zh": "你能再说一遍吗", "en": "Can you say that again?"}
+{"id": "call_3", "zh": "稍等一下我马上回来", "en": "Hang on, I'll be right back."}
+{"id": "work_1", "zh": "这个需求我们下周再聊", "en": "Let's talk about this requirement again next week."}
+{"id": "work_2", "zh": "会议改到下午三点", "en": "The meeting has been moved to 3 p.m."}
+{"id": "work_3", "zh": "我还在核对这个问题", "en": "I'm still checking this issue."}
+{"id": "feel_1", "zh": "感觉你翻译的有点慢", "en": "I feel like your translation is a bit slow."}
+{"id": "hear_1", "zh": "我听不清你说什么", "en": "I cannot hear what you are saying clearly."}
+{"id": "round_2", "zh": "我刚面完一面", "en": "I just finished the first interview round."}

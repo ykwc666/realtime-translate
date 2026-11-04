@@ -1,0 +1,453 @@
+{
+  "time": "2026-11-02 20:17:52",
+  "tag": "prefix-mt-lora-ab",
+  "note": "Opus-MT LoRA prefix vs baseline CT2",
+  "mode": "prefix_mt_ab",
+  "n_cases": 36,
+  "base_ms_median": 48.7,
+  "lora_ms_median": 61.6,
+  "samples": [
+    {
+      "tag": "p40",
+      "zh": "欢迎大家来体验达",
+      "full_zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "ref_en": "Welcome everyone to try the speech recognition model launched by DAMO Academy.",
+      "base": "Welcome to the Da da.",
+      "lora": "Welcome to the experience of Dat's experience.",
+      "base_ms": 43.9,
+      "lora_ms": 86.3
+    },
+    {
+      "tag": "p60",
+      "zh": "欢迎大家来体验达摩院推出",
+      "full_zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "ref_en": "Welcome everyone to try the speech recognition model launched by DAMO Academy.",
+      "base": "Welcome to the Dharma Academy.",
+      "lora": "Welcome to the Dharma Academy launch.",
+      "base_ms": 48.9,
+      "lora_ms": 58.5
+    },
+    {
+      "tag": "full",
+      "zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "full_zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "ref_en": "Welcome everyone to try the speech recognition model launched by DAMO Academy.",
+      "base": "Welcome to the speech recognition model launched by the Dharma House.",
+      "lora": "Welcome to the speech recognition model launched by the Dharma Academy.",
+      "base_ms": 87.5,
+      "lora_ms": 85.5
+    },
+    {
+      "tag": "p40",
+      "zh": "请稍等，",
+      "full_zh": "请稍等，我马上给你答复。",
+      "ref_en": "Please wait a moment, I will get back to you right away.",
+      "base": "Please wait.",
+      "lora": "Please wait a moment.",
+      "base_ms": 23.7,
+      "lora_ms": 34.3
+    },
+    {
+      "tag": "p60",
+      "zh": "请稍等，我马上",
+      "full_zh": "请稍等，我马上给你答复。",
+      "ref_en": "Please wait a moment, I will get back to you right away.",
+      "base": "One moment, please. I'll be right there.",
+      "lora": "Please wait a moment. I'll be right there.",
+      "base_ms": 74.5,
+      "lora_ms": 70.1
+    },
+    {
+      "tag": "full",
+      "zh": "请稍等，我马上给你答复。",
+      "full_zh": "请稍等，我马上给你答复。",
+      "ref_en": "Please wait a moment, I will get back to you right away.",
+      "base": "Just a moment, I'll give you an answer.",
+      "lora": "Please wait a moment, I will give you an answer immediately.",
+      "base_ms": 74.6,
+      "lora_ms": 78.5
+    },
+    {
+      "tag": "p40",
+      "zh": "今天的会",
+      "full_zh": "今天的会议改到下午三点。",
+      "ref_en": "Today's meeting has been moved to three in the afternoon.",
+      "base": "Today's meeting.",
+      "lora": "Today's meeting will be held in New York City.",
+      "base_ms": 33.4,
+      "lora_ms": 69.4
+    },
+    {
+      "tag": "p60",
+      "zh": "今天的会议改到",
+      "full_zh": "今天的会议改到下午三点。",
+      "ref_en": "Today's meeting has been moved to three in the afternoon.",
+      "base": "Today's meeting has been rescheduled to",
+      "lora": "Today's meeting has been changed to a new meeting.",
+      "base_ms": 48.7,
+      "lora_ms": 79.4
+    }
+  ],
+  "all": [
+    {
+      "tag": "p40",
+      "zh": "欢迎大家来体验达",
+      "full_zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "ref_en": "Welcome everyone to try the speech recognition model launched by DAMO Academy.",
+      "base": "Welcome to the Da da.",
+      "lora": "Welcome to the experience of Dat's experience.",
+      "base_ms": 43.9,
+      "lora_ms": 86.3
+    },
+    {
+      "tag": "p60",
+      "zh": "欢迎大家来体验达摩院推出",
+      "full_zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "ref_en": "Welcome everyone to try the speech recognition model launched by DAMO Academy.",
+      "base": "Welcome to the Dharma Academy.",
+      "lora": "Welcome to the Dharma Academy launch.",
+      "base_ms": 48.9,
+      "lora_ms": 58.5
+    },
+    {
+      "tag": "full",
+      "zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "full_zh": "欢迎大家来体验达摩院推出的语音识别模型。",
+      "ref_en": "Welcome everyone to try the speech recognition model launched by DAMO Academy.",
+      "base": "Welcome to the speech recognition model launched by the Dharma House.",
+      "lora": "Welcome to the speech recognition model launched by the Dharma Academy.",
+      "base_ms": 87.5,
+      "lora_ms": 85.5
+    },
+    {
+      "tag": "p40",
+      "zh": "请稍等，",
+      "full_zh": "请稍等，我马上给你答复。",
+      "ref_en": "Please wait a moment, I will get back to you right away.",
+      "base": "Please wait.",
+      "lora": "Please wait a moment.",
+      "base_ms": 23.7,
+      "lora_ms": 34.3
+    },
+    {
+      "tag": "p60",
+      "zh": "请稍等，我马上",
+      "full_zh": "请稍等，我马上给你答复。",
+      "ref_en": "Please wait a moment, I will get back to you right away.",
+      "base": "One moment, please. I'll be right there.",
+      "lora": "Please wait a moment. I'll be right there.",
+      "base_ms": 74.5,
+      "lora_ms": 70.1
+    },
+    {
+      "tag": "full",
+      "zh": "请稍等，我马上给你答复。",
+      "full_zh": "请稍等，我马上给你答复。",
+      "ref_en": "Please wait a moment, I will get back to you right away.",
+      "base": "Just a moment, I'll give you an answer.",
+      "lora": "Please wait a moment, I will give you an answer immediately.",
+      "base_ms": 74.6,
+      "lora_ms": 78.5
+    },
+    {
+      "tag": "p40",
+      "zh": "今天的会",
+      "full_zh": "今天的会议改到下午三点。",
+      "ref_en": "Today's meeting has been moved to three in the afternoon.",
+      "base": "Today's meeting.",
+      "lora": "Today's meeting will be held in New York City.",
+      "base_ms": 33.4,
+      "lora_ms": 69.4
+    },
+    {
+      "tag": "p60",
+      "zh": "今天的会议改到",
+      "full_zh": "今天的会议改到下午三点。",
+      "ref_en": "Today's meeting has been moved to three in the afternoon.",
+      "base": "Today's meeting has been rescheduled to",
+      "lora": "Today's meeting has been changed to a new meeting.",
+      "base_ms": 48.7,
+      "lora_ms": 79.4
+    },
+    {
+      "tag": "full",
+      "zh": "今天的会议改到下午三点。",
+      "full_zh": "今天的会议改到下午三点。",
+      "ref_en": "Today's meeting has been moved to three in the afternoon.",
+      "base": "Today's meeting has been rescheduled to 3 p.m.",
+      "lora": "Today's meeting has been rescheduled to 3 p.m.",
+      "base_ms": 79.0,
+      "lora_ms": 81.3
+    },
+    {
+      "tag": "p40",
+      "zh": "我们需要一",
+      "full_zh": "我们需要一份详细的技术方案。",
+      "ref_en": "We need a detailed technical proposal.",
+      "base": "We need one.",
+      "lora": "We need one.",
+      "base_ms": 30.1,
+      "lora_ms": 33.6
+    },
+    {
+      "tag": "p60",
+      "zh": "我们需要一份详细",
+      "full_zh": "我们需要一份详细的技术方案。",
+      "ref_en": "We need a detailed technical proposal.",
+      "base": "We need a detailed copy.",
+      "lora": "We need a detailed copy.",
+      "base_ms": 42.4,
+      "lora_ms": 40.7
+    },
+    {
+      "tag": "full",
+      "zh": "我们需要一份详细的技术方案。",
+      "full_zh": "我们需要一份详细的技术方案。",
+      "ref_en": "We need a detailed technical proposal.",
+      "base": "We need a detailed technical programme.",
+      "lora": "We need a detailed technical programme.",
+      "base_ms": 48.7,
+      "lora_ms": 47.3
+    },
+    {
+      "tag": "p40",
+      "zh": "这个问题",
+      "full_zh": "这个问题我还在核实。",
+      "ref_en": "I am still verifying this issue.",
+      "base": "The question.",
+      "lora": "The question is:",
+      "base_ms": 23.9,
+      "lora_ms": 28.0
+    },
+    {
+      "tag": "p60",
+      "zh": "这个问题我还",
+      "full_zh": "这个问题我还在核实。",
+      "ref_en": "I am still verifying this issue.",
+      "base": "I'll take that back.",
+      "lora": "I'm still asking the question.",
+      "base_ms": 43.8,
+      "lora_ms": 52.0
+    },
+    {
+      "tag": "full",
+      "zh": "这个问题我还在核实。",
+      "full_zh": "这个问题我还在核实。",
+      "ref_en": "I am still verifying this issue.",
+      "base": "I'm still checking this out.",
+      "lora": "I'm still checking this question.",
+      "base_ms": 49.8,
+      "lora_ms": 49.0
+    },
+    {
+      "tag": "p40",
+      "zh": "感谢你的",
+      "full_zh": "感谢你的帮助，非常有用。",
+      "ref_en": "Thank you for your help, it was very useful.",
+      "base": "Thank you.",
+      "lora": "Thank you very much.",
+      "base_ms": 21.8,
+      "lora_ms": 33.6
+    },
+    {
+      "tag": "p60",
+      "zh": "感谢你的帮助，",
+      "full_zh": "感谢你的帮助，非常有用。",
+      "ref_en": "Thank you for your help, it was very useful.",
+      "base": "Thank you for your help.",
+      "lora": "Thank you for your help, but I am not sure what you are doing.",
+      "base_ms": 36.7,
+      "lora_ms": 86.6
+    },
+    {
+      "tag": "full",
+      "zh": "感谢你的帮助，非常有用。",
+      "full_zh": "感谢你的帮助，非常有用。",
+      "ref_en": "Thank you for your help, it was very useful.",
+      "base": "Thank you for your help. It was very useful.",
+      "lora": "Thank you for your help, very usefully.",
+      "base_ms": 67.6,
+      "lora_ms": 61.6
+    },
+    {
+      "tag": "p40",
+      "zh": "请把麦克",
+      "full_zh": "请把麦克风关掉再发言。",
+      "ref_en": "Please mute your microphone before speaking again.",
+      "base": "Please, Mac.",
+      "lora": "Please, please, turn Mike over to the office.",
+      "base_ms": 28.3,
+      "lora_ms": 64.0
+    },
+    {
+      "tag": "p60",
+      "zh": "请把麦克风关",
+      "full_zh": "请把麦克风关掉再发言。",
+      "ref_en": "Please mute your microphone before speaking again.",
+      "base": "Turn off the microphone, please.",
+      "lora": "Please turn off the microphone.",
+      "base_ms": 45.6,
+      "lora_ms": 39.0
+    },
+    {
+      "tag": "full",
+      "zh": "请把麦克风关掉再发言。",
+      "full_zh": "请把麦克风关掉再发言。",
+      "ref_en": "Please mute your microphone before speaking again.",
+      "base": "Please turn off the microphone and speak again.",
+      "lora": "Please turn off the microphone before taking the floor.",
+      "base_ms": 55.9,
+      "lora_ms": 66.2
+    },
+    {
+      "tag": "p40",
+      "zh": "网络有点卡",
+      "full_zh": "网络有点卡，你能重复一遍吗？",
+      "ref_en": "The network is a bit laggy, could you repeat that?",
+      "base": "The network's a little bit cardy.",
+      "lora": "The network is a little bit cardy.",
+      "base_ms": 60.1,
+      "lora_ms": 57.0
+    },
+    {
+      "tag": "p60",
+      "zh": "网络有点卡，你能",
+      "full_zh": "网络有点卡，你能重复一遍吗？",
+      "ref_en": "The network is a bit laggy, could you repeat that?",
+      "base": "The network's a little cardy, you can.",
+      "lora": "The network is a little cardy, can you?",
+      "base_ms": 71.4,
+      "lora_ms": 66.2
+    },
+    {
+      "tag": "full",
+      "zh": "网络有点卡，你能重复一遍吗？",
+      "full_zh": "网络有点卡，你能重复一遍吗？",
+      "ref_en": "The network is a bit laggy, could you repeat that?",
+      "base": "The network's a little bit carded. Can you repeat that?",
+      "lora": "The network is a little bit cardy. Could you repeat that?",
+      "base_ms": 88.9,
+      "lora_ms": 78.4
+    },
+    {
+      "tag": "p40",
+      "zh": "我们可以先",
+      "full_zh": "我们可以先从核心功能开始。",
+      "ref_en": "We can start with the core features first.",
+      "base": "We can go first.",
+      "lora": "We can go first.",
+      "base_ms": 34.4,
+      "lora_ms": 35.6
+    },
+    {
+      "tag": "p60",
+      "zh": "我们可以先从核",
+      "full_zh": "我们可以先从核心功能开始。",
+      "ref_en": "We can start with the core features first.",
+      "base": "We can start with the core.",
+      "lora": "We can start with the core first.",
+      "base_ms": 44.4,
+      "lora_ms": 48.4
+    },
+    {
+      "tag": "full",
+      "zh": "我们可以先从核心功能开始。",
+      "full_zh": "我们可以先从核心功能开始。",
+      "ref_en": "We can start with the core features first.",
+      "base": "We can start with core functions.",
+      "lora": "We can start with core functions first.",
+      "base_ms": 42.1,
+      "lora_ms": 51.6
+    },
+    {
+      "tag": "p40",
+      "zh": "这个版本已",
+      "full_zh": "这个版本已经修复了延迟问题。",
+      "ref_en": "This version has already fixed the latency issue.",
+      "base": "This version is already",
+      "lora": "This version has already been translated into the current version.",
+      "base_ms": 28.9,
+      "lora_ms": 63.5
+    },
+    {
+      "tag": "p60",
+      "zh": "这个版本已经修复",
+      "full_zh": "这个版本已经修复了延迟问题。",
+      "ref_en": "This version has already fixed the latency issue.",
+      "base": "This version has been repaired.",
+      "lora": "This version has been repaired.",
+      "base_ms": 36.8,
+      "lora_ms": 38.3
+    },
+    {
+      "tag": "full",
+      "zh": "这个版本已经修复了延迟问题。",
+      "full_zh": "这个版本已经修复了延迟问题。",
+      "ref_en": "This version has already fixed the latency issue.",
+      "base": "The delay has been repaired by this version.",
+      "lora": "This version has already fixed the delay problem.",
+      "base_ms": 56.3,
+      "lora_ms": 54.0
+    },
+    {
+      "tag": "p40",
+      "zh": "我听不清",
+      "full_zh": "我听不清，请大声一点。",
+      "ref_en": "I can't hear clearly, please speak a bit louder.",
+      "base": "I can't hear you.",
+      "lora": "I can't hear you.",
+      "base_ms": 45.2,
+      "lora_ms": 45.8
+    },
+    {
+      "tag": "p60",
+      "zh": "我听不清，请",
+      "full_zh": "我听不清，请大声一点。",
+      "ref_en": "I can't hear clearly, please speak a bit louder.",
+      "base": "I can't hear you, please.",
+      "lora": "I can't hear you. Please.",
+      "base_ms": 56.2,
+      "lora_ms": 54.7
+    },
+    {
+      "tag": "full",
+      "zh": "我听不清，请大声一点。",
+      "full_zh": "我听不清，请大声一点。",
+      "ref_en": "I can't hear clearly, please speak a bit louder.",
+      "base": "I can't hear you, please speak up.",
+      "lora": "I can't hear you, please speak louder.",
+      "base_ms": 64.9,
+      "lora_ms": 64.7
+    },
+    {
+      "tag": "p40",
+      "zh": "翻译结果会",
+      "full_zh": "翻译结果会实时显示在耳机里。",
+      "ref_en": "The translation will be shown in the earphones in real time.",
+      "base": "Translation will be available.",
+      "lora": "The translation will be available in the language of translation.",
+      "base_ms": 35.6,
+      "lora_ms": 66.4
+    },
+    {
+      "tag": "p60",
+      "zh": "翻译结果会实时显",
+      "full_zh": "翻译结果会实时显示在耳机里。",
+      "ref_en": "The translation will be shown in the earphones in real time.",
+      "base": "The results will be visible in real time.",
+      "lora": "The translation results will be visible in real time.",
+      "base_ms": 56.8,
+      "lora_ms": 64.3
+    },
+    {
+      "tag": "full",
+      "zh": "翻译结果会实时显示在耳机里。",
+      "full_zh": "翻译结果会实时显示在耳机里。",
+      "ref_en": "The translation will be shown in the earphones in real time.",
+      "base": "The translation results are shown in real time on the headphones.",
+      "lora": "Translation results will be shown in real time on the headphones.",
+      "base_ms": 88.2,
+      "lora_ms": 88.4
+    }
+  ]
+}

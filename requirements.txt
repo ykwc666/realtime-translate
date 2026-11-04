@@ -1,0 +1,17 @@
+# CPU 环境；国内源安装见 scripts/setup_and_download.ps1
+torch
+torchaudio
+funasr
+modelscope
+transformers
+sentencepiece
+sacremoses
+soundfile
+sounddevice
+soundcard
+numpy
+piper-tts
+onnxruntime
+ctranslate2
+sherpa-onnx
+huggingface_hub
