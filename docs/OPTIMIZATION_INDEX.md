@@ -23,6 +23,7 @@
 | 2026-11-04 | en→zh 质量尺子+高频修 | 是 | 通过 42%→88%，broken 0 | `MT_EN_ZH_QUALITY_STEP1.md` |
 | 2026-11-04 | en→zh 边界类+holdout | 是 | 60/60，broken 0，P95 0.43ms | `MT_EN_ZH_QUALITY_STEP2.md` |
 | 2026-11-04 | 真实语料 harvest 闭环 | 工具 | 采集+人判；82×3 全绿 | `HARVEST_SESSION.md` |
+| 2026-11-04 | 公开 CC-BY 英文语音 harvest | 度量 | 50句 ok6%/wrong56%；规则命中0 | `HARVEST_PUBLIC_EN_2026-11-04.md` |
 
 ## 检查点约定
 

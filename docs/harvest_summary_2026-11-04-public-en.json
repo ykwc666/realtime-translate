@@ -1,0 +1,35 @@
+{
+  "time": "2026-11-04 19:58:41",
+  "ingest": "docs\\harvest_judge_2026-11-04-public-en.jsonl",
+  "n_rows": 50,
+  "n_labeled": 50,
+  "totals": {
+    "wrong": 28,
+    "awkward": 19,
+    "ok": 3
+  },
+  "by_rule_layer": {
+    "rule_touched": {},
+    "model_passthrough": {
+      "wrong": 28,
+      "awkward": 19,
+      "ok": 3
+    }
+  },
+  "latency_perceived": {
+    "n": 50,
+    "p50": 921.6,
+    "p90": 1141.4,
+    "max": 1333.8,
+    "mean": 899.7
+  },
+  "latency_device_ttfa": {
+    "n": 0,
+    "p50": null,
+    "p90": null,
+    "max": null
+  },
+  "asr": {
+    "n": 50
+  }
+}
