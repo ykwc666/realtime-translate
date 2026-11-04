@@ -1,0 +1,5 @@
+{"wait_tts": true, "src": "延迟大概有多少", "tgt": "About how much delay is there?", "utt_wall_ms": 3239.5099000023038, "perceived_ms": 976.4171999995597, "feed_return_ms": 2921.0, "t_mt_done_ms": 976.4085999995586}
+{"wait_tts": true, "src": "今天天气怎么样", "tgt": "How's the weather today?", "utt_wall_ms": 2431.5722999999707, "perceived_ms": 610.9046000019589, "feed_return_ms": 2110.7, "t_mt_done_ms": 610.8860000022105}
+{"wait_tts": false, "src": "延迟大概有多少", "tgt": "About how much delay is there?", "utt_wall_ms": 860.050899998896, "perceived_ms": 967.740900003264, "feed_return_ms": 520.0, "t_mt_done_ms": 967.7335000014864}
+{"wait_tts": false, "src": "今天天气怎么样", "tgt": "How's the weather today?", "utt_wall_ms": 565.8340000009048, "perceived_ms": 620.6440000023576, "feed_return_ms": 170.9, "t_mt_done_ms": 620.6358000017644}
+{"summary_on": {"n": 2, "utt_wall_median": 2835.5, "utt_wall_mean": 2835.5, "feed_ret_median": 2515.8, "srcs": ["延迟大概有多少", "今天天气怎么样"]}, "summary_off": {"n": 2, "utt_wall_median": 712.9, "utt_wall_mean": 712.9, "feed_ret_median": 345.4, "srcs": ["延迟大概有多少", "今天天气怎么样"]}}

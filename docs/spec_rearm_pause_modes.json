@@ -1,0 +1,122 @@
+[
+  {
+    "mode": "offline",
+    "rep": 1,
+    "src": "现在是星期啊。",
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 606.7886999990151
+    },
+    "asr_wait": 192.7,
+    "mt_ready": 334.69269999841345,
+    "ath_max": 239.7,
+    "over_100": 2,
+    "hit": true
+  },
+  {
+    "mode": "offline",
+    "rep": 2,
+    "src": "现在是星期啊。",
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 693.7327999949048
+    },
+    "asr_wait": 273.3,
+    "mt_ready": 437.3509999968519,
+    "ath_max": 343.5,
+    "over_100": 2,
+    "hit": true
+  },
+  {
+    "mode": "full",
+    "rep": 1,
+    "src": "现在是星期啊。",
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 879.8806000013428
+    },
+    "asr_wait": 352.2,
+    "mt_ready": 498.73789999764995,
+    "ath_max": 403.3,
+    "over_100": 3,
+    "hit": true
+  },
+  {
+    "mode": "full",
+    "rep": 2,
+    "src": "现在是星期啊。",
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 839.6734000016295
+    },
+    "asr_wait": 414.9,
+    "mt_ready": 567.2451999998884,
+    "ath_max": 473.4,
+    "over_100": 2,
+    "hit": true
+  },
+  {
+    "mode": "off",
+    "rep": 1,
+    "src": "现在是星期啊。",
+    "spec_counters": {
+      "starts": 1,
+      "hits": 0,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 322.53249999848776
+    },
+    "asr_wait": 252.6,
+    "mt_ready": 394.6195999997144,
+    "ath_max": 299.9,
+    "over_100": 2,
+    "hit": false
+  },
+  {
+    "mode": "off",
+    "rep": 2,
+    "src": "现在是星期啊。",
+    "spec_counters": {
+      "starts": 1,
+      "hits": 0,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 336.11949999976787
+    },
+    "asr_wait": 290.4,
+    "mt_ready": 444.4714999990538,
+    "ath_max": 350.1,
+    "over_100": 1,
+    "hit": false
+  }
+]

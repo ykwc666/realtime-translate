@@ -1,0 +1,1094 @@
+[
+  {
+    "mode": "offline",
+    "wav": "pause_xingqi_er.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "现在是星期啊。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 542.857799999183
+    },
+    "asr_wait_med": 309.1,
+    "asr_waits": [
+      309.1
+    ],
+    "mt_ready_med": 494.388599996455,
+    "mt_ready": [
+      494.388599996455
+    ],
+    "audio_thread": {
+      "median_ms": 2.1,
+      "max_ms": 402.5,
+      "over_100ms": 1,
+      "n": 37
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "pause_xingqi_er.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "现在是星期啊。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 761.4443999991636
+    },
+    "asr_wait_med": 410.9,
+    "asr_waits": [
+      410.9
+    ],
+    "mt_ready_med": 557.1217999968212,
+    "mt_ready": [
+      557.1217999968212
+    ],
+    "audio_thread": {
+      "median_ms": 1.8,
+      "max_ms": 463.3,
+      "over_100ms": 3,
+      "n": 37
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "stop_zheshi_xingqi.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "这是星期。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 330.2204999999958
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1
+    ],
+    "mt_ready_med": 488.2166000024881,
+    "mt_ready": [
+      488.2166000024881
+    ],
+    "audio_thread": {
+      "median_ms": 2.1,
+      "max_ms": 77.8,
+      "over_100ms": 0,
+      "n": 27
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "stop_zheshi_xingqi.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "这是星期。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 278.84869999979855
+    },
+    "asr_wait_med": 0.4,
+    "asr_waits": [
+      0.4
+    ],
+    "mt_ready_med": 490.5500999993819,
+    "mt_ready": [
+      490.5500999993819
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 71.2,
+      "over_100ms": 0,
+      "n": 27
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "cont_tuesday.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "现在是星期二。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 352.09039999972447
+    },
+    "asr_wait_med": 0.3,
+    "asr_waits": [
+      0.3
+    ],
+    "mt_ready_med": 450.39819999874453,
+    "mt_ready": [
+      450.39819999874453
+    ],
+    "audio_thread": {
+      "median_ms": 2.4,
+      "max_ms": 93.1,
+      "over_100ms": 0,
+      "n": 26
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "cont_tuesday.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "现在是星期二。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 358.1688000012946
+    },
+    "asr_wait_med": 0.2,
+    "asr_waits": [
+      0.2
+    ],
+    "mt_ready_med": 450.3146999995806,
+    "mt_ready": [
+      450.3146999995806
+    ],
+    "audio_thread": {
+      "median_ms": 2.3,
+      "max_ms": 110.1,
+      "over_100ms": 1,
+      "n": 26
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "accept_phrases.wav",
+    "rep": 1,
+    "n": 4,
+    "srcs": [
+      "你好，延迟大概有多少？",
+      "今天天气怎么样？",
+      "现在是星期二。",
+      "他现在没有回我的消息。"
+    ],
+    "hits": 4,
+    "spec_counters": {
+      "starts": 5,
+      "hits": 4,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 1792.4876999968546
+    },
+    "asr_wait_med": 0.3,
+    "asr_waits": [
+      157.1,
+      0.1,
+      0.3,
+      0.1
+    ],
+    "mt_ready_med": 450.34970000051544,
+    "mt_ready": [
+      655.141299997922,
+      450.203500000498,
+      450.34970000051544,
+      450.12579999820446
+    ],
+    "audio_thread": {
+      "median_ms": 2.1,
+      "max_ms": 213.6,
+      "over_100ms": 4,
+      "n": 139
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "accept_phrases.wav",
+    "rep": 2,
+    "n": 4,
+    "srcs": [
+      "你好，延迟大概有多少？",
+      "今天天气怎么样？",
+      "现在是星期二。",
+      "他现在没有回我的消息。"
+    ],
+    "hits": 4,
+    "spec_counters": {
+      "starts": 5,
+      "hits": 4,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 1652.2124000039184
+    },
+    "asr_wait_med": 0.2,
+    "asr_waits": [
+      227.0,
+      0.1,
+      0.2,
+      0.1
+    ],
+    "mt_ready_med": 450.2351000010094,
+    "mt_ready": [
+      769.8643000003358,
+      450.1459999992221,
+      450.2351000010094,
+      450.2007000010053
+    ],
+    "audio_thread": {
+      "median_ms": 2.4,
+      "max_ms": 330.1,
+      "over_100ms": 3,
+      "n": 139
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "tail_duosimo.wav",
+    "rep": 1,
+    "n": 2,
+    "srcs": [
+      "延迟大概有多少？",
+      "今天天气怎么样？"
+    ],
+    "hits": 2,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 2,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 984.9401000028593
+    },
+    "asr_wait_med": 89.5,
+    "asr_waits": [
+      0.2,
+      89.5
+    ],
+    "mt_ready_med": 539.5922999996401,
+    "mt_ready": [
+      450.23329999821726,
+      539.5922999996401
+    ],
+    "audio_thread": {
+      "median_ms": 1.9,
+      "max_ms": 149.4,
+      "over_100ms": 1,
+      "n": 54
+    }
+  },
+  {
+    "mode": "offline",
+    "wav": "tail_duosimo.wav",
+    "rep": 2,
+    "n": 2,
+    "srcs": [
+      "延迟大概有多少？",
+      "今天天气怎么样？"
+    ],
+    "hits": 2,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 2,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 923.76250000234
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1,
+      0.1
+    ],
+    "mt_ready_med": 450.1471000003221,
+    "mt_ready": [
+      450.1471000003221,
+      450.12149999820394
+    ],
+    "audio_thread": {
+      "median_ms": 2.1,
+      "max_ms": 133.7,
+      "over_100ms": 1,
+      "n": 54
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "pause_xingqi_er.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "现在是星期啊。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 971.0732999992615
+    },
+    "asr_wait_med": 423.4,
+    "asr_waits": [
+      423.4
+    ],
+    "mt_ready_med": 572.7908999979263,
+    "mt_ready": [
+      572.7908999979263
+    ],
+    "audio_thread": {
+      "median_ms": 1.9,
+      "max_ms": 477.5,
+      "over_100ms": 2,
+      "n": 37
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "pause_xingqi_er.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "现在是星期啊。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 1,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 883.3292999988771
+    },
+    "asr_wait_med": 395.2,
+    "asr_waits": [
+      395.2
+    ],
+    "mt_ready_med": 548.0480000005628,
+    "mt_ready": [
+      548.0480000005628
+    ],
+    "audio_thread": {
+      "median_ms": 2.5,
+      "max_ms": 452.5,
+      "over_100ms": 3,
+      "n": 37
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "stop_zheshi_xingqi.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "这是星期。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 345.5093999982637
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1
+    ],
+    "mt_ready_med": 503.4467000004952,
+    "mt_ready": [
+      503.4467000004952
+    ],
+    "audio_thread": {
+      "median_ms": 2.8,
+      "max_ms": 74.5,
+      "over_100ms": 0,
+      "n": 27
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "stop_zheshi_xingqi.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "这是星期。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 327.6899999982561
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1
+    ],
+    "mt_ready_med": 493.91490000198246,
+    "mt_ready": [
+      493.91490000198246
+    ],
+    "audio_thread": {
+      "median_ms": 2.7,
+      "max_ms": 98.2,
+      "over_100ms": 0,
+      "n": 27
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "cont_tuesday.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "现在是星期二。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 474.8680000011518
+    },
+    "asr_wait_med": 0.2,
+    "asr_waits": [
+      0.2
+    ],
+    "mt_ready_med": 450.26510000025155,
+    "mt_ready": [
+      450.26510000025155
+    ],
+    "audio_thread": {
+      "median_ms": 2.7,
+      "max_ms": 122.6,
+      "over_100ms": 1,
+      "n": 26
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "cont_tuesday.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "现在是星期二。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 429.6037000021897
+    },
+    "asr_wait_med": 0.3,
+    "asr_waits": [
+      0.3
+    ],
+    "mt_ready_med": 450.37410000077216,
+    "mt_ready": [
+      450.37410000077216
+    ],
+    "audio_thread": {
+      "median_ms": 2.4,
+      "max_ms": 127.6,
+      "over_100ms": 1,
+      "n": 26
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "accept_phrases.wav",
+    "rep": 1,
+    "n": 4,
+    "srcs": [
+      "你好，延迟大概有多少？",
+      "今天天气怎么样？",
+      "现在是星期二。",
+      "他现在没有回我的消息。"
+    ],
+    "hits": 4,
+    "spec_counters": {
+      "starts": 5,
+      "hits": 4,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 2423.294900003384
+    },
+    "asr_wait_med": 0.3,
+    "asr_waits": [
+      306.8,
+      0.1,
+      0.3,
+      0.2
+    ],
+    "mt_ready_med": 450.51490000332706,
+    "mt_ready": [
+      824.6179999987362,
+      450.19650000176625,
+      450.51490000332706,
+      450.26660000075935
+    ],
+    "audio_thread": {
+      "median_ms": 2.5,
+      "max_ms": 385.9,
+      "over_100ms": 6,
+      "n": 139
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "accept_phrases.wav",
+    "rep": 2,
+    "n": 4,
+    "srcs": [
+      "你好，延迟大概有多少？",
+      "今天天气怎么样？",
+      "现在是星期二。",
+      "他现在没有回我的消息。"
+    ],
+    "hits": 4,
+    "spec_counters": {
+      "starts": 5,
+      "hits": 4,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 1,
+      "cpu_ms": 2192.0382999960566
+    },
+    "asr_wait_med": 98.5,
+    "asr_waits": [
+      116.4,
+      98.5,
+      0.2,
+      0.1
+    ],
+    "mt_ready_med": 548.5829999997804,
+    "mt_ready": [
+      625.0413999987359,
+      548.5829999997804,
+      450.2481000017724,
+      450.1146000002336
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 184.7,
+      "over_100ms": 5,
+      "n": 139
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "tail_duosimo.wav",
+    "rep": 1,
+    "n": 2,
+    "srcs": [
+      "延迟大概有多少？",
+      "今天天气怎么样？"
+    ],
+    "hits": 2,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 2,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 682.4632999996538
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1,
+      0.1
+    ],
+    "mt_ready_med": 450.12320000023465,
+    "mt_ready": [
+      450.1042000010784,
+      450.12320000023465
+    ],
+    "audio_thread": {
+      "median_ms": 2.0,
+      "max_ms": 105.8,
+      "over_100ms": 1,
+      "n": 54
+    }
+  },
+  {
+    "mode": "full",
+    "wav": "tail_duosimo.wav",
+    "rep": 2,
+    "n": 2,
+    "srcs": [
+      "延迟大概有多少？",
+      "今天天气怎么样？"
+    ],
+    "hits": 2,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 2,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 710.9001999997417
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1,
+      0.1
+    ],
+    "mt_ready_med": 450.11109999904875,
+    "mt_ready": [
+      450.11109999904875,
+      450.10930000353255
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 111.8,
+      "over_100ms": 1,
+      "n": 54
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "pause_xingqi_er.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "现在是星期啊。"
+    ],
+    "hits": 0,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 0,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 307.64169999747537
+    },
+    "asr_wait_med": 336.0,
+    "asr_waits": [
+      336.0
+    ],
+    "mt_ready_med": 489.7839999975986,
+    "mt_ready": [
+      489.7839999975986
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 404.3,
+      "over_100ms": 1,
+      "n": 37
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "pause_xingqi_er.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "现在是星期啊。"
+    ],
+    "hits": 0,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 0,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 384.9785999991582
+    },
+    "asr_wait_med": 222.5,
+    "asr_waits": [
+      222.5
+    ],
+    "mt_ready_med": 364.50329999570386,
+    "mt_ready": [
+      364.50329999570386
+    ],
+    "audio_thread": {
+      "median_ms": 2.1,
+      "max_ms": 268.4,
+      "over_100ms": 2,
+      "n": 37
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "stop_zheshi_xingqi.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "这是星期。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 293.68049999902723
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1
+    ],
+    "mt_ready_med": 490.16910000136704,
+    "mt_ready": [
+      490.16910000136704
+    ],
+    "audio_thread": {
+      "median_ms": 2.4,
+      "max_ms": 61.2,
+      "over_100ms": 0,
+      "n": 27
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "stop_zheshi_xingqi.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "这是星期。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 240.7539000014367
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1
+    ],
+    "mt_ready_med": 486.1406000018178,
+    "mt_ready": [
+      486.1406000018178
+    ],
+    "audio_thread": {
+      "median_ms": 2.3,
+      "max_ms": 57.2,
+      "over_100ms": 0,
+      "n": 27
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "cont_tuesday.wav",
+    "rep": 1,
+    "n": 1,
+    "srcs": [
+      "现在是星期二。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 367.3613999999361
+    },
+    "asr_wait_med": 0.6,
+    "asr_waits": [
+      0.6
+    ],
+    "mt_ready_med": 450.6586999996216,
+    "mt_ready": [
+      450.6586999996216
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 103.1,
+      "over_100ms": 1,
+      "n": 26
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "cont_tuesday.wav",
+    "rep": 2,
+    "n": 1,
+    "srcs": [
+      "现在是星期二。"
+    ],
+    "hits": 1,
+    "spec_counters": {
+      "starts": 1,
+      "hits": 1,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 386.9360000026063
+    },
+    "asr_wait_med": 0.2,
+    "asr_waits": [
+      0.2
+    ],
+    "mt_ready_med": 450.29799999974784,
+    "mt_ready": [
+      450.29799999974784
+    ],
+    "audio_thread": {
+      "median_ms": 2.6,
+      "max_ms": 96.3,
+      "over_100ms": 0,
+      "n": 26
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "accept_phrases.wav",
+    "rep": 1,
+    "n": 4,
+    "srcs": [
+      "你好，延迟大概有多少？",
+      "今天天气怎么样？",
+      "现在是星期二。",
+      "他现在没有回我的消息。"
+    ],
+    "hits": 3,
+    "spec_counters": {
+      "starts": 4,
+      "hits": 3,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 1359.844400001748
+    },
+    "asr_wait_med": 1.3,
+    "asr_waits": [
+      514.1,
+      1.3,
+      0.2,
+      0.1
+    ],
+    "mt_ready_med": 451.3423000025796,
+    "mt_ready": [
+      1038.885100002517,
+      451.3423000025796,
+      450.2710999986448,
+      450.1060000002326
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 600.9,
+      "over_100ms": 3,
+      "n": 139
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "accept_phrases.wav",
+    "rep": 2,
+    "n": 4,
+    "srcs": [
+      "你好，延迟大概有多少？",
+      "今天天气怎么样？",
+      "现在是星期二。",
+      "他现在没有回我的消息。"
+    ],
+    "hits": 3,
+    "spec_counters": {
+      "starts": 4,
+      "hits": 3,
+      "cancel_speech": 1,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 1290.406799998891
+    },
+    "asr_wait_med": 0.2,
+    "asr_waits": [
+      348.5,
+      0.1,
+      0.2,
+      0.1
+    ],
+    "mt_ready_med": 450.3093000021181,
+    "mt_ready": [
+      843.7189000032959,
+      450.1349999991362,
+      450.3093000021181,
+      450.1096999993024
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 401.1,
+      "over_100ms": 3,
+      "n": 139
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "tail_duosimo.wav",
+    "rep": 1,
+    "n": 2,
+    "srcs": [
+      "延迟大概有多少？",
+      "今天天气怎么样？"
+    ],
+    "hits": 2,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 2,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 990.7575999968685
+    },
+    "asr_wait_med": 97.7,
+    "asr_waits": [
+      97.7,
+      0.1
+    ],
+    "mt_ready_med": 547.8770000008808,
+    "mt_ready": [
+      547.8770000008808,
+      450.13509999989765
+    ],
+    "audio_thread": {
+      "median_ms": 2.3,
+      "max_ms": 114.2,
+      "over_100ms": 2,
+      "n": 54
+    }
+  },
+  {
+    "mode": "off",
+    "wav": "tail_duosimo.wav",
+    "rep": 2,
+    "n": 2,
+    "srcs": [
+      "延迟大概有多少？",
+      "今天天气怎么样？"
+    ],
+    "hits": 2,
+    "spec_counters": {
+      "starts": 2,
+      "hits": 2,
+      "cancel_speech": 0,
+      "miss_grow": 0,
+      "miss_timeout": 0,
+      "skip_headstart": 0,
+      "restarts": 0,
+      "cpu_ms": 823.9892999990843
+    },
+    "asr_wait_med": 0.1,
+    "asr_waits": [
+      0.1,
+      0.1
+    ],
+    "mt_ready_med": 450.1705000002403,
+    "mt_ready": [
+      450.1285000005737,
+      450.1705000002403
+    ],
+    "audio_thread": {
+      "median_ms": 2.2,
+      "max_ms": 131.2,
+      "over_100ms": 2,
+      "n": 54
+    }
+  }
+]

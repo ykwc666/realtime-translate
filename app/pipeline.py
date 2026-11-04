@@ -27,6 +27,28 @@ class TurnResult:
     e2e_ms: float
 
 
+def _post_utt_echo_pad(mute_fn, *drain_fns) -> None:  # noqa: ANN001
+    """After an utterance: optional echo mute pad on the audio thread.
+
+    When FINALIZE_WAIT_TTS is False, pad already runs inside tts_queue (TTS
+    thread) so the capture loop must not sleep here.
+    """
+    if not bool(getattr(config, "FINALIZE_WAIT_TTS", True)):
+        return
+    pad = float(getattr(config, "PLAYBACK_MUTE_PAD_SEC", 0.0) or 0.0)
+    if pad <= 0 or mute_fn is None:
+        return
+    mute_fn(True)
+    for d in drain_fns:
+        if callable(d):
+            d()
+    time.sleep(pad)
+    for d in drain_fns:
+        if callable(d):
+            d()
+    mute_fn(False)
+
+
 class TranslatePipeline:
     def __init__(self, enable_tts: bool = True) -> None:
         print(
@@ -46,8 +68,14 @@ class TranslatePipeline:
             print(
                 f"TTS 预热完成 zh={costs.get('zh', 0):.0f}ms en={costs.get('en', 0):.0f}ms"
             )
-        # ASR/MT tiny warmup
-        _ = self.translator.translate("你好")
+        # ASR/MT tiny warmup（避开 TM 命中句，确保 CT2 两边都热）
+        _ = self.translator.translate("你好，世界")
+        _ = self.translator.translate("hello world")
+        if bool(getattr(config, "ASR_PUNCT_DISPLAY", False)):
+            from .punct import add_punctuation, punct_available
+
+            if punct_available():
+                add_punctuation("你好")  # lazy-load OfflinePunctuation
         print(f"模型就绪，用时 {(time.perf_counter() - t0):.1f}s")
         print("优化记录见 docs/OPTIMIZATION_LOG.md ；测速: python scripts/bench.py --tag ...")
 
@@ -114,7 +142,10 @@ class TranslatePipeline:
             f"双轨实机 VAD：partial={config.PARTIAL_INTERVAL_SEC}s，"
             f"静音={config.VAD_SILENCE_SEC}s，句尾整句 MT（中途不译）；Ctrl+C 退出"
         )
+        from .denoise import MicDenoiser
+
         mic = MicStream()
+        denoise = MicDenoiser()
         engine = DualTrackEngine(
             self.asr,
             self.translator,
@@ -126,18 +157,16 @@ class TranslatePipeline:
         mic.start()
         try:
             for chunk in mic.chunks():
+                chunk = denoise.process(chunk)
+                if chunk.size == 0:
+                    continue
                 finished = engine.feed_chunk(
                     chunk,
                     mute_cb=mic.mute,
                     allow_async_partial=True,
                 )
                 if finished is not None:
-                    # Keep mic dead across post-utt echo; TTS queue already pads per clip
-                    mic.mute(True)
-                    mic.drain()
-                    time.sleep(config.PLAYBACK_MUTE_PAD_SEC)
-                    mic.drain()
-                    mic.mute(False)
+                    _post_utt_echo_pad(mic.mute, mic.drain)
         except KeyboardInterrupt:
             print("\n退出")
         finally:
@@ -171,11 +200,7 @@ class TranslatePipeline:
                     allow_async_partial=True,
                 )
                 if finished is not None and config.LOOPBACK_MUTE_ON_TTS:
-                    lb.mute(True)
-                    lb.drain()
-                    time.sleep(config.PLAYBACK_MUTE_PAD_SEC)
-                    lb.drain()
-                    lb.mute(False)
+                    _post_utt_echo_pad(lb.mute, lb.drain)
         except KeyboardInterrupt:
             print("\n退出")
         finally:
@@ -189,9 +214,12 @@ class TranslatePipeline:
             f"  环回设备候选: {devices or ['(无)']}\n"
             "  强烈建议：对端声音与本机 TTS 输出分设备，否则环回会吃到自己的翻译。"
         )
+        from .denoise import MicDenoiser
+
         mic = MicStream()
         lb = LoopbackStream()
         asr_lb = StreamingAsr()
+        denoise = MicDenoiser()
         eng_mic = DualTrackEngine(
             self.asr,
             self.translator,
@@ -220,17 +248,16 @@ class TranslatePipeline:
                 for chunk in mic.chunks():
                     if stop.is_set():
                         break
+                    chunk = denoise.process(chunk)
+                    if chunk.size == 0:
+                        continue
                     finished = eng_mic.feed_chunk(
                         chunk, mute_cb=_mute_both, allow_async_partial=True
                     )
                     if finished is not None:
-                        _mute_both(True)
-                        mic.drain()
-                        lb.drain()
-                        time.sleep(config.PLAYBACK_MUTE_PAD_SEC)
-                        mic.drain()
-                        lb.drain()
-                        _mute_both(False)
+                        _post_utt_echo_pad(
+                            _mute_both, mic.drain, lb.drain
+                        )
             except Exception as exc:  # noqa: BLE001
                 print(f"[mic thread] {exc}")
 
@@ -245,13 +272,9 @@ class TranslatePipeline:
                         allow_async_partial=True,
                     )
                     if finished is not None and config.LOOPBACK_MUTE_ON_TTS:
-                        _mute_both(True)
-                        mic.drain()
-                        lb.drain()
-                        time.sleep(config.PLAYBACK_MUTE_PAD_SEC)
-                        mic.drain()
-                        lb.drain()
-                        _mute_both(False)
+                        _post_utt_echo_pad(
+                            _mute_both, mic.drain, lb.drain
+                        )
             except Exception as exc:  # noqa: BLE001
                 print(f"[loopback thread] {exc}")
 

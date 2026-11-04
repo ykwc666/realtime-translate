@@ -6,7 +6,8 @@ import time
 from dataclasses import dataclass
 
 from . import config
-from .mt_postedit import postedit_zh_en
+from .mt_postedit import postedit_en_zh, postedit_zh_en
+from .mt_tm import lookup_tm
 
 
 @dataclass
@@ -15,6 +16,7 @@ class TranslateResult:
     tgt_lang: str
     text: str
     ms: float
+    from_tm: bool = False
 
 
 def detect_lang(text: str) -> str:
@@ -82,14 +84,20 @@ class Translator:
         src = src_lang or detect_lang(text)
         tgt = "en" if src == "zh" else "zh"
         t0 = time.perf_counter()
+        hit = lookup_tm(text, src)
+        if hit is not None:
+            ms = (time.perf_counter() - t0) * 1000
+            return TranslateResult(src, tgt, hit, ms, from_tm=True)
         if self.backend == "ct2":
             translated = self._translate_ct2(text, src)
         else:
             translated = self._translate_transformers(text, src)
         if src == "zh" and tgt == "en":
             translated = postedit_zh_en(text, translated)
+        elif src == "en" and tgt == "zh":
+            translated = postedit_en_zh(text, translated)
         ms = (time.perf_counter() - t0) * 1000
-        return TranslateResult(src, tgt, translated, ms)
+        return TranslateResult(src, tgt, translated, ms, from_tm=False)
 
     def _translate_transformers(self, text: str, src: str) -> str:
         tok = self._tok_zh_en if src == "zh" else self._tok_en_zh

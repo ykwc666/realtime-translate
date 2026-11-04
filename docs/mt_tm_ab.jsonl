@@ -1,0 +1,62 @@
+{"dir": "zh-en", "src": "你好", "tm": "Hello.", "ct2_pe": "Hello.", "ct2_ms": 19.69, "tm_ms": 1.554, "note": "same"}
+{"dir": "zh-en", "src": "您好", "tm": "Hello.", "ct2_pe": "Hello.", "ct2_ms": 22.43, "tm_ms": 0.009, "note": "same"}
+{"dir": "zh-en", "src": "谢谢", "tm": "Thank you.", "ct2_pe": "Thank you.", "ct2_ms": 22.11, "tm_ms": 0.009, "note": "same"}
+{"dir": "zh-en", "src": "谢谢你", "tm": "Thank you.", "ct2_pe": "Thank you.", "ct2_ms": 23.63, "tm_ms": 0.009, "note": "same"}
+{"dir": "zh-en", "src": "再见", "tm": "Goodbye.", "ct2_pe": "Bye.", "ct2_ms": 17.01, "tm_ms": 0.009, "note": "FIX"}
+{"dir": "zh-en", "src": "拜拜", "tm": "Bye.", "ct2_pe": "Bye.", "ct2_ms": 18.73, "tm_ms": 0.008, "note": "same"}
+{"dir": "zh-en", "src": "好的", "tm": "Okay.", "ct2_pe": "Okay.", "ct2_ms": 18.13, "tm_ms": 0.012, "note": "same"}
+{"dir": "zh-en", "src": "可以", "tm": "Sure.", "ct2_pe": "Yes.", "ct2_ms": 23.3, "tm_ms": 0.01, "note": "FIX"}
+{"dir": "zh-en", "src": "没问题", "tm": "No problem.", "ct2_pe": "Sure.", "ct2_ms": 21.17, "tm_ms": 0.01, "note": "FIX"}
+{"dir": "zh-en", "src": "稍等一下", "tm": "Hang on a second.", "ct2_pe": "Hold on a second.", "ct2_ms": 33.4, "tm_ms": 0.008, "note": "FIX"}
+{"dir": "zh-en", "src": "稍等一下我马上回来", "tm": "Hang on, I'll be right back.", "ct2_pe": "Hold on a second. I'll be right back.", "ct2_ms": 69.51, "tm_ms": 0.008, "note": "FIX"}
+{"dir": "zh-en", "src": "你能再说一遍吗", "tm": "Can you say that again?", "ct2_pe": "Can you say that again?", "ct2_ms": 40.04, "tm_ms": 0.007, "note": "same"}
+{"dir": "zh-en", "src": "请再说一遍", "tm": "Please say that again.", "ct2_pe": "Please repeat that.", "ct2_ms": 27.94, "tm_ms": 0.011, "note": "FIX"}
+{"dir": "zh-en", "src": "我听不清", "tm": "I can't hear clearly.", "ct2_pe": "I can't hear clearly.", "ct2_ms": 44.94, "tm_ms": 0.012, "note": "same"}
+{"dir": "zh-en", "src": "我听不清你说什么", "tm": "I can't hear what you're saying clearly.", "ct2_pe": "I can't hear what you're saying clearly.", "ct2_ms": 49.48, "tm_ms": 0.013, "note": "same"}
+{"dir": "zh-en", "src": "今天天气怎么样", "tm": "How's the weather today?", "ct2_pe": "How's the weather today?", "ct2_ms": 37.71, "tm_ms": 0.007, "note": "same"}
+{"dir": "zh-en", "src": "明天天气怎么样", "tm": "How's the weather tomorrow?", "ct2_pe": "How's the weather tomorrow?", "ct2_ms": 39.04, "tm_ms": 0.013, "note": "same"}
+{"dir": "zh-en", "src": "天气怎么样", "tm": "How's the weather?", "ct2_pe": "How's the weather?", "ct2_ms": 33.76, "tm_ms": 0.008, "note": "same"}
+{"dir": "zh-en", "src": "延迟大概有多少", "tm": "About how much delay is there?", "ct2_pe": "About how much delay is there?", "ct2_ms": 43.09, "tm_ms": 0.009, "note": "same"}
+{"dir": "zh-en", "src": "今天延迟大概有多少", "tm": "How much delay is there today?", "ct2_pe": "How much delay is there today?", "ct2_ms": 42.54, "tm_ms": 0.009, "note": "same"}
+{"dir": "zh-en", "src": "翻译延迟大概有多少", "tm": "About how much translation delay is there?", "ct2_pe": "About how much translation delay is there?", "ct2_ms": 46.98, "tm_ms": 0.012, "note": "same"}
+{"dir": "zh-en", "src": "感觉你翻译的有点慢", "tm": "I feel like the translation is a bit slow.", "ct2_pe": "I feel like the translation is a bit slow.", "ct2_ms": 56.92, "tm_ms": 0.008, "note": "same"}
+{"dir": "zh-en", "src": "你回我消息了吗", "tm": "Did you reply to my message?", "ct2_pe": "Did you reply to my message?", "ct2_ms": 43.65, "tm_ms": 0.01, "note": "same"}
+{"dir": "zh-en", "src": "他现在没有回我的消息", "tm": "He hasn't replied to my messages yet.", "ct2_pe": "He hasn't replied to my messages yet.", "ct2_ms": 65.52, "tm_ms": 0.007, "note": "same"}
+{"dir": "zh-en", "src": "我可能过不了这一面", "tm": "I might not pass this interview round.", "ct2_pe": "I might not pass this interview round.", "ct2_ms": 48.71, "tm_ms": 0.007, "note": "same"}
+{"dir": "zh-en", "src": "现在是星期二", "tm": "It's Tuesday.", "ct2_pe": "It's Tuesday.", "ct2_ms": 41.45, "tm_ms": 0.01, "note": "same"}
+{"dir": "zh-en", "src": "现在是星期五", "tm": "It's Friday.", "ct2_pe": "It's Friday.", "ct2_ms": 47.99, "tm_ms": 0.009, "note": "same"}
+{"dir": "zh-en", "src": "会议改到下午三点", "tm": "The meeting has been moved to 3 p.m.", "ct2_pe": "The meeting has been rescheduled to 3:00 p.m.", "ct2_ms": 97.27, "tm_ms": 0.009, "note": "FIX"}
+{"dir": "en-zh", "src": "Hello", "tm": "你好。", "ct2_pe": "你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好", "ct2_ms": 856.02, "tm_ms": 0.008, "note": "FIX"}
+{"dir": "en-zh", "src": "Hello.", "tm": "你好。", "ct2_pe": "你好。 很高兴见到你。", "ct2_ms": 42.57, "tm_ms": 0.01, "note": "FIX"}
+{"dir": "en-zh", "src": "Hi", "tm": "嗨。", "ct2_pe": "嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨 嗨", "ct2_ms": 718.09, "tm_ms": 0.007, "note": "FIX"}
+{"dir": "en-zh", "src": "Hi.", "tm": "嗨。", "ct2_pe": "嗨 嗨 很高兴见到你 Hi.", "ct2_ms": 50.63, "tm_ms": 0.009, "note": "FIX"}
+{"dir": "en-zh", "src": "Thank you", "tm": "谢谢。", "ct2_pe": "谢谢", "ct2_ms": 13.57, "tm_ms": 0.013, "note": "same"}
+{"dir": "en-zh", "src": "Thank you.", "tm": "谢谢。", "ct2_pe": "谢谢", "ct2_ms": 13.99, "tm_ms": 0.013, "note": "same"}
+{"dir": "en-zh", "src": "Thanks", "tm": "谢谢。", "ct2_pe": "谢谢 谢谢", "ct2_ms": 18.28, "tm_ms": 0.006, "note": "FIX"}
+{"dir": "en-zh", "src": "Thanks.", "tm": "谢谢。", "ct2_pe": "谢谢", "ct2_ms": 13.47, "tm_ms": 0.007, "note": "same"}
+{"dir": "en-zh", "src": "Goodbye", "tm": "再见。", "ct2_pe": "再见", "ct2_ms": 14.95, "tm_ms": 0.006, "note": "same"}
+{"dir": "en-zh", "src": "Goodbye.", "tm": "再见。", "ct2_pe": "再见", "ct2_ms": 12.81, "tm_ms": 0.011, "note": "same"}
+{"dir": "en-zh", "src": "Bye", "tm": "拜拜。", "ct2_pe": "再见", "ct2_ms": 12.87, "tm_ms": 0.008, "note": "FIX"}
+{"dir": "en-zh", "src": "Bye.", "tm": "拜拜。", "ct2_pe": "再见", "ct2_ms": 14.84, "tm_ms": 0.01, "note": "FIX"}
+{"dir": "en-zh", "src": "Okay", "tm": "好的。", "ct2_pe": "好", "ct2_ms": 12.69, "tm_ms": 0.012, "note": "FIX"}
+{"dir": "en-zh", "src": "Okay.", "tm": "好的。", "ct2_pe": "好吧。 说吧。", "ct2_ms": 38.6, "tm_ms": 0.007, "note": "FIX"}
+{"dir": "en-zh", "src": "OK", "tm": "好的。", "ct2_pe": "好", "ct2_ms": 12.03, "tm_ms": 0.009, "note": "FIX"}
+{"dir": "en-zh", "src": "Sure", "tm": "可以。", "ct2_pe": "好", "ct2_ms": 12.97, "tm_ms": 0.01, "note": "FIX"}
+{"dir": "en-zh", "src": "Sure.", "tm": "可以。", "ct2_pe": "当然可以。", "ct2_ms": 24.34, "tm_ms": 0.008, "note": "FIX"}
+{"dir": "en-zh", "src": "No problem", "tm": "没问题。", "ct2_pe": "没问题", "ct2_ms": 13.26, "tm_ms": 0.008, "note": "same"}
+{"dir": "en-zh", "src": "No problem.", "tm": "没问题。", "ct2_pe": "没问题", "ct2_ms": 13.83, "tm_ms": 0.007, "note": "same"}
+{"dir": "en-zh", "src": "Can you say that again?", "tm": "你能再说一遍吗？", "ct2_pe": "你能再说一遍吗?", "ct2_ms": 36.73, "tm_ms": 0.016, "note": "same"}
+{"dir": "en-zh", "src": "Please say that again.", "tm": "请再说一遍。", "ct2_pe": "请再说一遍", "ct2_ms": 23.39, "tm_ms": 0.016, "note": "same"}
+{"dir": "en-zh", "src": "I can't hear clearly.", "tm": "我听不清。", "ct2_pe": "我听不清。", "ct2_ms": 35.77, "tm_ms": 0.016, "note": "same"}
+{"dir": "en-zh", "src": "I can't hear what you're saying clearly.", "tm": "我听不清你说什么。", "ct2_pe": "我听不清你说什么。", "ct2_ms": 34.87, "tm_ms": 0.011, "note": "same"}
+{"dir": "en-zh", "src": "How's the weather today?", "tm": "今天天气怎么样？", "ct2_pe": "今天天气怎么样？", "ct2_ms": 29.52, "tm_ms": 0.009, "note": "same"}
+{"dir": "en-zh", "src": "How's the weather tomorrow?", "tm": "明天天气怎么样？", "ct2_pe": "明天天气怎么样？", "ct2_ms": 28.46, "tm_ms": 0.012, "note": "same"}
+{"dir": "en-zh", "src": "How's the weather?", "tm": "天气怎么样？", "ct2_pe": "天气怎么样？", "ct2_ms": 30.48, "tm_ms": 0.01, "note": "same"}
+{"dir": "en-zh", "src": "About how much delay is there?", "tm": "延迟大概有多少？", "ct2_pe": "延迟大概有多少？", "ct2_ms": 32.71, "tm_ms": 0.009, "note": "same"}
+{"dir": "en-zh", "src": "How much delay is there today?", "tm": "今天延迟大概有多少？", "ct2_pe": "今天延迟大概有多少？", "ct2_ms": 35.87, "tm_ms": 0.009, "note": "same"}
+{"dir": "en-zh", "src": "How much delay is there?", "tm": "延迟大概有多少？", "ct2_pe": "延迟大概有多少？", "ct2_ms": 40.84, "tm_ms": 0.009, "note": "same"}
+{"dir": "en-zh", "src": "Did you reply to my message?", "tm": "你回我消息了吗？", "ct2_pe": "你回我消息了吗？", "ct2_ms": 42.61, "tm_ms": 0.012, "note": "same"}
+{"dir": "en-zh", "src": "He hasn't replied to my message yet.", "tm": "他还没有回我的消息。", "ct2_pe": "他回了我的消息。", "ct2_ms": 37.7, "tm_ms": 0.01, "note": "FIX"}
+{"dir": "en-zh", "src": "He has not replied to my message yet.", "tm": "他还没有回我的消息。", "ct2_pe": "他还没有回我的消息。", "ct2_ms": 40.9, "tm_ms": 0.01, "note": "same"}
+{"dir": "en-zh", "src": "I might not pass this interview round.", "tm": "我可能过不了这一面。", "ct2_pe": "我可能过不了这一面。", "ct2_ms": 40.62, "tm_ms": 0.014, "note": "same"}
+{"dir": "en-zh", "src": "Hang on, I'll be right back.", "tm": "稍等一下，我马上回来。", "ct2_pe": "等一下,我马上回来", "ct2_ms": 39.49, "tm_ms": 0.011, "note": "FIX"}

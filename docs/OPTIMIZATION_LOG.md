@@ -153,3 +153,85 @@ Renoir 核显 + SenseVoice int8：DML 明显更慢；且与 pip sherpa 的 ORT 1
 | 2026-11-02 21:54:24 | audio-path-gilpure | block=100 gil=True int_p99=111.56340000161435 lag_p99=32.12110000458779 late=0.0% | audio path profile |
 | 2026-11-02 21:54:29 | audio-path-gilpure | block=40 gil=True int_p99=63.73470000107773 lag_p99=92.58790000603767 late=2.42% | audio path profile |
 | 2026-11-03 13:54:33 | dualsim-asr-tail-v1 | first_partial=73.7 first_stable_mt=1047.1 wall=1047.8 partials=7 | closing-chunk buf + pad0.8 + prefer_final_asr |
+
+## 质量刀（2026-11-04）
+
+- **en→zh postedit**：`needle_hit` raw 4/10 → +postedit 10/10（`docs/mt_en_zh_postedit_ab.jsonl`）
+- **精确 TM**（`app/mt_tm.py` + `data/mt_tm.jsonl` 62 条）：命中 median **0.009ms** vs CT2+pe **34.3ms**；21/62 相对 raw 有 FIX（寒暄/稍等/会议时间等）；预热改为 `你好，世界` + `hello world` 避开 TM
+- 复现：`python scripts/bench_mt_tm.py` / `python scripts/bench_mt_en_zh_postedit.py`
+
+## P0-3 finalize 不堵采集（2026-11-04）
+
+- `FINALIZE_WAIT_TTS=False`：采集线程不再 wait TTS；尾音 pad 移到 tts_queue
+- A/B：utt_wall median **2836→713**；feed 返回 **2516→345**；perceived 持平（`docs/FINALIZE_WAIT_TTS_AB.md`）
+
+## 长句投机提前量自适应（2026-11-04）
+
+- 公式：`pred_ms=max(180,-310.93+456.60*audio_sec)`（par3+2 微基准拟合）；trigger=`clamp(VAD−pred−0.05,[0.08,0.25])`
+- 真实 wav：串行6+6→并行3+2 无文本回归；自适应后长句 perceived **978→604**，waited **476→106**
+- 默认 `ASR_SPECULATE_ADAPTIVE_LEAD=True`；详见 `docs/SPECULATE_ADAPTIVE_LEAD_AB.md`
+
+## P1-2 TTS 可打断 + 子句流水线（2026-11-04）
+
+- `tts_play.play_array`：`OutputStream` 可打断；`invalidate` → `stop()`
+- **子句流水线**（`TTS_STREAM_PLAY`）：Piper 整句只吐 1 块，改按标点切句——先播句1、同时合成后续
+- A/B：多子句英文 TTFA **209→67 / 191→49 ms（约 −140ms）**；单句打平。见 `docs/TTS_STREAM_AB.md`
+- 单测：`test_tts_interrupt` + `test_tts_stream_ttfa`
+
+## TTS 持久 OutputStream（2026-11-04）
+
+- 归因：oneshot 每句 open≈29ms + **close/drain≈219ms**（残余 speak_wall 主因）；`ttfa_pcm`≠设备首音
+- `TTS_PERSISTENT_OUTPUT=True`：复用流；`ttfa_callback` 中位 **−69ms**，speak_wall 中位 **−319ms**，underrun 0
+- 见 `docs/TTS_PERSISTENT_OUTPUT_AB.md`；单测 `test_tts_play_timing`
+
+## 端到端真实首音（2026-11-04）
+
+- 持久流 gen 哨兵 + active underrun；20 轮打断续播 0 失败
+- `latency_device_ttfa_ms` 经 TtsPlayEvent 按 utt_id 回填；`latency_perceived_ms` 仍=mt_ready
+- paced `--tts on`：accept device_ttfa median off **653** / on **619**；账本最大头仍是 VAD 0.45s
+- 见 `docs/END_TO_END_TTFA_AB.md`；测试 58 passed
+
+## VAD silence 0.35 A/B（2026-11-04）
+
+- paced + 真实 TTS：device_ttfa 中位约 **−70~−93ms**；句数/文本与 0.45 一致（无粘句）
+- **默认仍 0.45**（实麦气口未验）；见 `docs/VAD_SILENCE_035_AB.md`
+
+## Early-cut 安全边界（2026-11-04）
+
+- 固定 0.35/0.40：合成 6 wav×2rep **unsafe=0**，device TTFA 约 **−100ms**；默认不改
+- 只读 probe：`safe_350=0%`（检查点时投机未就绪）→ **关闭「就绪即切」生产线**
+- 见 `docs/ENDPOINT_EARLY_CUT_AB.md`；`ENDPOINT_EARLY_CUT_PROBE` 默认 False
+
+## 二遍 ASR 并行抢核（2026-11-04）
+
+- 根因：8 物理核上两路各 6 ORT 线程 → 并行互相拖慢（详见 `docs/ASR_2PASS_PARALLEL_AB.md`）
+- 默认：`ASR_2PASS_PARALLEL=True`，`ASR_THREADS_ONLINE=3`，`ASR_THREADS_OFFLINE=2`
+- paced perceived median：**622 → 458 ms**（串行 6/6 vs 并行 3/2）
+- 复现：`python scripts/bench_2pass_ab.py --threads 6 4 3 2 --reps 3 --parallel both`
+
+## P1-8 / P1-4（2026-11-04）
+
+- **MT 扫参**（`docs/mt_threads_ab.jsonl`）：beam=1 下 threads median **2=61.6 / 4=46.5 / 6=47.7** ms；beam=2 更慢且几乎同译 → **保持 MT_THREADS=4, beam=1**
+- **TEN-VAD**：已下载 `models/ten-vad.onnx`，`VAD_BACKEND=ten` + `bench_paced.py --vad ten`
+  - silence=0.45：silero median perceived **739** vs ten **817**（持平噪声内）
+  - silence=0.35：ten **粘句**（你好+延迟+天气合成一句，perceived max 1715）→ **不升默认**
+- 复现：`python scripts/bench_mt_threads.py`；`python scripts/download_ten_vad.py`；`python scripts/bench_paced.py --vad ten --tag ...`
+
+## Speculate re-arm（2026-11-04）
+
+- 根因：`holding_cut` 不跑 `_note_chunk_energy` → 续说时 `engine_sil` 卡死 → 从不 `cancel_speech` → `miss_grow`
+- 机制修复保留；**第二枪 full 2pass 经济账为负**（wait/CPU 差于 miss 串行）
+- 修正：`ASR_SPECULATE_REARM_MODE=offline`（默认）— restart 只跑 offline，CUT 并行 online finalize + prefer_2pass
+- pause：offline wait 193/273 vs full 352/415；≤50 未过（仲裁提前量不足）。见 `docs/SPEC_REARM_OFFLINE.md`
+- 单测 `test_spec_rearm` + `test_spec_rearm_offline`；76 passed
+
+## P1-3 标点探针（2026-11-04）
+
+- CT-Transformer int8 已就位；**不能**替代星期白名单（offline API / logits 均失败）
+- 落地：`app/punct.py` + `ASR_PUNCT_DISPLAY`（只美化 `stats.source`，MT 仍用裸 ASR）
+- 见 `docs/PUNCT_ENDPOINT_PROBE.md`
+
+## P1-6 麦侧 GTCRN（2026-11-04）
+
+- `gtcrn_simple.onnx` 已下；`MicDenoiser` 接 `run_vad`/duplex 麦路
+- **默认 `MIC_DENOISE=False`**；实麦噪再开。见 `docs/MIC_DENOISE.md`

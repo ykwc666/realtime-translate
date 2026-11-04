@@ -1,0 +1,6 @@
+{"threads": 2, "beam": 1, "n": 32, "median_ms": 61.57, "mean_ms": 72.61, "p90_ms": 100.12, "hyp0": "He hasn't replied to my messages yet."}
+{"threads": 2, "beam": 2, "n": 32, "median_ms": 78.99, "mean_ms": 84.29, "p90_ms": 106.34, "hyp0": "He hasn't replied to my messages yet."}
+{"threads": 4, "beam": 1, "n": 32, "median_ms": 46.54, "mean_ms": 49.04, "p90_ms": 69.2, "hyp0": "He hasn't replied to my messages yet."}
+{"threads": 4, "beam": 2, "n": 32, "median_ms": 62.38, "mean_ms": 62.29, "p90_ms": 80.08, "hyp0": "He hasn't replied to my messages yet."}
+{"threads": 6, "beam": 1, "n": 32, "median_ms": 47.75, "mean_ms": 50.47, "p90_ms": 70.54, "hyp0": "He hasn't replied to my messages yet."}
+{"threads": 6, "beam": 2, "n": 32, "median_ms": 59.36, "mean_ms": 63.1, "p90_ms": 86.41, "hyp0": "He hasn't replied to my messages yet."}

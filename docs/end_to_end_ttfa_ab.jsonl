@@ -1,0 +1,17 @@
+{"summary": true, "task": "END_TO_END_TTFA", "date": "2026-11-04"}
+{"phase1": "interrupt_resume_20", "persistent": true, "fails": 0, "cycles": 20, "note": "gen-tagged PCM+sentinel; stop does not put bare None"}
+{"phase1": "interrupt_resume_20", "persistent": false, "fails": 0, "cycles": 20}
+{"phase1": "idle_underrun", "persistent": true, "active_underruns_after_idle300ms": 0}
+{"phase1": "pytest", "passed": 58, "note": "tests -q after task"}
+{"run": "accept_tts_off", "wav": "accept_phrases.wav", "n": 4, "mt_ready_median_ms": 450.2, "device_ttfa_median_ms": null, "srcs": ["你好延迟大概有多少", "今天天气怎么样", "现在是星期二", "他现在没有回我的消息"]}
+{"run": "accept_tts_on_p_off", "wav": "accept_phrases.wav", "n": 4, "mt_ready_median_ms": 450.3, "device_ttfa_median_ms": 653.4, "device_ttfa_mean_ms": 673.5, "device_ttfa_p90_ms": 653.4, "device_ttfa_max_ms": 863.2, "underruns": 0}
+{"run": "accept_tts_on_p_on", "wav": "accept_phrases.wav", "n": 4, "mt_ready_median_ms": 450.4, "device_ttfa_median_ms": 618.8, "device_ttfa_mean_ms": 586.9, "device_ttfa_p90_ms": 618.8, "device_ttfa_max_ms": 639.1, "underruns": 0}
+{"run": "accept_tts_on_p_off_r2", "wav": "accept_phrases.wav", "n": 4, "device_ttfa_median_ms": 681.1, "device_ttfa_mean_ms": 653.8, "device_ttfa_max_ms": 720.7}
+{"run": "tail_tts_off", "wav": "tail_duosimo.wav", "n": 2, "mt_ready_median_ms": 451.6, "srcs": ["延迟大概有多少", "今天天气怎么样"]}
+{"run": "tail_tts_on_p_off_r1", "wav": "tail_duosimo.wav", "n": 2, "device_ttfa_median_ms": 625.0, "device_ttfa_mean_ms": 615.4}
+{"run": "tail_tts_on_p_on_r1", "wav": "tail_duosimo.wav", "n": 2, "device_ttfa_median_ms": 560.0, "device_ttfa_mean_ms": 550.0}
+{"run": "tail_tts_on_p_off_r2", "wav": "tail_duosimo.wav", "n": 2, "device_ttfa_median_ms": 642.0, "device_ttfa_mean_ms": 622.1}
+{"run": "tail_tts_on_p_on_r2", "wav": "tail_duosimo.wav", "n": 2, "device_ttfa_median_ms": 596.4, "device_ttfa_mean_ms": 561.7}
+{"delta": "accept_device_ttfa_off_minus_on_median", "r1_ms": 34.6, "r2_approx_ms": 62.3, "note": "r2 used logged accept off median 681 vs on 619"}
+{"delta": "tail_device_ttfa_off_minus_on_median", "r1_ms": 65.0, "r2_ms": 45.6}
+{"text_consistency": true, "note": "src/tgt and utt counts match tts off vs on for both wavs"}

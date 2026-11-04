@@ -1,0 +1,10 @@
+{"en": "How much delay is there today?", "zh": "今天延迟大概有多少？", "needles": ["延迟", "多少"]}
+{"en": "How much delay is there?", "zh": "延迟大概有多少？", "needles": ["延迟", "多少"]}
+{"en": "About how much delay is there?", "zh": "延迟大概有多少？", "needles": ["延迟"]}
+{"en": "how much delay is there today", "zh": "今天延迟大概有多少？", "needles": ["延迟"]}
+{"en": "I might not pass this interview round.", "zh": "我可能过不了这一面。", "needles": ["这一面"]}
+{"en": "Did you reply to my message?", "zh": "你回我消息了吗？", "needles": ["回", "消息"]}
+{"en": "He has not replied to my message yet.", "zh": "他还没有回我的消息。", "needles": ["回", "消息"]}
+{"en": "I can't hear what you're saying clearly.", "zh": "我听不清你说什么。", "needles": ["听不清"]}
+{"en": "How's the weather today?", "zh": "今天天气怎么样？", "needles": ["天气"]}
+{"en": "Can you say that again?", "zh": "你能再说一遍吗？", "needles": ["再说"], "untouched": true}

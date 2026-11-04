@@ -1,7 +1,30 @@
 """Call-domain MT postedit regression."""
 from __future__ import annotations
 
-from app.mt_postedit import postedit_zh_en
+from app.mt_postedit import postedit_en_zh, postedit_zh_en
+
+
+def test_en_zh_delay_not_procrastination():
+    assert "延迟" in postedit_en_zh(
+        "How much delay is there today?", "今天还有多少拖延?"
+    )
+    assert "拖延" not in postedit_en_zh(
+        "how much delay is there today", "今天还有多少拖延?"
+    )
+
+
+def test_en_zh_interview_and_reply():
+    assert "这一面" in postedit_en_zh(
+        "I might not pass this interview round.", "我可能不会通过这次面试"
+    )
+    assert "消息" in postedit_en_zh(
+        "Did you reply to my message?", "你回复我的信息了吗?"
+    )
+
+
+def test_en_zh_unrelated_untouched():
+    zh = "你能再说一遍吗？"
+    assert postedit_en_zh("Can you say that again?", zh) == zh
 
 
 def test_reply_message_direction():

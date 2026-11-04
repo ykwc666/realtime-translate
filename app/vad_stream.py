@@ -15,10 +15,17 @@ class SpeechSegment:
 
 
 def create_endpoint():
-    """Factory: silero (default) or energy fallback."""
-    if config.VAD_BACKEND == "silero" and config.SILERO_VAD_ONNX.exists():
+    """Factory: silero (default) | ten | energy fallback."""
+    backend = (config.VAD_BACKEND or "silero").lower()
+    if backend == "ten" and config.TEN_VAD_ONNX.exists():
         try:
-            return SileroVadEndpoint()
+            return SherpaVadEndpoint(kind="ten")
+        except Exception as exc:  # noqa: BLE001
+            print(f"[vad] TEN-VAD 初始化失败，尝试 Silero: {exc}")
+            backend = "silero"
+    if backend == "silero" and config.SILERO_VAD_ONNX.exists():
+        try:
+            return SherpaVadEndpoint(kind="silero")
         except Exception as exc:  # noqa: BLE001
             print(f"[vad] Silero 初始化失败，回退能量 VAD: {exc}")
     return EnergyEndpoint()
@@ -107,27 +114,43 @@ class EnergyEndpoint:
         return None
 
 
-class SileroVadEndpoint:
-    """sherpa-onnx Silero VAD with EnergyEndpoint-compatible API."""
+class SherpaVadEndpoint:
+    """sherpa-onnx Silero / TEN-VAD with EnergyEndpoint-compatible API."""
 
-    def __init__(self) -> None:
+    def __init__(self, kind: str = "silero") -> None:
         import sherpa_onnx
 
-        if not config.SILERO_VAD_ONNX.exists():
-            raise FileNotFoundError(config.SILERO_VAD_ONNX)
+        kind = (kind or "silero").lower()
+        self.kind = kind
         self.sr = config.SAMPLE_RATE
         vad_cfg = sherpa_onnx.VadModelConfig()
-        vad_cfg.silero_vad.model = str(config.SILERO_VAD_ONNX)
-        vad_cfg.silero_vad.threshold = float(
-            getattr(config, "VAD_SILERO_THRESHOLD", 0.6)
-        )
-        vad_cfg.silero_vad.min_silence_duration = float(config.VAD_SILENCE_SEC)
-        vad_cfg.silero_vad.min_speech_duration = float(config.MIN_SPEECH_SEC)
+        if kind == "ten":
+            if not config.TEN_VAD_ONNX.exists():
+                raise FileNotFoundError(config.TEN_VAD_ONNX)
+            vad_cfg.ten_vad.model = str(config.TEN_VAD_ONNX)
+            vad_cfg.ten_vad.threshold = float(
+                getattr(config, "VAD_TEN_THRESHOLD", 0.5)
+            )
+            vad_cfg.ten_vad.min_silence_duration = float(config.VAD_SILENCE_SEC)
+            vad_cfg.ten_vad.min_speech_duration = float(config.MIN_SPEECH_SEC)
+            vad_cfg.ten_vad.max_speech_duration = float(config.VAD_MAX_UTT_SEC)
+            window = int(vad_cfg.ten_vad.window_size)
+        else:
+            if not config.SILERO_VAD_ONNX.exists():
+                raise FileNotFoundError(config.SILERO_VAD_ONNX)
+            vad_cfg.silero_vad.model = str(config.SILERO_VAD_ONNX)
+            vad_cfg.silero_vad.threshold = float(
+                getattr(config, "VAD_SILERO_THRESHOLD", 0.6)
+            )
+            vad_cfg.silero_vad.min_silence_duration = float(config.VAD_SILENCE_SEC)
+            vad_cfg.silero_vad.min_speech_duration = float(config.MIN_SPEECH_SEC)
+            vad_cfg.silero_vad.max_speech_duration = float(config.VAD_MAX_UTT_SEC)
+            window = int(vad_cfg.silero_vad.window_size)
         vad_cfg.sample_rate = config.SAMPLE_RATE
         vad_cfg.num_threads = 1
         vad_cfg.provider = "cpu"
         self._vad = sherpa_onnx.VoiceActivityDetector(vad_cfg, buffer_size_in_seconds=60)
-        self._window = int(vad_cfg.silero_vad.window_size)
+        self._window = window
         self._pending = np.zeros(0, dtype=np.float32)
         self._speech_started = False
         self._utt_audio = np.zeros(0, dtype=np.float32)
@@ -160,7 +183,7 @@ class SileroVadEndpoint:
         return float(self._silence_samples) / float(self.sr)
 
     def set_hang_hold(self, hold: bool) -> None:
-        """Ignore Silero early segment pops while strong-hang; silence floor unchanged."""
+        """Ignore early segment pops while strong-hang; silence floor unchanged."""
         self._hang_hold = bool(hold)
         self._silence_needed = self._silence_base
 
@@ -250,7 +273,7 @@ class SileroVadEndpoint:
                         self._utt_audio = np.zeros(0, dtype=np.float32)
                     self._utt_audio = np.concatenate([self._utt_audio, win])
             elif self._speech_started:
-                # Silero often stops flagging speech without popping a segment —
+                # VAD often stops flagging speech without popping a segment —
                 # count trailing silence ourselves and force endpoint.
                 self._utt_audio = np.concatenate([self._utt_audio, win])
                 self._silence_samples += int(win.size)
@@ -281,10 +304,21 @@ class SileroVadEndpoint:
 
 
 
+# Back-compat alias (default kind=silero)
+SileroVadEndpoint = SherpaVadEndpoint
+
+
+def vad_backend_label(ep: object) -> str:
+    kind = getattr(ep, "kind", None)
+    if kind:
+        return f"{type(ep).__name__}({kind})"
+    return type(ep).__name__
+
+
 def segment_audio(
     audio: np.ndarray, block_ms: int = 100
 ) -> list[SpeechSegment]:
-    """Split a wav with the same Silero/Energy endpoint used live (no FunASR)."""
+    """Split a wav with the same Silero/TEN/Energy endpoint used live (no FunASR)."""
     audio = np.asarray(audio, dtype=np.float32).reshape(-1)
     if audio.size == 0:
         return []

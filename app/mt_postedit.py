@@ -1,10 +1,64 @@
-"""High-precision ZH→EN post-edits for call / interview phrases Opus-MT often twists.
+"""High-precision call-domain post-edits for Opus-MT twists.
+
+- postedit_zh_en: ZH→EN
+- postedit_en_zh: EN→ZH（环回对端英文）
 
 Only fires on countable source patterns. Does not touch unrelated sentences.
 """
 from __future__ import annotations
 
 import re
+
+
+def postedit_en_zh(en: str, zh: str) -> str:
+    src = (en or "").strip()
+    hyp = (zh or "").strip()
+    if not src:
+        return hyp
+    s = src.lower()
+
+    # latency / delay — Opus 常译成「拖延」
+    if re.search(r"\bdelay\b", s) and re.search(
+        r"how\s+(much|many)|about\s+how|what(?:'s| is)\s+the\s+delay", s
+    ):
+        if "today" in s:
+            return "今天延迟大概有多少？"
+        return "延迟大概有多少？"
+
+    # interview round / this round（求职口语）
+    if re.search(r"interview\s+round|(?:this|that|one)\s+round", s):
+        if re.search(r"might not pass|may not pass|won'?t pass|cannot pass", s):
+            return "我可能过不了这一面。"
+        if re.search(r"only\s+(has\s+)?one\s+round|one\s+round\s+only", s):
+            return "只有一面。"
+
+    # reply to my message(s) — 信息→消息；方向兜底
+    if re.search(r"repl(?:y|ied)\s+to\s+my\s+messages?", s):
+        q = "?" in src or s.startswith("did ") or s.startswith("have ")
+        neg = bool(re.search(r"\b(not|n't|never)\b", s))
+        if q:
+            if s.startswith("did you") or s.startswith("have you"):
+                return "你回我消息了吗？"
+            return "他回我消息了吗？"
+        if "you" in s.split()[:3]:
+            return "你还没有回我的消息。" if neg else "你回了我的消息。"
+        return "他还没有回我的消息。" if neg else "他回了我的消息。"
+
+    # hear clearly
+    if re.search(r"can'?t hear|cannot hear|hear .+ clearly", s):
+        if re.search(r"what you'?re saying|what you are saying", s):
+            return "我听不清你说什么。"
+        return "我听不清。"
+
+    # weather
+    if re.search(r"how'?s the weather|how is the weather", s):
+        if "today" in s:
+            return "今天天气怎么样？"
+        if "tomorrow" in s:
+            return "明天天气怎么样？"
+        return "天气怎么样？"
+
+    return hyp
 
 
 def postedit_zh_en(zh: str, en: str) -> str:

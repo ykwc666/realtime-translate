@@ -33,8 +33,12 @@
 | P1 WASAPI 环回 | **首版已做** | `LoopbackStream` + `--mode loopback|duplex`；`probe_loopback.py` 已通 |
 | TTS 输出设备 | **已做** | `TTS_OUTPUT_DEVICE_NAME` + `--list-output`；与环回分设备 |
 | 单实例锁 | **已做** | `cache/run.lock`（vad/loopback/duplex/ptt） |
+| 二遍并行抢核修复 | **已做** | `ASR_THREADS_ONLINE/OFFLINE=3/2` + `ASR_2PASS_PARALLEL=True`；paced perceived median **622→458**；详见 `ASR_2PASS_PARALLEL_AB.md` |
+| 长句投机提前量自适应 | **已做** | `ASR_SPECULATE_ADAPTIVE_LEAD`；长句 perceived **978→604**；`SPECULATE_ADAPTIVE_LEAD_AB.md` |
+| P0-3 finalize 不堵采集 | **已做** | `FINALIZE_WAIT_TTS=False`；utt_wall **2836→713**；`FINALIZE_WAIT_TTS_AB.md` |
 
-未完成但仍有效的评审建议：TEN-VAD、死代码清理、requirements pin、TTS 可打断流水线。
+未完成但仍有效的评审建议：死代码清理、requirements pin、P1-3 端点去白名单、P1-5/6 模型换代。
+TEN-VAD / MT 扫参：已测；P0-3 finalize 不堵采集：**已做**（`FINALIZE_WAIT_TTS=False`，见 `FINALIZE_WAIT_TTS_AB.md`）。
 
 ---
 
@@ -252,13 +256,13 @@ CUT → 用流式文本立刻 MT(61ms) → 立刻 TTS(v0) 出声
 | # | 项 | 说明 | 预期 | 改动量 |
 |---|---|---|---|---|
 | P1-1 | **WASAPI 环回真双通道** | 见 §2 根因 C。新增 `audio_io.LoopbackStream`，与 `MicStream` 对称；两条 `DualTrackEngine` 实例互不干扰 | 消灭回声 / 免 `detect_lang` / 全双工 | L |
-| P1-2 | **TTS 流水线化 + 可打断** | 当前 `synthesize()` 把整句攒完才 `sd.play(blocking=True)`，且用全局 stream（无法 `sd.stop()` 打断）。改成：① 子句级预取（合成 N+1 与播放 N 重叠）；② 自建 `sd.OutputStream` 回调写 ring buffer，可即时停 | 长句首音 −100~200ms，延迟可控 | M |
-| P1-3 | **端点判定去白名单化** | 「星期」白名单是打补丁（`mt_policy.py:218-230`），永远覆盖不了长尾。用**在线标点/句法完整度**替代：sherpa-onnx 自带 `OnlinePunctuation`（CT-Transformer zh-en），~几 ms，问句/句尾判定比手写虚词表稳得多 | 少一个永久维护负担；「星期」类特殊逻辑消失 | M |
-| P1-4 | **VAD 换 TEN-VAD** | sherpa-onnx 2.0.1 已内置 `TenVadModelConfig`；模型 `ten-vad.onnx`(324KB) / `int8`(126KB)。TEN-VAD 专为流式低延迟设计，可支撑更短静音门槛。你已有 `VAD_BACKEND` 抽象，**加一个分支即可 A/B** | 静音门槛 600→450ms 而不吞字（需实测） | S |
+| P1-2 | **TTS 流水线化 + 可打断** | **已做**：可打断 + 子句流水线（TTFA≈−140ms）+ **持久 OutputStream**（callback TTFA≈−69ms、wall≈−319ms；`docs/TTS_PERSISTENT_OUTPUT_AB.md`） | 可插话；首音与收尾开销下降 | M |
+| P1-3 | **端点判定去白名单化** | **探针否决（2026-11-04）**：已下 CT-Transformer 是 `OfflinePunctuation`（非英文 Online）；`add_punctuation` 与末字 logits 都分不开「现在是星期/二」；展示层可用（`ASR_PUNCT_DISPLAY`）。**白名单保留**。见 `docs/PUNCT_ENDPOINT_PROBE.md` | 避免误收/误等回归 | S（已结） |
+| P1-4 | **VAD 换 TEN-VAD** | **已接入可选**（`VAD_BACKEND=ten`，`models/ten-vad.onnx`，`download_ten_vad.py`）。paced：silence=0.45 与 Silero 持平（median ~0.7–0.8s）；**0.35 时 TEN 更易粘句**（3 句粘成 1）→ **默认仍 silero / 0.45** | 可选 A/B，不升默认 | S |
 | P1-5 | **ASR 换双语流式模型** | `sherpa-onnx-streaming-paraformer-bilingual-zh-en`（同 API `from_paraformer`，可直接替换）或 `streaming-zipformer-bilingual-zh-en`。收益：**中英混说直接识别**，`detect_lang()` 退役，专名（达摩院类）跨语种更稳 | 质量 + 少一处猜测逻辑 | S~M |
-| P1-6 | **麦克风侧加降噪** | sherpa-onnx 2.0.1 内置 `OnlineSpeechDenoiser`（GTCRN/DPDFNet）。笔记本麦在风扇/键盘噪声下 WER 明显受损，GTCRN 开销约 1ms/frame | WER 改善（需实测），间接减少"末字丢" | S |
-| P1-7 | **术语表 + 翻译记忆(TM)** | Opus-MT 无上下文，同一专名每次译法不同。加：① 术语表（源→目标强制替换，后编辑阶段，0ms）；② 精确 TM 命中（"你好/谢谢/明天见"这类高频句，命中即 0ms 返回）；③ 通话内滚动 2 句上下文拼接（仅当 MT 延迟有余量时开） | 一致性 + 高频句零延迟 | M |
-| P1-8 | **MT 参数扫一遍** | 现在 `beam_size=1, max_decoding_length=128, intra_threads=4` 是拍死的（`translate.py:109-113`）。`intra_threads` 在 4800H 上 2/4/6 值得扫；`beam_size=2` 质量换 ~2× 延迟也值得量一次 | 未知，可能白捡 10–20ms | S |
+| P1-6 | **麦克风侧加降噪** | **已接入可选**：`MIC_DENOISE` + `models/gtcrn_simple.onnx`（`download_gtcrn.py`）；默认关。见 `docs/MIC_DENOISE.md` | 实麦再开；合成集不必开 | S（已接） |
+| P1-7 | **术语表 + 翻译记忆(TM)** | **精确 TM 已做**（`app/mt_tm.py` + `data/mt_tm.jsonl`，62 条；命中 median ≈0.01ms vs CT2+pe ≈34ms；21/62 相对 raw 有 FIX）。术语表 / 通话内 2 句上下文仍待做 | 高频句零延迟 | M |
+| P1-8 | **MT 参数扫一遍** | **已扫**（`bench_mt_threads.py`，32 句）：threads **4** median 46.5ms 优于 2(61.6)/6(47.7)；beam=2 慢 ~15ms 且与 beam1 同译 31/32 → **保持 beam=1 / MT_THREADS=4** | 无改动，确认最优 | S |
 | P1-9 | **质量评测集扩容** | `data/mt_call_eval.jsonl` 只有 22 条。既然有 `bench_mt_call_quality.py`，把评测集扩到 150–300 条（含专名、否定、时态、反问），否则 LoRA/术语表的效果都不可信 | 后续所有质量改动的判据 | S（体力活） | 
 | P1-10 | **重开"中途译"作为可选模式** | 文档已按 wall 判据否决。但在**长句/独白**场景，先用流式文本在说话中就译、边说边播，体感远好于"说完等 1.3s"。建议做成 `--mode sim`，与 `final_only` 并存，各配各的指标（sim 看 `time_to_first_audio_during_speech`） | 长句体感质变 | M |
 

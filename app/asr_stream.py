@@ -177,7 +177,9 @@ class StreamingAsr:
         self.recognizer = sherpa_onnx.OfflineRecognizer.from_sense_voice(
             model=str(config.SHERPA_SENSEVOICE_MODEL),
             tokens=str(config.SHERPA_SENSEVOICE_TOKENS),
-            num_threads=int(config.ASR_THREADS),
+            num_threads=int(
+                getattr(config, "ASR_THREADS_OFFLINE", config.ASR_THREADS)
+            ),
             use_itn=True,
             debug=False,
             language="auto",
@@ -198,7 +200,9 @@ class StreamingAsr:
             tokens=str(tok),
             encoder=str(enc),
             decoder=str(dec),
-            num_threads=int(config.ASR_THREADS),
+            num_threads=int(
+                getattr(config, "ASR_THREADS_ONLINE", config.ASR_THREADS)
+            ),
             sample_rate=int(config.SAMPLE_RATE),
             enable_endpoint_detection=False,
             provider="cpu",
@@ -315,6 +319,42 @@ class StreamingAsr:
             ms = float(online.ms) + float(offline.ms)
             return AsrResult(merged, ms, int(audio.size))
         return self.transcribe(audio)
+
+    def transcribe_offline_only(self, audio: np.ndarray) -> AsrResult:
+        """SenseVoice/offline path only — for re-arm speculate (no Paraformer oneshot)."""
+        audio = np.asarray(audio, dtype=np.float32).reshape(-1)
+        if audio.size == 0:
+            return AsrResult("", 0.0, 0)
+        if self.recognizer is None:
+            return AsrResult("", 0.0, int(audio.size))
+        return self._transcribe_sherpa_offline(audio)
+
+    def finalize_online_only(
+        self, full_audio: np.ndarray, state: AsrIncState
+    ) -> AsrResult:
+        """Flush live streaming state only (no offline). Used with offline-hint re-arm."""
+        full_audio = np.asarray(full_audio, dtype=np.float32).reshape(-1)
+        if not self.is_true_streaming:
+            return self.transcribe(full_audio)
+        return self._finalize_paraformer_online(full_audio, state)
+
+    def merge_online_with_offline_hint(
+        self,
+        online: AsrResult,
+        offline_text: str,
+        offline_ms: float,
+    ) -> AsrResult:
+        """Same prefer_2pass merge as finalize_stream; ms = online + offline hint."""
+        stream_t = (online.text or "").strip()
+        off_t = (offline_text or "").strip()
+        merged = prefer_2pass_asr(stream_t, off_t)
+        ms = float(online.ms) + float(offline_ms)
+        if merged != stream_t:
+            print(
+                f"[ASR 2pass offline {float(offline_ms):.0f}ms] "
+                f"{stream_t!r} → {merged!r}"
+            )
+        return AsrResult(merged, ms, int(online.audio_samples))
 
     def finalize_stream(
         self, full_audio: np.ndarray, state: AsrIncState
