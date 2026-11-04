@@ -17,6 +17,8 @@ class TranslateResult:
     text: str
     ms: float
     from_tm: bool = False
+    # Observational only (harvest): model/TM text before postedit. Production path unchanged.
+    mt_raw: str | None = None
 
 
 def detect_lang(text: str) -> str:
@@ -87,17 +89,20 @@ class Translator:
         hit = lookup_tm(text, src)
         if hit is not None:
             ms = (time.perf_counter() - t0) * 1000
-            return TranslateResult(src, tgt, hit, ms, from_tm=True)
+            return TranslateResult(src, tgt, hit, ms, from_tm=True, mt_raw=hit)
         if self.backend == "ct2":
-            translated = self._translate_ct2(text, src)
+            raw = self._translate_ct2(text, src)
         else:
-            translated = self._translate_transformers(text, src)
+            raw = self._translate_transformers(text, src)
+        translated = raw
         if src == "zh" and tgt == "en":
-            translated = postedit_zh_en(text, translated)
+            translated = postedit_zh_en(text, raw)
         elif src == "en" and tgt == "zh":
-            translated = postedit_en_zh(text, translated)
+            translated = postedit_en_zh(text, raw)
         ms = (time.perf_counter() - t0) * 1000
-        return TranslateResult(src, tgt, translated, ms, from_tm=False)
+        return TranslateResult(
+            src, tgt, translated, ms, from_tm=False, mt_raw=raw
+        )
 
     def _translate_transformers(self, text: str, src: str) -> str:
         tok = self._tok_zh_en if src == "zh" else self._tok_en_zh

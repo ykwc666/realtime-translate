@@ -81,6 +81,8 @@ class DualTrackStats:
     speculate_hit: bool = False
     source: str = ""
     translated: str = ""
+    # Observational (harvest): pre-postedit MT text; null until final MT runs
+    mt_raw: str | None = None
     partial_interval_used: list[float] = field(default_factory=list)
     utt_id: int = 0
     # Read-only early-cut probe oracle (None unless ENDPOINT_EARLY_CUT_PROBE)
@@ -107,6 +109,8 @@ class DualTrackEngine:
         # Fixed direction for duplex (mic=zh, loopback=en); None → detect_lang
         self.force_src_lang = force_src_lang
         self.label = label or ""
+        # Side-channel only (e.g. HarvestWriter); never on the critical latency path.
+        self.on_utt_final = None
         self.endpoint = create_endpoint()
         tag = f" {self.label}" if self.label else ""
         print(f"[vad{tag}] backend={vad_backend_label(self.endpoint)}")
@@ -268,6 +272,16 @@ class DualTrackEngine:
         if t_end > 0:
             self._utt_speech_end[uid] = t_end
         self._prune_utt_maps()
+
+    def _notify_utt_final(self, stats: DualTrackStats) -> None:
+        """Side-channel hook (harvest). Must not raise into finalize."""
+        cb = getattr(self, "on_utt_final", None)
+        if not callable(cb):
+            return
+        try:
+            cb(stats)
+        except Exception as exc:  # noqa: BLE001 — never break capture
+            print(f"[harvest hook error] {exc}")
 
     def _on_tts_play_event(self, ev: TtsPlayEvent) -> None:
         """Fill device-TTFA fields on the utt that owned this job (safe after reset)."""
@@ -654,6 +668,8 @@ class DualTrackEngine:
         self.stats.mt_triggers += 1
         self.stats.mt_reasons.append("final")
         self.tgt_lang = mt.tgt_lang
+        # harvest observational field (no behavior change)
+        self.stats.mt_raw = getattr(mt, "mt_raw", None) or mt.text
         now = time.perf_counter()
         if self.stats.first_stable_mt_ms is None and self.utt_t0:
             self.stats.first_stable_mt_ms = (now - self.utt_t0) * 1000
@@ -869,6 +885,7 @@ class DualTrackEngine:
             if self.utt_t0:
                 self.stats.utt_wall_ms = (time.perf_counter() - self.utt_t0) * 1000
             out = self.stats
+            self._notify_utt_final(out)
             self.endpoint.reset()
             self.reset_utt()
             return out
@@ -923,6 +940,7 @@ class DualTrackEngine:
         out.audio_sec_final = float(self.audio_sec)
         self._probe_finalize(out.source or full)
         self._register_utt_stats(out)
+        self._notify_utt_final(out)
         self.endpoint.reset()
         self.reset_utt()
         return out

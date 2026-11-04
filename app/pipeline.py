@@ -50,7 +50,7 @@ def _post_utt_echo_pad(mute_fn, *drain_fns) -> None:  # noqa: ANN001
 
 
 class TranslatePipeline:
-    def __init__(self, enable_tts: bool = True) -> None:
+    def __init__(self, enable_tts: bool = True, harvest=None) -> None:  # noqa: ANN001
         print(
             f"加载模型中（CPU）ASR={config.ASR_BACKEND} MT={config.MT_BACKEND} …"
         )
@@ -58,6 +58,8 @@ class TranslatePipeline:
         self.asr = StreamingAsr()
         self.translator = Translator()
         self.tts = TtsPlayer() if enable_tts else None
+        # Optional HarvestWriter (side-channel only; see app/harvest.py)
+        self.harvest = harvest
         if self.tts:
             if self.tts.output_device is not None:
                 print(f"TTS 输出设备 index={self.tts.output_device}")
@@ -154,6 +156,8 @@ class TranslatePipeline:
             force_src_lang="zh",
             label="mic",
         )
+        if self.harvest is not None:
+            self.harvest.attach_engine(engine)
         mic.start()
         try:
             for chunk in mic.chunks():
@@ -191,6 +195,8 @@ class TranslatePipeline:
             force_src_lang="en",
             label="loopback",
         )
+        if self.harvest is not None:
+            self.harvest.attach_engine(engine)
         lb.start()
         try:
             for chunk in lb.chunks():
@@ -236,6 +242,9 @@ class TranslatePipeline:
             force_src_lang="en",
             label="loopback",
         )
+        if self.harvest is not None:
+            self.harvest.attach_engine(eng_mic)
+            self.harvest.attach_engine(eng_lb)
         stop = threading.Event()
 
         def _mute_both(muted: bool) -> None:

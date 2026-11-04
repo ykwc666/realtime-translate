@@ -1,0 +1,33 @@
+{
+  "time": "2026-11-04 18:58:59",
+  "ingest": "docs\\harvest_judge_2026-11-04-smoke.jsonl",
+  "n_rows": 4,
+  "n_labeled": 4,
+  "totals": {
+    "awkward": 1,
+    "ok": 3
+  },
+  "by_rule_layer": {
+    "rule_touched": {},
+    "model_passthrough": {
+      "awkward": 1,
+      "ok": 3
+    }
+  },
+  "latency_perceived": {
+    "n": 4,
+    "p50": 748.1,
+    "p90": 748.1,
+    "max": 945.3,
+    "mean": 724.2
+  },
+  "latency_device_ttfa": {
+    "n": 0,
+    "p50": null,
+    "p90": null,
+    "max": null
+  },
+  "asr": {
+    "n": 4
+  }
+}

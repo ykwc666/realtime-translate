@@ -254,3 +254,10 @@ Renoir 核显 + SenseVoice int8：DML 明显更慢；且与 pip sherpa 的 ORT 1
 - 收掉 6 句边界失败（窄规则 + TM×6）；加 10 句 holdout 变体
 - **60/60 (100%)**，broken 0，holdout 10/10；P95 0.43ms；**82 passed**
 - 见 `docs/MT_EN_ZH_QUALITY_STEP2.md`；本尺子规则路径已饱和
+
+## 真实语料 harvest 闭环（2026-11-04）
+
+- `app/harvest.py` 契约 + 队列写盘；`scripts/harvest_session.py` / `judge_harvest.py`；`run.py --harvest`
+- 旁路：`mt_raw` 观测字段 + `on_utt_final`；不改 ASR/VAD/TTS/postedit 语义
+- flaky：`test_tts_interrupt` 放宽+重试；全量 **82 passed ×3**
+- 冒烟：`data/harvest/2026-11-04-smoke.jsonl`；说明见 `docs/HARVEST_SESSION.md`

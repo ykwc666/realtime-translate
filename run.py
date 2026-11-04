@@ -30,6 +30,17 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="列出播放设备（供 TTS_OUTPUT_DEVICE_NAME）后退出",
     )
+    parser.add_argument(
+        "--harvest",
+        action="store_true",
+        help="会话采集到 data/harvest/*.jsonl（见 app/harvest.py 契约）",
+    )
+    parser.add_argument(
+        "--source-desc",
+        type=str,
+        default="",
+        help="--harvest 时必填：音源描述（写入每行）",
+    )
     args = parser.parse_args(argv)
 
     if args.list_loopback:
@@ -45,36 +56,53 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{idx}\t{ch}ch\t{name}")
         return 0
 
+    harvest = None
+    if args.harvest:
+        if not args.source_desc.strip():
+            print("--harvest 需要 --source-desc", file=sys.stderr)
+            return 2
+        from app.harvest import HarvestWriter, next_harvest_path
+
+        harvest = HarvestWriter(
+            next_harvest_path(), mode=args.mode, source_desc=args.source_desc.strip()
+        )
+
     # Live modes: only one process
     if args.mode in ("vad", "loopback", "duplex", "ptt"):
         from app.single_instance import acquire_run_lock
 
         if not acquire_run_lock(args.mode):
+            if harvest is not None:
+                harvest.close()
             return 3
 
     from app.pipeline import TranslatePipeline
 
-    pipe = TranslatePipeline(enable_tts=not args.no_tts)
+    try:
+        pipe = TranslatePipeline(enable_tts=not args.no_tts, harvest=harvest)
 
-    if args.mode == "file":
-        if not args.file:
-            print("file 模式需要 --file path.wav", file=sys.stderr)
-            return 2
-        pipe.run_file(args.file, play=not args.no_tts)
-    elif args.mode == "dualsim":
-        if not args.file:
-            print("dualsim 模式需要 --file path.wav", file=sys.stderr)
-            return 2
-        pipe.run_dualsim(args.file, play=not args.no_tts)
-    elif args.mode == "vad":
-        pipe.run_vad()
-    elif args.mode == "loopback":
-        pipe.run_loopback()
-    elif args.mode == "duplex":
-        pipe.run_duplex()
-    else:
-        pipe.run_ptt()
-    return 0
+        if args.mode == "file":
+            if not args.file:
+                print("file 模式需要 --file path.wav", file=sys.stderr)
+                return 2
+            pipe.run_file(args.file, play=not args.no_tts)
+        elif args.mode == "dualsim":
+            if not args.file:
+                print("dualsim 模式需要 --file path.wav", file=sys.stderr)
+                return 2
+            pipe.run_dualsim(args.file, play=not args.no_tts)
+        elif args.mode == "vad":
+            pipe.run_vad()
+        elif args.mode == "loopback":
+            pipe.run_loopback()
+        elif args.mode == "duplex":
+            pipe.run_duplex()
+        else:
+            pipe.run_ptt()
+        return 0
+    finally:
+        if harvest is not None:
+            harvest.close()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,1 @@
+{"t_wall": "2026-11-04 18:58:08", "src": "how much delay is there today？", "tgt": "今天延迟大概有多少？", "mt_raw": "今天延迟大概有多少？", "spec_hit": true, "asr_wait_ms": 122.1, "latency_perceived_ms": 574.8, "latency_device_ttfa_ms": null, "mode": "file", "source_desc": "smoke ab_weekday/loopback_en_probe"}
