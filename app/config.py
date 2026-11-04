@@ -57,6 +57,8 @@ VAD_FORCE_END_UNCHANGED_COMPLETE = 2
 VAD_FORCE_END_UNCHANGED_WEEKDAY = 4
 # 句尾 SenseVoice 二遍：流式出字快，离线抬识别（对标云端差距的本地刀）
 ASR_FINAL_2PASS = True
+# Paraformer oneshot 与 SenseVoice 二遍并行（False=串行，便于 A/B 与异常回退）
+ASR_2PASS_PARALLEL = True
 # 静音达到该秒数时后台投机定稿（独立 stream，CUT 时优先取）
 ASR_SPECULATE_ENABLED = True
 ASR_SPECULATE_SILENCE_SEC = 0.25

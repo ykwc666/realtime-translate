@@ -3,8 +3,9 @@ from __future__ import annotations
 import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Callable
 
 import numpy as np
 
@@ -141,6 +142,12 @@ class StreamingAsr:
         self.is_true_streaming = self.backend == "sherpa_paraformer_online"
         self.recognizer = None  # SenseVoice offline (primary or 2-pass)
         self._2pass = False
+        # Reused by 2-pass parallel path; threads created lazily on first submit.
+        self._2pass_pool: ThreadPoolExecutor | None = None
+        if bool(getattr(config, "ASR_2PASS_PARALLEL", True)):
+            self._2pass_pool = ThreadPoolExecutor(
+                max_workers=2, thread_name_prefix="asr2pass"
+            )
         if self.is_true_streaming:
             self._init_sherpa_paraformer_online()
             if bool(getattr(config, "ASR_FINAL_2PASS", False)):
@@ -148,6 +155,17 @@ class StreamingAsr:
                 self._2pass = self.recognizer is not None
         else:
             self._init_sherpa_sensevoice()
+
+    def close(self) -> None:
+        """Release 2-pass pool without blocking (wait=False).
+
+        wait=False so close/atexit never hang on a stuck decode; in-flight work
+        may still briefly keep the process alive (pool threads are non-daemon).
+        """
+        pool = self._2pass_pool
+        self._2pass_pool = None
+        if pool is not None:
+            pool.shutdown(wait=False)
 
     def _init_sherpa_sensevoice(self) -> None:
         import sherpa_onnx
@@ -258,16 +276,41 @@ class StreamingAsr:
         state.total_model_ms += res.ms
         return AsrResult(merged, res.ms, clip.size)
 
+    def _run_2pass_pair(
+        self,
+        online_fn: Callable[[], AsrResult],
+        offline_fn: Callable[[], AsrResult],
+    ) -> tuple[AsrResult, AsrResult]:
+        """Run online + offline decode; parallel when ASR_2PASS_PARALLEL else serial."""
+        pool = self._2pass_pool
+        if pool is None or not bool(getattr(config, "ASR_2PASS_PARALLEL", True)):
+            return online_fn(), offline_fn()
+        fut_on = pool.submit(online_fn)
+        fut_off = pool.submit(offline_fn)
+        try:
+            online = fut_on.result()
+        except Exception as exc:  # noqa: BLE001
+            print(f"[ASR 2pass parallel online error] {exc}")
+            online = online_fn()
+        try:
+            offline = fut_off.result()
+        except Exception as exc:  # noqa: BLE001
+            print(f"[ASR 2pass parallel offline error] {exc}")
+            offline = offline_fn()
+        return online, offline
+
     def transcribe_with_2pass(self, audio: np.ndarray) -> AsrResult:
         """Independent oneshot (+ SenseVoice) for speculative finalize; no live state."""
         audio = np.asarray(audio, dtype=np.float32).reshape(-1)
         if audio.size == 0:
             return AsrResult("", 0.0, 0)
         if self.is_true_streaming:
-            online = self._transcribe_paraformer_online_oneshot(audio)
             if not self._2pass or self.recognizer is None:
-                return online
-            offline = self._transcribe_sherpa_offline(audio)
+                return self._transcribe_paraformer_online_oneshot(audio)
+            online, offline = self._run_2pass_pair(
+                lambda: self._transcribe_paraformer_online_oneshot(audio),
+                lambda: self._transcribe_sherpa_offline(audio),
+            )
             merged = prefer_2pass_asr(online.text, offline.text)
             ms = float(online.ms) + float(offline.ms)
             return AsrResult(merged, ms, int(audio.size))
@@ -279,10 +322,12 @@ class StreamingAsr:
         full_audio = np.asarray(full_audio, dtype=np.float32).reshape(-1)
         if not self.is_true_streaming:
             return self.transcribe(full_audio)
-        online = self._finalize_paraformer_online(full_audio, state)
         if not self._2pass or self.recognizer is None or full_audio.size == 0:
-            return online
-        offline = self._transcribe_sherpa_offline(full_audio)
+            return self._finalize_paraformer_online(full_audio, state)
+        online, offline = self._run_2pass_pair(
+            lambda: self._finalize_paraformer_online(full_audio, state),
+            lambda: self._transcribe_sherpa_offline(full_audio),
+        )
         stream_t = (online.text or "").strip()
         off_t = (offline.text or "").strip()
         merged = prefer_2pass_asr(stream_t, off_t)
