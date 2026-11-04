@@ -19,6 +19,7 @@
 | 2026-11-04 | 标点去白名单 | **否**（展示 only） | 探针失败 | `PUNCT_ENDPOINT_PROBE.md` |
 | 2026-11-04 | GTCRN 降噪 | **否**（可选） | 未实麦 A/B | `MIC_DENOISE.md` |
 | 2026-11-04 | 精确 TM | 是 | hit ~0.01ms | `mt_tm_ab.jsonl` |
+| 2026-11-04 | ONLINE_TAIL_PAD 0.5 | 是 | pause wait 230→143 | `TAIL_PAD_AB.md` |
 
 ## 检查点约定
 

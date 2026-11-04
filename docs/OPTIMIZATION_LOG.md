@@ -235,3 +235,9 @@ Renoir 核显 + SenseVoice int8：DML 明显更慢；且与 pip sherpa 的 ORT 1
 
 - `gtcrn_simple.onnx` 已下；`MicDenoiser` 接 `run_vad`/duplex 麦路
 - **默认 `MIC_DENOISE=False`**；实麦噪再开。见 `docs/MIC_DENOISE.md`
+
+## ONLINE_TAIL_PAD 0.5（2026-11-04）
+
+- A/B 1.0 / 0.5 / 0.25：合成集文本全一致；pause `asr_wait` **230→143**，`mt_ready` **375→288**
+- **默认改为 0.5**（0.25 不稳）。见 `docs/TAIL_PAD_AB.md`
+- git checkpoint：`91cddc9`；对照表：`docs/OPTIMIZATION_INDEX.md`

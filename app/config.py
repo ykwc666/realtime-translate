@@ -33,8 +33,10 @@ ASR_PUNCT_DISPLAY = True
 GTCRN_MODEL = MODELS_DIR / "gtcrn_simple.onnx"
 MIC_DENOISE = False
 MIC_DENOISE_THREADS = 1
-# Online Paraformer 句尾右上下文：官方 C++ mic 示例用 ~1.0s；配合 finalize 时 is_final
-ONLINE_TAIL_PAD_SEC = 1.0
+# Online Paraformer 句尾右上下文（finalize 喂零 pad）。官方示例 ~1.0s；
+# paced A/B：0.5 文本与 1.0 一致，pause asr_wait/mt_ready 更好；0.25 不稳 → 默认 0.5
+# 见 docs/TAIL_PAD_AB.md
+ONLINE_TAIL_PAD_SEC = 0.5
 SILERO_VAD_ONNX = MODELS_DIR / "silero_vad.onnx"
 TEN_VAD_ONNX = MODELS_DIR / "ten-vad.onnx"
 # vad: silero | ten | energy（ten=TEN-VAD，需 models/ten-vad.onnx）
