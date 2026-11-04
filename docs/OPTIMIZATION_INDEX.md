@@ -20,6 +20,7 @@
 | 2026-11-04 | GTCRN 降噪 | **否**（可选） | 未实麦 A/B | `MIC_DENOISE.md` |
 | 2026-11-04 | 精确 TM | 是 | hit ~0.01ms | `mt_tm_ab.jsonl` |
 | 2026-11-04 | ONLINE_TAIL_PAD 0.5 | 是 | pause wait 230→143 | `TAIL_PAD_AB.md` |
+| 2026-11-04 | en→zh 质量尺子+高频修 | 是 | 通过 42%→88%，broken 0 | `MT_EN_ZH_QUALITY_STEP1.md` |
 
 ## 检查点约定
 

@@ -241,3 +241,10 @@ Renoir 核显 + SenseVoice int8：DML 明显更慢；且与 pip sherpa 的 ORT 1
 - A/B 1.0 / 0.5 / 0.25：合成集文本全一致；pause `asr_wait` **230→143**，`mt_ready` **375→288**
 - **默认改为 0.5**（0.25 不稳）。见 `docs/TAIL_PAD_AB.md`
 - git checkpoint：`91cddc9`；对照表：`docs/OPTIMIZATION_INDEX.md`
+
+## MT en→zh 质量第一步（2026-11-04）
+
+- 评测集 10→50；人判基线通过 **42%**（broken 2，hear 规则过宽）
+- 收窄 hear；修 ≥3 类：meeting_term / domain_term / term_literal / meeting_idiom；顺带 mute
+- 修复后 **44/50 (88%)**，broken **0**，postedit P95 **0.43ms**；规则边界：sense_loss / direction_reverse / colloquial_literal
+- 单测 +5；全量 **81 passed**。见 `docs/MT_EN_ZH_QUALITY_STEP1.md`

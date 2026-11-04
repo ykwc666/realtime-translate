@@ -1,0 +1,50 @@
+{"en": "How much delay is there today?", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "How much delay is there?", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "About how much delay is there?", "verdict": "ok"}
+{"en": "how much delay is there today", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "I might not pass this interview round.", "verdict": "fixed", "fail_class": "meeting_term"}
+{"en": "Did you reply to my message?", "verdict": "fixed", "fail_class": "noun_mistranslation"}
+{"en": "He has not replied to my message yet.", "verdict": "fixed", "fail_class": "noun_mistranslation"}
+{"en": "I can't hear what you're saying clearly.", "verdict": "ok"}
+{"en": "How's the weather today?", "verdict": "ok"}
+{"en": "Can you say that again?", "verdict": "ok"}
+{"en": "Can you hear me now?", "verdict": "ok"}
+{"en": "Are we still on for three?", "verdict": "fixed", "fail_class": "meeting_idiom"}
+{"en": "What's the deadline for this?", "verdict": "fixed", "fail_class": "meeting_term"}
+{"en": "Do you have five minutes?", "verdict": "ok"}
+{"en": "Is the echo gone on your side?", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "We're shipping Friday at 2 p.m.", "verdict": "fixed", "fail_class": "term_literal"}
+{"en": "Cut that clip to about thirty seconds.", "verdict": "ok"}
+{"en": "Latency is around two hundred millis.", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "Give me ten more minutes on the deck.", "verdict": "fixed", "fail_class": "meeting_term"}
+{"en": "The call drops every fifteen minutes or so.", "verdict": "wrong", "fail_class": "sense_loss"}
+{"en": "I don't think we should ship tonight.", "verdict": "fixed", "fail_class": "term_literal"}
+{"en": "She's not joining the sync.", "verdict": "ok"}
+{"en": "We can't hear the other side at all.", "verdict": "ok"}
+{"en": "No, don't mute yourself yet.", "verdict": "fixed", "fail_class": "noun_mistranslation"}
+{"en": "I'm not seeing your screen share.", "verdict": "ok"}
+{"en": "Gonna jump off in a sec.", "verdict": "wrong", "fail_class": "colloquial_literal"}
+{"en": "I'll ping you the deck after this.", "verdict": "fixed", "fail_class": "meeting_term"}
+{"en": "Let's circle back on that tomorrow.", "verdict": "fixed", "fail_class": "meeting_idiom"}
+{"en": "Sorry, you broke up there for a bit.", "verdict": "wrong", "fail_class": "colloquial_literal"}
+{"en": "Hang on, I'm pulling up the build log.", "verdict": "fixed", "fail_class": "term_literal"}
+{"en": "We need a quick sync before standup.", "verdict": "fixed", "fail_class": "meeting_term"}
+{"en": "The rollout slipped to next week.", "verdict": "fixed", "fail_class": "meeting_term"}
+{"en": "Can we push the deadline by a day?", "verdict": "wrong", "fail_class": "direction_reverse"}
+{"en": "I'll take the action item on docs.", "verdict": "fixed", "fail_class": "meeting_term"}
+{"en": "Please send the recording after the call.", "verdict": "ok"}
+{"en": "Duplex still feels a bit choppy on my end.", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "There's a weird echo when you talk.", "verdict": "ok"}
+{"en": "How bad is the end-to-end latency right now?", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "The mic is picking up a lot of noise.", "verdict": "ok"}
+{"en": "Try turning off noise suppression for a second.", "verdict": "ok"}
+{"en": "The build's been failing since Tuesday and nobody owns the fix yet.", "verdict": "fixed", "fail_class": "term_literal"}
+{"en": "If the delay stays above three hundred millis we should not go live today.", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "Can you walk me through what broke in the last release real quick?", "verdict": "wrong", "fail_class": "sense_loss"}
+{"en": "I thought we agreed not to change the API until after the rollout.", "verdict": "wrong", "fail_class": "direction_reverse"}
+{"en": "Sorry I'm late, the previous call ran over by about twenty minutes.", "verdict": "ok"}
+{"en": "What's our plan if the client still can't hear us after the reboot?", "verdict": "ok"}
+{"en": "I'll share my screen in a minute so we can look at the numbers together.", "verdict": "ok"}
+{"en": "Don't cut me off yet, I still have one more point on latency.", "verdict": "fixed", "fail_class": "domain_term"}
+{"en": "Are you muted? I'm getting silence on my end.", "verdict": "fixed", "fail_class": "noun_mistranslation"}
+{"en": "Let's wrap in five and send notes after.", "verdict": "fixed", "fail_class": "meeting_idiom"}

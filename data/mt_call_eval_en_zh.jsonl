@@ -8,3 +8,43 @@
 {"en": "I can't hear what you're saying clearly.", "zh": "我听不清你说什么。", "needles": ["听不清"]}
 {"en": "How's the weather today?", "zh": "今天天气怎么样？", "needles": ["天气"]}
 {"en": "Can you say that again?", "zh": "你能再说一遍吗？", "needles": ["再说"], "untouched": true}
+{"en": "Can you hear me now?", "zh": "你现在能听见我吗？", "tags": ["question", "domain"], "needles": ["听见", "吗"]}
+{"en": "Are we still on for three?", "zh": "我们三点还开吗？", "tags": ["question", "number"], "needles": ["三点"]}
+{"en": "What's the deadline for this?", "zh": "这个截止日期是什么时候？", "tags": ["question", "meeting"], "needles": ["截止"]}
+{"en": "Do you have five minutes?", "zh": "你有五分钟吗？", "tags": ["question", "number"], "needles": ["五分钟", "吗"]}
+{"en": "Is the echo gone on your side?", "zh": "你那边回声没了吗？", "tags": ["question", "domain"], "needles": ["回声"]}
+{"en": "We're shipping Friday at 2 p.m.", "zh": "我们周五下午两点上线。", "tags": ["number", "meeting"], "needles": ["周五", "两点"]}
+{"en": "Cut that clip to about thirty seconds.", "zh": "把那段剪到大概三十秒。", "tags": ["number", "domain"], "needles": ["三十秒"]}
+{"en": "Latency is around two hundred millis.", "zh": "延迟大概两百毫秒左右。", "tags": ["number", "domain"], "needles": ["延迟", "毫秒"]}
+{"en": "Give me ten more minutes on the deck.", "zh": "幻灯片再给我十分钟。", "tags": ["number", "meeting"], "needles": ["十分钟"]}
+{"en": "The call drops every fifteen minutes or so.", "zh": "通话大概每十五分钟就断一次。", "tags": ["number", "domain"], "needles": ["十五分钟"]}
+{"en": "I don't think we should ship tonight.", "zh": "我觉得今晚不该上线。", "tags": ["negation", "meeting"], "needles": ["不该", "上线"]}
+{"en": "She's not joining the sync.", "zh": "她不参加这次同步会。", "tags": ["negation", "meeting"], "needles": ["不"]}
+{"en": "We can't hear the other side at all.", "zh": "对端我们完全听不见。", "tags": ["negation", "domain"], "needles": ["听不见"]}
+{"en": "No, don't mute yourself yet.", "zh": "别，先别静音。", "tags": ["negation", "colloquial"], "needles": ["别", "静音"]}
+{"en": "I'm not seeing your screen share.", "zh": "我这边看不到你的屏幕共享。", "tags": ["negation", "meeting"], "needles": ["看不到", "屏幕"]}
+{"en": "Gonna jump off in a sec.", "zh": "我马上先挂一下。", "tags": ["colloquial"], "needles": ["挂"]}
+{"en": "I'll ping you the deck after this.", "zh": "会后我把幻灯片发你。", "tags": ["colloquial", "meeting"], "needles": ["发"]}
+{"en": "Let's circle back on that tomorrow.", "zh": "这个咱们明天再聊。", "tags": ["colloquial", "meeting"], "needles": ["明天"]}
+{"en": "Sorry, you broke up there for a bit.", "zh": "不好意思，刚才你那边断了一会儿。", "tags": ["colloquial", "domain"], "needles": ["断"]}
+{"en": "Hang on, I'm pulling up the build log.", "zh": "等一下，我把构建日志翻出来。", "tags": ["colloquial", "meeting"], "needles": ["等"]}
+{"en": "We need a quick sync before standup.", "zh": "站会前我们得快速对一下。", "tags": ["meeting"], "needles": ["对一下"]}
+{"en": "The rollout slipped to next week.", "zh": "上线推到下周了。", "tags": ["meeting"], "needles": ["下周"]}
+{"en": "Can we push the deadline by a day?", "zh": "截止日期能往后推一天吗？", "tags": ["meeting", "question"], "needles": ["截止", "推"]}
+{"en": "I'll take the action item on docs.", "zh": "文档这块我来跟。", "tags": ["meeting"], "needles": ["文档"]}
+{"en": "Please send the recording after the call.", "zh": "开完会把录音发我一下。", "tags": ["meeting"], "needles": ["录音"]}
+{"en": "Duplex still feels a bit choppy on my end.", "zh": "我这边双工还是有点卡。", "tags": ["domain"], "needles": ["双工", "卡"]}
+{"en": "There's a weird echo when you talk.", "zh": "你说话的时候有点奇怪的回声。", "tags": ["domain"], "needles": ["回声"]}
+{"en": "How bad is the end-to-end latency right now?", "zh": "现在端到端延迟有多差？", "tags": ["domain", "question"], "needles": ["延迟"]}
+{"en": "The mic is picking up a lot of noise.", "zh": "麦克风收进来好多噪音。", "tags": ["domain"], "needles": ["噪音"]}
+{"en": "Try turning off noise suppression for a second.", "zh": "噪声抑制先关一下试试。", "tags": ["domain"], "needles": ["噪声", "关"]}
+{"en": "The build's been failing since Tuesday and nobody owns the fix yet.", "zh": "构建从周二就一直挂，到现在还没人认领修。", "tags": ["long", "meeting", "negation"], "needles": ["周二", "挂"]}
+{"en": "If the delay stays above three hundred millis we should not go live today.", "zh": "要是延迟一直高于三百毫秒，今天就不该上线。", "tags": ["long", "domain", "number", "negation"], "needles": ["延迟", "三百", "上线"]}
+{"en": "Can you walk me through what broke in the last release real quick?", "zh": "你能不能快速跟我过一下上一版到底哪里挂了？", "tags": ["long", "question", "meeting"], "needles": ["挂"]}
+{"en": "I thought we agreed not to change the API until after the rollout.", "zh": "我以为我们说好了上线前先不动 API。", "tags": ["long", "meeting", "negation"], "needles": ["上线", "不动"]}
+{"en": "Sorry I'm late, the previous call ran over by about twenty minutes.", "zh": "不好意思我晚了，上一场大概拖了二十分钟。", "tags": ["long", "number", "colloquial"], "needles": ["二十分钟"]}
+{"en": "What's our plan if the client still can't hear us after the reboot?", "zh": "要是重启完客户还是听不见我们，下一步怎么弄？", "tags": ["long", "question", "domain", "negation"], "needles": ["听不见"]}
+{"en": "I'll share my screen in a minute so we can look at the numbers together.", "zh": "我一会儿共享屏幕，咱们一起看数字。", "tags": ["long", "meeting", "number"], "needles": ["共享", "屏幕"]}
+{"en": "Don't cut me off yet, I still have one more point on latency.", "zh": "先别打断我，延迟这块我还有一点要说。", "tags": ["long", "negation", "domain"], "needles": ["别打断", "延迟"]}
+{"en": "Are you muted? I'm getting silence on my end.", "zh": "你是不是静音了？我这边全是静音。", "tags": ["question", "colloquial", "domain"], "needles": ["静音"]}
+{"en": "Let's wrap in five and send notes after.", "zh": "五分钟内收束，会后发纪要。", "tags": ["number", "meeting", "colloquial"], "needles": ["五分钟"]}

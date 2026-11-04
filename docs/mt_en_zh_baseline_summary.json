@@ -1,0 +1,22 @@
+{
+  "phase": "baseline_pre_fix",
+  "time": "2026-11-04 18:15",
+  "n": 50,
+  "totals": {"ok": 15, "wrong": 27, "fixed": 6, "broken": 2},
+  "postedit_pass": "21/50 (42%)",
+  "broken_rate": "2/50 (4%)",
+  "pe_ms_p50": 0.026,
+  "pe_ms_p95": 0.38,
+  "fail_classes": {
+    "meeting_term": 6,
+    "domain_term": 6,
+    "term_literal": 4,
+    "meeting_idiom": 3,
+    "sense_loss": 2,
+    "postedit_regression": 2,
+    "noun_mistranslation": 2,
+    "colloquial_literal": 2,
+    "direction_reverse": 2
+  },
+  "note": "raw=ct2 bypass TM; human semantic judge in mt_en_zh_judge.jsonl"
+}
