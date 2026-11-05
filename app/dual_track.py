@@ -765,6 +765,7 @@ class DualTrackEngine:
         """仅 final：ASR 原生文本上有「非串尾句末 + 其后足够长」则拆子句。
 
         切分决策不调用标点模型（展示标点只在 _finalize_utt 跑一次）。
+        子句拼接去空白后覆盖原文 <90% → 视为丢内容，回退整句。
         """
         pending = (pending or "").strip()
         if not pending:
@@ -774,7 +775,20 @@ class DualTrackEngine:
         if not has_splitworthy_mid_end(pending):
             return [pending]
         parts = split_sentences(pending)
-        return parts if len(parts) >= 2 else [pending]
+        if len(parts) < 2:
+            return [pending]
+        def _ns(s: str) -> int:
+            return len(re.sub(r"\s+", "", s or ""))
+
+        orig = _ns(pending)
+        got = _ns("".join(parts))
+        if orig and got < 0.9 * orig:
+            print(
+                f"[MT split abort coverage] got={got}/{orig} <90% "
+                f"pending={pending!r} parts={parts!r}"
+            )
+            return [pending]
+        return parts
 
     def _translate_final(self, text: str, mute_cb=None) -> None:  # noqa: ANN001
         pending = (text or "").strip()

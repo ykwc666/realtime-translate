@@ -61,3 +61,37 @@ def test_true_english_period_mid_splits() -> None:
     assert has_splitworthy_mid_end(src) is True
     parts = split_sentences(src)
     assert len(parts) >= 2
+
+
+def test_keep_single_char_clauses() -> None:
+    src = "对。我觉得可以。今天不行。"
+    parts = _engine()._final_mt_clauses(src)
+    assert len(parts) == 3
+    assert parts[0] == "对。"
+    assert "我觉得可以" in parts[1]
+    assert "今天不行" in parts[2]
+
+
+def test_keep_interjection_clauses() -> None:
+    src = "嗯。我知道了。明白了。"
+    parts = _engine()._final_mt_clauses(src)
+    assert len(parts) == 3
+    assert parts[0] == "嗯。"
+
+
+def test_punct_only_splits_to_empty() -> None:
+    assert split_sentences("。。。") == []
+
+
+def test_split_coverage_invariant() -> None:
+    for src in (
+        "对。我觉得可以。今天不行。",
+        "嗯。我知道了。明白了。",
+        "今天天气怎么样？现在是星期二。",
+    ):
+        parts = _engine()._final_mt_clauses(src)
+        import re
+
+        orig = len(re.sub(r"\s+", "", src))
+        got = len(re.sub(r"\s+", "", "".join(parts)))
+        assert got >= 0.9 * orig

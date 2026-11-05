@@ -169,6 +169,12 @@ def _is_contentful(text: str) -> bool:
     return len(content) >= 2
 
 
+def _has_any_content(text: str) -> bool:
+    """子句级：去标点后仍有 >=1 个字符（\\w 或汉字）。保留单字「对。」「嗯。」。"""
+    content = re.sub(r"[^\w\u4e00-\u9fff]+", "", text or "", flags=re.UNICODE)
+    return len(content) >= 1
+
+
 def _latin_word_before(text: str, dot_i: int) -> str:
     j = dot_i - 1
     while j >= 0 and text[j].isalpha():
@@ -251,14 +257,14 @@ def _split_on_sentence_ends(t: str) -> list[str]:
             j = i + 1
             while j < n and t[j].isspace():
                 j += 1
-            if part and _is_contentful(part):
+            if part and _has_any_content(part):
                 parts.append(part)
             start = j
             i = j
             continue
         i += 1
     tail = t[start:].strip()
-    if tail and _is_contentful(tail):
+    if tail and _has_any_content(tail):
         parts.append(tail)
     elif tail and not parts:
         parts.append(tail)
