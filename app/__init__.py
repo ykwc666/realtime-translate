@@ -1,1 +1,1 @@
-"""Call-level ZH/EN realtime translate stack."""
+"""通话级中英实时翻译栈。"""

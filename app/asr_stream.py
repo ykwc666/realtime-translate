@@ -11,7 +11,7 @@ import numpy as np
 
 from . import config
 
-# Hot-path backends only. FunASR paths removed from runtime.
+# 热路径后端仅此两种；FunASR 路径已从运行时移除。
 _SUPPORTED = frozenset({"sherpa_paraformer_online", "sherpa_sensevoice"})
 
 
@@ -24,7 +24,7 @@ class AsrResult:
 
 @dataclass
 class AsrIncState:
-    """Incremental / streaming ASR state for one utterance."""
+    """单句的增量/流式 ASR 状态。"""
 
     decoded_samples: int = 0
     text: str = ""
@@ -35,7 +35,7 @@ class AsrIncState:
 
 
 def prefer_final_asr(partial: str, final: str) -> str:
-    """Pick longer text when one is a prefix of the other (guard trailing-char loss)."""
+    """一方为另一方前缀时取较长文本（防末字丢失）。"""
     p = (partial or "").strip()
     f = (final or "").strip()
     if not p:
@@ -51,14 +51,43 @@ def _strip_asr_tail_punct(text: str) -> str:
     return (text or "").strip().rstrip("。！？.!?,，、；; ")
 
 
-def prefer_2pass_asr(stream_text: str, offline_text: str) -> str:
-    """Merge streaming Paraformer final with SenseVoice offline rescoring."""
+_WEEKDAY_COMPLETE_RE = re.compile(r"(?:星期|礼拜|周)[一二三四五六日天]$")
+
+
+def _weekday_complete(text: str) -> bool:
+    """流式已落到完整「星期X」时，勿被 SenseVoice 口语幻觉（星期啊）盖掉。"""
+    return bool(_WEEKDAY_COMPLETE_RE.search(_strip_asr_tail_punct(text)))
+
+
+def prefer_2pass_asr(
+    stream_text: str,
+    offline_text: str,
+    *,
+    mode: str | None = None,
+) -> str:
+    """合并流式 Paraformer 定稿与 SenseVoice 离线重打分。
+
+    mode: legacy | offline | offline_conflict（见 config.ASR_2PASS_MERGE_MODE）。
+    """
     s = _strip_asr_tail_punct(stream_text)
     o = _strip_asr_tail_punct(offline_text)
     if not o:
         return s
     if not s:
         return o
+
+    # 星期保护：online 完整「星期X」且 offline 不完整 → 信 online（防「星期三」→「星期啊」）。
+    if _weekday_complete(s) and not _weekday_complete(o):
+        return s
+
+    merge_mode = (mode or getattr(config, "ASR_2PASS_MERGE_MODE", "legacy") or "legacy")
+    merge_mode = str(merge_mode).strip().lower()
+    if merge_mode == "offline":
+        return o
+    if merge_mode == "online":
+        return s
+
+    # 公共前缀/包含关系 — 与 legacy 相同。
     if o.startswith(s) or s.startswith(o):
         return o if len(o) >= len(s) else s
     if s in o:
@@ -71,15 +100,21 @@ def prefer_2pass_asr(stream_text: str, offline_text: str) -> str:
             break
         common += 1
     if common >= max(2, (len(s) + 1) // 2):
+        # 公共词干后分叉：legacy 取较长；offline_conflict
+        # 始终信 SenseVoice（ledger oneshot：offline WER < merged）。
+        if merge_mode == "offline_conflict":
+            return o
         return o if len(o) >= len(s) else s
-    # Short stream + clearly longer offline → trust offline (mic truncations)
+    # 流式短 + 离线明显更长 → 信 offline（麦侧截断）
     if len(o) >= len(s) + 2:
+        return o
+    if merge_mode == "offline_conflict":
         return o
     return s
 
 
 def merge_overlap_text(prev: str, tail: str) -> str:
-    """Merge previous hypothesis with SenseVoice overlap-window ASR text."""
+    """将上一假设与 SenseVoice 重叠窗 ASR 文本合并。"""
     prev = (prev or "").strip()
     tail = (tail or "").strip()
     if not prev:
@@ -129,7 +164,7 @@ def merge_overlap_text(prev: str, tail: str) -> str:
 
 
 class StreamingAsr:
-    """ASR: sherpa Online Paraformer (default) or sherpa SenseVoice (fallback)."""
+    """ASR：sherpa Online Paraformer（默认）或 sherpa SenseVoice（回退）。"""
 
     def __init__(self) -> None:
         os.environ.setdefault("OMP_NUM_THREADS", str(config.ASR_THREADS))
@@ -140,9 +175,9 @@ class StreamingAsr:
                 f"可选: {', '.join(sorted(_SUPPORTED))}"
             )
         self.is_true_streaming = self.backend == "sherpa_paraformer_online"
-        self.recognizer = None  # SenseVoice offline (primary or 2-pass)
+        self.recognizer = None  # SenseVoice 离线（主路径或 2pass）
         self._2pass = False
-        # Reused by 2-pass parallel path; threads created lazily on first submit.
+        # 2pass 并行路径复用；首次 submit 时懒创建线程池。
         self._2pass_pool: ThreadPoolExecutor | None = None
         if bool(getattr(config, "ASR_2PASS_PARALLEL", True)):
             self._2pass_pool = ThreadPoolExecutor(
@@ -157,10 +192,10 @@ class StreamingAsr:
             self._init_sherpa_sensevoice()
 
     def close(self) -> None:
-        """Release 2-pass pool without blocking (wait=False).
+        """释放 2pass 线程池且不阻塞（wait=False）。
 
-        wait=False so close/atexit never hang on a stuck decode; in-flight work
-        may still briefly keep the process alive (pool threads are non-daemon).
+        wait=False 避免 close/atexit 卡在僵死解码；进行中的任务
+        仍可能短暂拖住进程（池线程非 daemon）。
         """
         pool = self._2pass_pool
         self._2pass_pool = None
@@ -218,7 +253,7 @@ class StreamingAsr:
         return self._transcribe_sherpa_offline(audio)
 
     def feed_stream(self, new_audio: np.ndarray, state: AsrIncState) -> AsrResult:
-        """True-streaming only: feed newly arrived samples (no full-buffer copy)."""
+        """仅真流式：喂新到样本（不整段缓冲拷贝）。"""
         if not self.is_true_streaming:
             raise RuntimeError("feed_stream 仅用于 sherpa_paraformer_online")
         new_audio = np.asarray(new_audio, dtype=np.float32).reshape(-1)
@@ -247,8 +282,8 @@ class StreamingAsr:
         self, full_audio: np.ndarray, state: AsrIncState
     ) -> AsrResult:
         """
-        Offline SenseVoice: overlap-window incremental.
-        True streaming: prefer feed_stream(); this still works if given full audio.
+        离线 SenseVoice：重叠窗增量。
+        真流式优先 feed_stream()；若传入整段音频仍可工作。
         """
         full_audio = np.asarray(full_audio, dtype=np.float32).reshape(-1)
         if full_audio.size == 0:
@@ -285,7 +320,7 @@ class StreamingAsr:
         online_fn: Callable[[], AsrResult],
         offline_fn: Callable[[], AsrResult],
     ) -> tuple[AsrResult, AsrResult]:
-        """Run online + offline decode; parallel when ASR_2PASS_PARALLEL else serial."""
+        """跑 online + offline 解码；ASR_2PASS_PARALLEL 时并行否则串行。"""
         pool = self._2pass_pool
         if pool is None or not bool(getattr(config, "ASR_2PASS_PARALLEL", True)):
             return online_fn(), offline_fn()
@@ -304,7 +339,7 @@ class StreamingAsr:
         return online, offline
 
     def transcribe_with_2pass(self, audio: np.ndarray) -> AsrResult:
-        """Independent oneshot (+ SenseVoice) for speculative finalize; no live state."""
+        """投机定稿用的独立 oneshot（+ SenseVoice）；不占用 live state。"""
         audio = np.asarray(audio, dtype=np.float32).reshape(-1)
         if audio.size == 0:
             return AsrResult("", 0.0, 0)
@@ -321,7 +356,7 @@ class StreamingAsr:
         return self.transcribe(audio)
 
     def transcribe_offline_only(self, audio: np.ndarray) -> AsrResult:
-        """SenseVoice/offline path only — for re-arm speculate (no Paraformer oneshot)."""
+        """仅 SenseVoice/离线路径 — 用于 re-arm 投机（无 Paraformer oneshot）。"""
         audio = np.asarray(audio, dtype=np.float32).reshape(-1)
         if audio.size == 0:
             return AsrResult("", 0.0, 0)
@@ -332,7 +367,7 @@ class StreamingAsr:
     def finalize_online_only(
         self, full_audio: np.ndarray, state: AsrIncState
     ) -> AsrResult:
-        """Flush live streaming state only (no offline). Used with offline-hint re-arm."""
+        """仅刷 live 流式状态（无 offline）。配合 offline-hint re-arm。"""
         full_audio = np.asarray(full_audio, dtype=np.float32).reshape(-1)
         if not self.is_true_streaming:
             return self.transcribe(full_audio)
@@ -344,7 +379,7 @@ class StreamingAsr:
         offline_text: str,
         offline_ms: float,
     ) -> AsrResult:
-        """Same prefer_2pass merge as finalize_stream; ms = online + offline hint."""
+        """与 finalize_stream 相同的 prefer_2pass 合并；ms = online + offline hint。"""
         stream_t = (online.text or "").strip()
         off_t = (offline_text or "").strip()
         merged = prefer_2pass_asr(stream_t, off_t)
@@ -381,7 +416,7 @@ class StreamingAsr:
 
     @staticmethod
     def _mark_paraformer_final(stream) -> bool:
-        """Flush CIF / short final chunk (sherpa OnlineStream option)."""
+        """刷 CIF / 短末块（sherpa OnlineStream 选项）。"""
         setter = getattr(stream, "set_option", None)
         if setter is None:
             return False
@@ -404,7 +439,7 @@ class StreamingAsr:
             fed = int(tail.size)
             state.stream.accept_waveform(config.SAMPLE_RATE, tail)
             state.decoded_samples = full_audio.size
-        # is_final before pad/input_finished: flush residual CIF + short last chunk
+        # pad/input_finished 前设 is_final：刷残余 CIF + 短末块
         self._mark_paraformer_final(state.stream)
         pad_sec = float(getattr(config, "ONLINE_TAIL_PAD_SEC", 1.0))
         pad_n = int(pad_sec * config.SAMPLE_RATE)

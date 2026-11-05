@@ -1,11 +1,11 @@
-"""Sherpa OfflinePunctuation (CT-Transformer zh-en) wrapper.
+"""Sherpa OfflinePunctuation（CT-Transformer 中英）封装。
 
-The downloaded model is *offline* CT-Transformer (not OnlinePunctuation/EN-cnn).
-High-level add_punctuation() always emits a terminal 。/？ — it cannot tell
-"说话未完". Raw last-token logits also fail to separate 现在是星期 vs 星期二
-(see docs/PUNCT_ENDPOINT_PROBE.md). Keep weekday whitelist for completion.
+下载的模型为*离线* CT-Transformer（非 OnlinePunctuation/EN-cnn）。
+高层 add_punctuation() 总会输出句末 。/？ — 无法判断「说话未完」。
+原始末 token logits 也无法区分「现在是星期」与「星期二」
+（见 docs/PUNCT_ENDPOINT_PROBE.md）。句末仍保留 weekday 白名单补全。
 
-Use this module for optional display punctuation / future experiments only.
+本模块仅用于可选展示标点 / 未来实验。
 """
 from __future__ import annotations
 
@@ -75,7 +75,7 @@ def _ensure() -> object | None:
 
 
 def add_punctuation(text: str) -> tuple[str, float]:
-    """Return (punctuated_or_original, ms). No-op if model unavailable."""
+    """返回 (加标点或原文, 毫秒)。模型不可用时为 no-op。"""
     t = (text or "").strip()
     if not t:
         return "", 0.0

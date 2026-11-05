@@ -28,10 +28,10 @@ class TurnResult:
 
 
 def _post_utt_echo_pad(mute_fn, *drain_fns) -> None:  # noqa: ANN001
-    """After an utterance: optional echo mute pad on the audio thread.
+    """一句结束后：在音频线程可选的回声静音 pad。
 
-    When FINALIZE_WAIT_TTS is False, pad already runs inside tts_queue (TTS
-    thread) so the capture loop must not sleep here.
+    FINALIZE_WAIT_TTS 为 False 时，pad 已在 tts_queue（TTS 线程）内执行，
+    采集循环此处不得 sleep。
     """
     if not bool(getattr(config, "FINALIZE_WAIT_TTS", True)):
         return
@@ -58,7 +58,7 @@ class TranslatePipeline:
         self.asr = StreamingAsr()
         self.translator = Translator()
         self.tts = TtsPlayer() if enable_tts else None
-        # Optional HarvestWriter (side-channel only; see app/harvest.py)
+        # 可选 HarvestWriter（仅旁路；见 app/harvest.py）
         self.harvest = harvest
         if self.tts:
             if self.tts.output_device is not None:
@@ -177,7 +177,7 @@ class TranslatePipeline:
             mic.stop()
 
     def run_loopback(self) -> None:
-        """Peer→me only: WASAPI loopback (expect English) → zh TTS."""
+        """仅对端→我：WASAPI 环回（预期英文）→ 中文 TTS。"""
         devices = list_loopback_devices()
         print(
             "环回对端→我：系统播放声 → ASR → en→zh → 中文播报；Ctrl+C 退出\n"
@@ -185,7 +185,7 @@ class TranslatePipeline:
             "  注意：TTS 若与环回同设备会自听；请用 VB-CABLE 等把对端/TTS 分到不同设备。"
         )
         lb = LoopbackStream()
-        # Own ASR instance so mic path can later run in parallel without racing streams
+        # 独立 ASR 实例，便于麦路与环回并行且不抢同一 stream
         asr_lb = StreamingAsr()
         engine = DualTrackEngine(
             asr_lb,
@@ -213,7 +213,7 @@ class TranslatePipeline:
             lb.stop()
 
     def run_duplex(self) -> None:
-        """Mic (zh→en) + loopback (en→zh) in parallel threads."""
+        """麦（zh→en）+ 环回（en→zh）并行线程。"""
         devices = list_loopback_devices()
         print(
             "双通道：麦 zh→en + 环回 en→zh（各一路 final_only）；Ctrl+C 退出\n"
@@ -307,7 +307,7 @@ class TranslatePipeline:
             t_lb.join(timeout=2.0)
 
     def run_dualsim(self, path: str, play: bool = False) -> list:
-        """Offline dual-track simulation by chunking a wav (no mic)."""
+        """离线双轨仿真：将 wav 分块喂入（无麦）。"""
         audio = load_wav(path)
         block = int(config.SAMPLE_RATE * 0.1)
         chunks = [

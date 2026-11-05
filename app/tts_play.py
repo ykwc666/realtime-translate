@@ -15,11 +15,11 @@ from piper import PiperVoice
 
 from . import config
 
-# Piper medium yields ~1 giant chunk per synthesize() call, so phoneme-stream
-# preroll cannot beat batch. Clause split is the real TTFA lever.
+# Piper medium 每次 synthesize() 约一整块，音素流
+# preroll 赢不了 batch。分句才是 TTFA 杠杆。
 _CLAUSE_SPLIT = re.compile(r"(?<=[,，。！？!?.;；])\s+")
 
-# Persistent queue item: (generation, pcm_or_sentinel_None)
+# 持久队列项：(generation, pcm_or_sentinel_None)
 _PersistItem = tuple[int, np.ndarray | None]
 
 
@@ -33,18 +33,18 @@ def split_tts_clauses(text: str) -> list[str]:
 
 @dataclass
 class PlayTiming:
-    """Device-side playback metrics (callback path)."""
+    """设备侧播放指标（callback 路径）。"""
 
     stream_open_ms: float = 0.0
-    # speak_t0 → first callback that wrote nonzero PCM (relative ms)
+    # speak_t0 → 首次写入非零 PCM 的 callback（相对 ms）
     ttfa_callback_ms: float = 0.0
-    # last sample write → play call fully returned
+    # 末样本写入 → play 调用完全返回
     close_or_drain_ms: float = 0.0
     expected_play_sec: float = 0.0
     actual_callback_play_sec: float = 0.0
-    # Legacy alias filled = active_underruns
+    # 旧别名：filled = active_underruns
     underruns: int = 0
-    # Only while utterance still needs PCM (not idle zero-fill)
+    # 仅当 utterance 仍需要 PCM（非 idle 零填充）
     active_underruns: int = 0
     idle_callbacks: int = 0
     samples_written: int = 0
@@ -52,10 +52,10 @@ class PlayTiming:
     stop_latency_ms: float = 0.0
     persistent: bool = False
     stream_reused: bool = False
-    # Absolute perf_counter timestamps (end-to-end accounting)
+    # perf_counter 绝对时间戳（端到端统计）
     first_callback_t: float | None = None
     first_pcm_ready_t: float | None = None
-    # True only when a real OutputStream callback wrote nonzero PCM
+    # 仅当真实 OutputStream callback 写入非零 PCM 时为 True
     callback_valid: bool = False
     interrupted: bool = False
 
@@ -67,7 +67,7 @@ class TtsResult:
     voice: str
     audio: np.ndarray | None = None
     sample_rate: int = 22050
-    # Legacy: speak/synth start → first nonempty PCM ready (NOT device callback).
+    # 旧指标：speak/synth 起点 → 首段非空 PCM 就绪（非设备 callback）。
     ttfa_ms: float = 0.0
     ttfa_pcm_ms: float = 0.0
     first_pcm_ready_t: float | None = None
@@ -75,7 +75,7 @@ class TtsResult:
 
 
 class TtsPlayer:
-    """Offline Piper TTS (no network)."""
+    """离线 Piper TTS（无网络）。"""
 
     def __init__(
         self,
@@ -86,12 +86,12 @@ class TtsPlayer:
         self.out_dir.mkdir(parents=True, exist_ok=True)
         self._voices: dict[str, PiperVoice] = {}
         self._warmed = False
-        self._io_lock = threading.Lock()  # duplex: mic+loopback share one player
+        self._io_lock = threading.Lock()  # duplex：mic+环回共用同一播放器
         self._stop = threading.Event()
-        self._gen = 0  # bump on stop/invalidate to drop stale PCM
+        self._gen = 0  # stop/invalidate 时递增以丢弃过期 PCM
         self.output_device = self._resolve_device(output_device)
         self.last_play_timing: PlayTiming | None = None
-        # Persistent OutputStream state (only when TTS_PERSISTENT_OUTPUT)
+        # 持久 OutputStream 状态（仅 TTS_PERSISTENT_OUTPUT）
         self._persist_stream: sd.OutputStream | None = None
         self._persist_sr: int | None = None
         self._persist_q: queue.Queue[_PersistItem] = queue.Queue()
@@ -141,7 +141,7 @@ class TtsPlayer:
         return self._voices[lang], name
 
     def warmup(self) -> dict[str, float]:
-        """Load zh/en voices and run a tiny synth so first real call is warm."""
+        """加载中英音色并做一次短合成，预热首次真实调用。"""
         costs: dict[str, float] = {}
         for lang, text in (("zh", "测试"), ("en", "test")):
             t0 = time.perf_counter()
@@ -166,7 +166,7 @@ class TtsPlayer:
         return costs
 
     def close(self) -> None:
-        """Release persistent stream; safe to call multiple times."""
+        """释放持久流；可多次调用。"""
         self._stop.set()
         self._gen += 1
         self._persist_need_pcm = False
@@ -240,7 +240,7 @@ class TtsPlayer:
         self._persist_q.put((self._gen, pcm))
 
     def stop(self) -> None:
-        """Abort current playback; persistent path never uses global sd.stop()."""
+        """中止当前播放；持久路径从不调用全局 sd.stop()。"""
         t0 = time.perf_counter()
         self._stop.set()
         self._gen += 1
@@ -275,7 +275,7 @@ class TtsPlayer:
         speak_t0: float,
         first_pcm_ready_t: float | None = None,
     ) -> PlayTiming:
-        """Open a fresh OutputStream, play buffer, close. Fully instrumented."""
+        """新建 OutputStream，播放缓冲后关闭。全量埋点。"""
         timing = PlayTiming(
             persistent=False,
             stream_reused=False,
@@ -343,7 +343,7 @@ class TtsPlayer:
                 timing.interrupted = True
                 self.last_play_timing = timing
                 return timing
-            # Blocking fallback: no real callback timestamp — leave unknown
+            # 阻塞回退：无真实 callback 时间戳 — 保持未知
             play_kw: dict = {"blocking": True}
             if self.output_device is not None:
                 play_kw["device"] = self.output_device
@@ -371,7 +371,7 @@ class TtsPlayer:
         return timing
 
     def _ensure_persist_stream(self, sample_rate: int) -> tuple[float, bool]:
-        """Return (open_ms_for_this_utt, reused)."""
+        """返回 (本 utterance 的 open_ms, 是否复用)。"""
         with self._persist_lock:
             if (
                 self._persist_stream is not None
@@ -390,7 +390,7 @@ class TtsPlayer:
                 pass
 
         def persist_callback(outdata, frames, _time_info, status) -> None:  # noqa: ANN001
-            # No locks / prints — queue + plain counters only.
+            # 无锁/无 print — 仅队列与普通计数。
             my_gen = self._persist_play_gen
             if status:
                 if self._persist_need_pcm and my_gen == self._gen:
@@ -416,7 +416,7 @@ class TtsPlayer:
                             self._persist_idle_callbacks += 1
                         return
                     if igen != my_gen:
-                        continue  # stale after stop
+                        continue  # stop 后过期
                     if piece is None:
                         outdata[out_pos:].fill(0)
                         self._persist_need_pcm = False
@@ -470,7 +470,7 @@ class TtsPlayer:
         first_pcm_ready_t: float | None,
         samples_expected: int = 0,
     ) -> PlayTiming:
-        """Arm persistent stream for one utterance (caller feeds PCM + sentinel)."""
+        """为单 utterance 武装持久流（调用方喂 PCM + sentinel）。"""
         self._stop.clear()
         self._persist_drain()
         with self._persist_lock:
@@ -511,7 +511,7 @@ class TtsPlayer:
             timing.close_or_drain_ms = (t_ret - self._persist_last_write_t) * 1000
         if self._stop.is_set():
             timing.interrupted = True
-        # Never invent callback time if no nonzero write happened
+        # 若无非零写入，勿伪造 callback 时间
         if not timing.callback_valid:
             timing.first_callback_t = None
             timing.ttfa_callback_ms = 0.0
@@ -549,7 +549,7 @@ class TtsPlayer:
         speak_t0: float | None = None,
         first_pcm_ready_t: float | None = None,
     ) -> float:
-        """Interruptible play; returns actual callback play seconds."""
+        """可中断播放；返回实际 callback 播放秒数。"""
         if audio.size == 0:
             return 0.0
         t0 = speak_t0 if speak_t0 is not None else time.perf_counter()
@@ -592,7 +592,7 @@ class TtsPlayer:
     def _speak_clauses(
         self, text: str, lang: str, save_wav: bool = False
     ) -> tuple[TtsResult, float]:
-        """Synth clause-1 → start play; overlap synth of later clauses (real TTFA cut)."""
+        """合成第 1 句 → 开播；后续句合成与播放重叠（真实 TTFA 优化）。"""
         text = (text or "").strip()
         if not text:
             return TtsResult(None, 0.0, ""), 0.0
@@ -731,7 +731,7 @@ class TtsPlayer:
                 timing.actual_callback_play_sec,
             )
 
-        # Non-persistent: live queue → fresh OutputStream
+        # 非持久：实时队列 → 新建 OutputStream
         leftover = np.zeros(0, dtype=np.float32)
         pos_played = 0
         sr = int(sample_rate_box[0])

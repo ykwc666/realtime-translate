@@ -1,0 +1,19 @@
+{
+  "id": "ami_000",
+  "ref": "YEAH WE'RE GONNA MEET UP",
+  "diagnosis": "VAD emitted a cut while DualTrackEngine.in_speech was still false. on_vad_candidate → WAIT set holding_cut; next chunk called _begin_utt() which wiped arbiter + holding_cut → segment vanished with no finalize_stream.",
+  "fix": "Begin utterance (seed buf from seg.audio) BEFORE arbiter hold; _begin_utt(preserve_hold=True) when already holding; ENDPOINT_HOLD_TIMEOUT_SEC=3.0 force cut; empty ASR returns DualTrackStats instead of None.",
+  "after_fix": {
+    "n_returned": 1,
+    "src": "we're going onnmeet up。",
+    "tgt": "我们继续见面",
+    "events": [
+      "on_vad_candidate",
+      "tick",
+      "finalize_utt_enter",
+      "finalize_stream",
+      "finalize_utt_exit",
+      "returned"
+    ]
+  }
+}

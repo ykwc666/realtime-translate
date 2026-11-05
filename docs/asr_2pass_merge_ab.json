@@ -1,0 +1,70 @@
+{
+  "modes": {
+    "legacy": {
+      "by_corpus": {
+        "ami": {
+          "n": 48,
+          "wer_mean": 0.2001
+        },
+        "fleurs": {
+          "n": 12,
+          "wer_mean": 0.1469
+        },
+        "libri": {
+          "n": 4,
+          "wer_mean": 1.2202
+        }
+      },
+      "main_wer_mean": 0.1895,
+      "n_main": 60,
+      "offline_pick_rate": 0.8125
+    },
+    "offline": {
+      "by_corpus": {
+        "ami": {
+          "n": 48,
+          "wer_mean": 0.1565
+        },
+        "fleurs": {
+          "n": 12,
+          "wer_mean": 0.0739
+        },
+        "libri": {
+          "n": 4,
+          "wer_mean": 1.1488
+        }
+      },
+      "main_wer_mean": 0.1399,
+      "n_main": 60,
+      "offline_pick_rate": 1.0
+    },
+    "offline_conflict": {
+      "by_corpus": {
+        "ami": {
+          "n": 48,
+          "wer_mean": 0.1565
+        },
+        "fleurs": {
+          "n": 12,
+          "wer_mean": 0.0739
+        },
+        "libri": {
+          "n": 4,
+          "wer_mean": 1.1488
+        }
+      },
+      "main_wer_mean": 0.1399,
+      "n_main": 60,
+      "offline_pick_rate": 1.0
+    }
+  },
+  "spot_weekday_conflict": {
+    "stream": "现在是星期三",
+    "offline_hyp": "现在是星期啊",
+    "legacy": "现在是星期啊",
+    "mode_offline": "现在是星期啊",
+    "mode_offline_conflict": "现在是星期啊"
+  },
+  "recommend": "offline",
+  "recommend_reason": "offline ami_wer 0.2001→0.1565 (fleurs 0.1469→0.0739)"
+}

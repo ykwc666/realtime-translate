@@ -1,0 +1,125 @@
+{
+  "id": "ami_046",
+  "path": "data/ledger_corpus/ami/EN2002c_FEO072_046.wav",
+  "ref": "SO UM I UH HAVE YOU ALREADY CALCULATED ALL THIS DATA OR ARE YOU SUPPOSED TO DO THAT",
+  "cases": [
+    {
+      "name": "current_defaults",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "soft",
+        "ASR_LOOP_KEEP_TAIL": true,
+        "ASR_SPEC_REJECT_STALE": true,
+        "ASR_SPEC_MISS_GROW_USE_P90": true
+      },
+      "n_utts": 1,
+      "srcs": [
+        "So I I have you already calculated。"
+      ],
+      "spec_counters": {
+        "starts": 3,
+        "hits": 1,
+        "cancel_speech": 2,
+        "miss_grow": 0,
+        "miss_timeout": 0,
+        "skip_headstart": 0,
+        "restarts": 2,
+        "cpu_ms": 464.3947000022308
+      }
+    },
+    {
+      "name": "stale_off",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "soft",
+        "ASR_LOOP_KEEP_TAIL": true,
+        "ASR_SPEC_REJECT_STALE": false,
+        "ASR_SPEC_MISS_GROW_USE_P90": true
+      },
+      "n_utts": 1,
+      "srcs": [
+        "So I I have you already calculated。"
+      ],
+      "spec_counters": {
+        "starts": 3,
+        "hits": 1,
+        "cancel_speech": 2,
+        "miss_grow": 0,
+        "miss_timeout": 0,
+        "skip_headstart": 0,
+        "restarts": 2,
+        "cpu_ms": 708.1238000009762
+      }
+    },
+    {
+      "name": "keep_tail_off",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "soft",
+        "ASR_LOOP_KEEP_TAIL": false,
+        "ASR_SPEC_REJECT_STALE": true,
+        "ASR_SPEC_MISS_GROW_USE_P90": true
+      },
+      "n_utts": 1,
+      "srcs": [
+        "So I I have you already calculated。"
+      ],
+      "spec_counters": {
+        "starts": 3,
+        "hits": 1,
+        "cancel_speech": 2,
+        "miss_grow": 0,
+        "miss_timeout": 0,
+        "skip_headstart": 0,
+        "restarts": 2,
+        "cpu_ms": 579.2343000011897
+      }
+    },
+    {
+      "name": "legacy_loop_stale_on",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "legacy",
+        "ASR_LOOP_KEEP_TAIL": true,
+        "ASR_SPEC_REJECT_STALE": true,
+        "ASR_SPEC_MISS_GROW_USE_P90": true
+      },
+      "n_utts": 2,
+      "srcs": [
+        "So I I have you already calculated。",
+        "We calculated all this data .。What are you supposed to do that？"
+      ],
+      "spec_counters": {
+        "starts": 4,
+        "hits": 2,
+        "cancel_speech": 2,
+        "miss_grow": 0,
+        "miss_timeout": 0,
+        "skip_headstart": 0,
+        "restarts": 2,
+        "cpu_ms": 1470.5079000013939,
+        "miss_stale": 1
+      }
+    },
+    {
+      "name": "pre_loop_fix_like",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "legacy",
+        "ASR_LOOP_KEEP_TAIL": false,
+        "ASR_SPEC_REJECT_STALE": false,
+        "ASR_SPEC_MISS_GROW_USE_P90": false
+      },
+      "n_utts": 2,
+      "srcs": [
+        "So I I have you already calculated。",
+        "Are you supposed to do that？"
+      ],
+      "spec_counters": {
+        "starts": 3,
+        "hits": 1,
+        "cancel_speech": 2,
+        "miss_grow": 0,
+        "miss_timeout": 0,
+        "skip_headstart": 0,
+        "restarts": 2,
+        "cpu_ms": 575.5526000011741
+      }
+    }
+  ]
+}

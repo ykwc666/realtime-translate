@@ -1,0 +1,65 @@
+{
+  "n_items": 12,
+  "table_wer": {
+    "fleurs": {
+      "n": 12,
+      "wer_coverage": 12,
+      "wer_mean": 0.1352
+    }
+  },
+  "table_fragment": {
+    "n": 12,
+    "short_lt_1s": 0,
+    "short_rate": 0.0,
+    "func_end": 1,
+    "func_end_rate": 0.0833
+  },
+  "table_split_ledger": {
+    "fleurs": {
+      "pipeline": {
+        "n": 12,
+        "ok": 11,
+        "ok_rate": 0.9167,
+        "counts": {
+          "ok": 11,
+          "awkward": 0,
+          "wrong": 1
+        }
+      },
+      "mt_only": {
+        "n": 12,
+        "ok": 11,
+        "ok_rate": 0.9167,
+        "counts": {
+          "ok": 11,
+          "awkward": 0,
+          "wrong": 1
+        }
+      }
+    }
+  },
+  "table_a5": {
+    "online": {
+      "n": 0,
+      "wer_mean": null,
+      "ok_rate": null
+    },
+    "offline": {
+      "n": 0,
+      "wer_mean": null,
+      "ok_rate": null
+    },
+    "merged": {
+      "n": 0,
+      "wer_mean": null,
+      "ok_rate": null
+    }
+  },
+  "main_corpora": [
+    "ami",
+    "fleurs"
+  ],
+  "ood_corpora": [
+    "libri"
+  ]
+}

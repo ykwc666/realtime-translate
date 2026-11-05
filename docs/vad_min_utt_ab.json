@@ -1,0 +1,72 @@
+{
+  "audio": {
+    "parts": [
+      {
+        "path": "cache\\harvest_public\\ami_en2001b_1993_2020.wav",
+        "sec": 25.85
+      },
+      {
+        "id": "ami_006",
+        "path": "data/ledger_corpus/ami/EN2002a_MEE071_006.wav",
+        "sec": 3.17,
+        "ref": "SO EVEN IF IT DOESN'T WORK YOU CAN JIGGERY POKERY AROUND AND MAKE IT WORK"
+      },
+      {
+        "id": "ami_014",
+        "path": "data/ledger_corpus/ami/EN2002a_FEO072_014.wav",
+        "sec": 1.67,
+        "ref": "THAT'S A GOOD POINT"
+      },
+      {
+        "id": "ami_018",
+        "path": "data/ledger_corpus/ami/EN2002a_MEE073_018.wav",
+        "sec": 3.28,
+        "ref": "WELL IT MIGHT COME TO US AS WE START PLAYING WITH IT"
+      },
+      {
+        "id": "ami_031",
+        "path": "data/ledger_corpus/ami/EN2002b_MEE071_031.wav",
+        "sec": 4.13,
+        "ref": "BUT THAT WILL MEAN THAT YOU CAN ONLY DO THINGS ON ACTUALLY NO UH 'CAUSE YOU NEED TO DO THINGS ON WORD LEVEL"
+      },
+      {
+        "id": "ami_039",
+        "path": "data/ledger_corpus/ami/EN2002b_MEE073_039.wav",
+        "sec": 5.07,
+        "ref": "BUT YEAH JUST I DON'T KNOW JUST IT DOESN'T MAKE ANY DIFFERENCE REALLY EITHER WAY TO ME"
+      }
+    ],
+    "total_sec": 46.12
+  },
+  "variants": [
+    {
+      "VAD_MIN_UTT_SEC": 0.0,
+      "n_utts": 5,
+      "short_lt_1s": 0,
+      "short_rate": 0.0,
+      "func_end": 0,
+      "func_end_rate": 0.0,
+      "first_stable_mt_ms_p50": 445.6,
+      "first_stable_mt_ms_p90": 663.8,
+      "latency_perceived_ms_p50": 598.9,
+      "latency_device_ttfa_ms_p50": null
+    },
+    {
+      "VAD_MIN_UTT_SEC": 1.0,
+      "n_utts": 5,
+      "short_lt_1s": 0,
+      "short_rate": 0.0,
+      "func_end": 0,
+      "func_end_rate": 0.0,
+      "first_stable_mt_ms_p50": 416.7,
+      "first_stable_mt_ms_p90": 638.1,
+      "latency_perceived_ms_p50": 602.2,
+      "latency_device_ttfa_ms_p50": null
+    }
+  ],
+  "mt_p50_delta_ms": -28.9,
+  "latency_gate_30ms": true,
+  "recommend_default_1_0": false,
+  "decision_reason": "baseline short_lt_1s=0 on this continuous mix; knob idle for <1s fragments — keep default 0",
+  "note": "device_ttfa N/A (enable_tts=False); latency proxy=first_stable_mt_ms_p50. No postedit/TM changes."
+}

@@ -28,11 +28,13 @@ def test_prefer_final_asr_keeps_longer_prefix():
 
 
 def test_prefer_2pass_extends_weekday():
+    # Extension / empty paths — mode-invariant
     assert prefer_2pass_asr("星期", "星期三") == "星期三"
     assert prefer_2pass_asr("延迟大概有多", "延迟大概有多少") == "延迟大概有多少"
     assert prefer_2pass_asr("你好", "") == "你好"
-    # unclear conflict → keep stream
-    assert prefer_2pass_asr("欺负", "十六") == "欺负"
+    # Default is offline (AMI WER win); legacy still keeps stream on short conflict
+    assert prefer_2pass_asr("欺负", "十六", mode="legacy") == "欺负"
+    assert prefer_2pass_asr("欺负", "十六", mode="offline") == "十六"
 
 
 def test_weekday_complete_vs_hang():

@@ -1,4 +1,4 @@
-"""Optional streaming GTCRN mic denoise (sherpa-onnx OnlineSpeechDenoiser)."""
+"""可选的流式 GTCRN 麦克风降噪（sherpa-onnx OnlineSpeechDenoiser）。"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -9,7 +9,7 @@ from . import config
 
 
 class MicDenoiser:
-    """Frame-aligned streaming denoise; pass-through if model missing/disabled."""
+    """按帧对齐的流式降噪；模型缺失或禁用时直通。"""
 
     def __init__(self) -> None:
         self._dn = None
@@ -74,7 +74,7 @@ class MicDenoiser:
             return rem
         out: list[np.ndarray] = []
         if self._buf.size:
-            # pad to frame
+            # 补零至整帧
             need = self._frame - (self._buf.size % self._frame)
             if need != self._frame:
                 self._buf = np.concatenate(

@@ -1,0 +1,17 @@
+{
+  "n_with_words": 32,
+  "p10": 1.061,
+  "p50": 3.092,
+  "p90": 4.281,
+  "min": 0.345,
+  "max": 5.392,
+  "ami_046": {
+    "id": "ami_046",
+    "words": 13,
+    "dur": 4.82,
+    "wps": 2.697,
+    "n_utts": 2,
+    "verdict": "awkward"
+  },
+  "note": "P10 candidate for conditional KEEP_TAIL if re-enabled; not written into config yet"
+}

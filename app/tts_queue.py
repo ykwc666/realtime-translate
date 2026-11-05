@@ -1,4 +1,4 @@
-"""Optimistic async TTS with utterance/seq invalidation."""
+"""乐观异步 TTS，按 utterance/seq 失效。"""
 from __future__ import annotations
 
 import queue
@@ -23,7 +23,7 @@ class TtsJob:
 
 @dataclass
 class TtsPlayEvent:
-    """Playback outcome for one job; absolute times use perf_counter."""
+    """单条任务的播放结果；绝对时间用 perf_counter。"""
 
     utt_id: int
     seq: int
@@ -83,7 +83,7 @@ def _event_from_timing(
 
 
 class TtsQueue:
-    """Enqueue speakable units; drop stale by (utt_id, seq, version)."""
+    """入队可播报单元；按 (utt_id, seq, version) 丢弃过期任务。"""
 
     def __init__(
         self,
@@ -120,10 +120,10 @@ class TtsQueue:
     def invalidate(
         self, utt_id: int, min_seq: int, min_version: int | None = None
     ) -> None:
-        """Drop queued/unplayed jobs below min_seq / min_version for this utt.
+        """丢弃本 utt 队列中 seq/version 低于阈值的未播任务。
 
-        Also aborts in-flight hardware playback so barge-in / final rewrite
-        does not keep talking over the next turn.
+        同时中止进行中的硬件播放，避免 barge-in / 最终改写
+        在下一轮仍继续播报。
         """
         with self._lock:
             prev = self._min_seq.get(utt_id, 0)
@@ -197,7 +197,7 @@ class TtsQueue:
 
     def _loop(self) -> None:
         assert self.tts is not None
-        # Prefetch: synth(N+1) overlaps play(N) when queue has a next job.
+        # 预取：队列有下一任务时，synth(N+1) 与 play(N) 重叠。
         pref_job: TtsJob | None = None
         pref_syn: TtsResult | None = None
         while True:
@@ -248,7 +248,7 @@ class TtsQueue:
                     play_sec = 0.0
                     first_pcm_t: float | None = None
                     if syn_ready is not None:
-                        # Prefetched full audio → interruptible play only
+                        # 已预取整段音频 → 仅可中断播放
                         first_pcm_t = getattr(syn_ready, "first_pcm_ready_t", None)
                         speak_t0 = time.perf_counter()
                         if syn_ready.audio is not None and syn_ready.audio.size:

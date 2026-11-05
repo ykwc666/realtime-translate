@@ -1,0 +1,261 @@
+{
+  "results": [
+    {
+      "candidate": "weak_gain_0.0",
+      "VAD_BACKEND": "ten",
+      "VAD_SPEECH_RMS_MIN": 0.035,
+      "VAD_WEAK_GAIN_MAX": 0.0,
+      "empty_n": 16,
+      "rescued": 0,
+      "rescue_rate": 0.0,
+      "rescue_ids": [],
+      "normal_n": 25,
+      "normal_ok": 25,
+      "false_open_noise": 0,
+      "false_open_detail": [],
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期三。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "weak_gain_2.0",
+      "VAD_BACKEND": "ten",
+      "VAD_SPEECH_RMS_MIN": 0.035,
+      "VAD_WEAK_GAIN_MAX": 2.0,
+      "empty_n": 16,
+      "rescued": 2,
+      "rescue_rate": 0.125,
+      "rescue_ids": [
+        "ami_015",
+        "ami_035"
+      ],
+      "normal_n": 25,
+      "normal_ok": 25,
+      "false_open_noise": 0,
+      "false_open_detail": [],
+      "synth_same": 2,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好。",
+            "延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": false
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期三。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "weak_gain_3.0",
+      "VAD_BACKEND": "ten",
+      "VAD_SPEECH_RMS_MIN": 0.035,
+      "VAD_WEAK_GAIN_MAX": 3.0,
+      "empty_n": 16,
+      "rescued": 8,
+      "rescue_rate": 0.5,
+      "rescue_ids": [
+        "ami_012",
+        "ami_014",
+        "ami_015",
+        "ami_018",
+        "ami_025",
+        "ami_034",
+        "ami_035",
+        "ami_047"
+      ],
+      "normal_n": 25,
+      "normal_ok": 25,
+      "false_open_noise": 0,
+      "false_open_detail": [],
+      "synth_same": 2,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好。",
+            "延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": false
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期三。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "weak_gain_4.0",
+      "VAD_BACKEND": "ten",
+      "VAD_SPEECH_RMS_MIN": 0.035,
+      "VAD_WEAK_GAIN_MAX": 4.0,
+      "empty_n": 16,
+      "rescued": 15,
+      "rescue_rate": 0.9375,
+      "rescue_ids": [
+        "ami_007",
+        "ami_012",
+        "ami_014",
+        "ami_015",
+        "ami_016",
+        "ami_018",
+        "ami_020",
+        "ami_025",
+        "ami_034",
+        "ami_035",
+        "ami_037",
+        "ami_038",
+        "ami_043",
+        "ami_044",
+        "ami_047"
+      ],
+      "normal_n": 25,
+      "normal_ok": 25,
+      "false_open_noise": 1,
+      "false_open_detail": [
+        "white"
+      ],
+      "synth_same": 2,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好。",
+            "延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": false
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期三。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "weak_gain_6.0",
+      "VAD_BACKEND": "ten",
+      "VAD_SPEECH_RMS_MIN": 0.035,
+      "VAD_WEAK_GAIN_MAX": 6.0,
+      "empty_n": 16,
+      "rescued": 16,
+      "rescue_rate": 1.0,
+      "rescue_ids": [
+        "ami_001",
+        "ami_007",
+        "ami_012",
+        "ami_014",
+        "ami_015",
+        "ami_016",
+        "ami_018",
+        "ami_020",
+        "ami_025",
+        "ami_034",
+        "ami_035",
+        "ami_037",
+        "ami_038",
+        "ami_043",
+        "ami_044",
+        "ami_047"
+      ],
+      "normal_n": 25,
+      "normal_ok": 25,
+      "false_open_noise": 1,
+      "false_open_detail": [
+        "white"
+      ],
+      "synth_same": 2,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好。",
+            "延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": false
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期三。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    }
+  ],
+  "recommend": null,
+  "recommend_gain": null,
+  "recommend_reason": "no candidate met gates — keep VAD_WEAK_GAIN_MAX=0",
+  "default_changed": null
+}

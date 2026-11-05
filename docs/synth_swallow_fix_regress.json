@@ -1,0 +1,98 @@
+[
+  {
+    "wav": "accept_phrases.wav",
+    "n_utts": 4,
+    "srcs": [
+      "你好，，延迟大概有多少？",
+      "今天天气怎么样？",
+      "现在是星期二。",
+      "他现在没有回我的消息。"
+    ],
+    "tgts": [
+      "Hello. How much delay is it?",
+      "How's the weather today?",
+      "It's Tuesday.",
+      "He hasn't replied to my messages yet."
+    ],
+    "latency_perceived_ms_p50": 711.3968000012392,
+    "utts": [
+      {
+        "src": "你好，，延迟大概有多少？",
+        "tgt": "Hello. How much delay is it?",
+        "audio_sec": 4.799999999999999,
+        "latency_perceived_ms": 803.3374000006006,
+        "first_stable_mt_ms": 1347.112899999047
+      },
+      {
+        "src": "今天天气怎么样？",
+        "tgt": "How's the weather today?",
+        "audio_sec": 2.400000000000001,
+        "latency_perceived_ms": 682.9488000003039,
+        "first_stable_mt_ms": 615.267600000152
+      },
+      {
+        "src": "现在是星期二。",
+        "tgt": "It's Tuesday.",
+        "audio_sec": 2.400000000000001,
+        "latency_perceived_ms": 577.5912000008248,
+        "first_stable_mt_ms": 525.8325000013429
+      },
+      {
+        "src": "他现在没有回我的消息。",
+        "tgt": "He hasn't replied to my messages yet.",
+        "audio_sec": 2.400000000000001,
+        "latency_perceived_ms": 711.3968000012392,
+        "first_stable_mt_ms": 687.4407000013889
+      }
+    ]
+  },
+  {
+    "wav": "tail_duosimo.wav",
+    "n_utts": 2,
+    "srcs": [
+      "延迟大概有多少？",
+      "今天天气怎么样？"
+    ],
+    "tgts": [
+      "About how much delay is there?",
+      "How's the weather today?"
+    ],
+    "latency_perceived_ms_p50": 1183.239500001946,
+    "utts": [
+      {
+        "src": "延迟大概有多少？",
+        "tgt": "About how much delay is there?",
+        "audio_sec": 2.400000000000001,
+        "latency_perceived_ms": 1183.239500001946,
+        "first_stable_mt_ms": 1109.0803000006417
+      },
+      {
+        "src": "今天天气怎么样？",
+        "tgt": "How's the weather today?",
+        "audio_sec": 2.400000000000001,
+        "latency_perceived_ms": 576.2052999998559,
+        "first_stable_mt_ms": 540.8560000014404
+      }
+    ]
+  },
+  {
+    "wav": "pause_xingqi_er.wav",
+    "n_utts": 1,
+    "srcs": [
+      "现在是星期三。"
+    ],
+    "tgts": [
+      "It's Wednesday."
+    ],
+    "latency_perceived_ms_p50": 397.4333000005572,
+    "utts": [
+      {
+        "src": "现在是星期三。",
+        "tgt": "It's Wednesday.",
+        "audio_sec": 2.400000000000001,
+        "latency_perceived_ms": 397.4333000005572,
+        "first_stable_mt_ms": 810.8307000002242
+      }
+    ]
+  }
+]

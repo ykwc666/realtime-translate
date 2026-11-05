@@ -67,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
             next_harvest_path(), mode=args.mode, source_desc=args.source_desc.strip()
         )
 
-    # Live modes: only one process
+    # 实时模式：只允许单进程
     if args.mode in ("vad", "loopback", "duplex", "ptt"):
         from app.single_instance import acquire_run_lock
 

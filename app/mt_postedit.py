@@ -1,9 +1,9 @@
-"""High-precision call-domain post-edits for Opus-MT twists.
+"""通话域 Opus-MT 误译的高精度 postedit。
 
 - postedit_zh_en: ZH→EN
 - postedit_en_zh: EN→ZH（环回对端英文）
 
-Only fires on countable source patterns. Does not touch unrelated sentences.
+仅在可计数的源句式上触发；不改动无关句子。
 """
 from __future__ import annotations
 
@@ -52,7 +52,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
     if re.search(r"\bi can'?t hear clearly\b|\bi cannot hear clearly\b", s):
         return "我听不清。"
 
-    # weather
+    # 天气
     if re.search(r"how'?s the weather|how is the weather", s):
         if "today" in s:
             return "今天天气怎么样？"
@@ -60,9 +60,9 @@ def postedit_en_zh(en: str, zh: str) -> str:
             return "明天天气怎么样？"
         return "天气怎么样？"
 
-    # --- additive class fixes (meeting_idiom / meeting_term / domain / term_literal) ---
+    # --- 增量类修正（meeting_idiom / meeting_term / domain / term_literal）---
 
-    # meeting_idiom
+    # meeting_idiom（会议惯用语）
     if re.search(r"still on for (three|3)\b", s):
         return "我们三点还开吗？"
     if re.search(r"circle back", s) and "tomorrow" in s:
@@ -70,7 +70,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
     if re.search(r"wrap in five|wrap(?:\s+it)?\s+up in five", s):
         return "五分钟内收束，会后发纪要。" if "note" in s else "五分钟内收束。"
 
-    # meeting_term — sticky call phrases
+    # meeting_term — 通话高频短语
     if re.search(r"what'?s the deadline|what is the deadline", s):
         return "这个截止日期是什么时候？"
     if re.search(r"ten more minutes on the deck|minutes on the deck", s):
@@ -84,7 +84,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
     if re.search(r"action item on docs?", s):
         return "文档这块我来跟。"
 
-    # domain_term — echo / latency / duplex / millis
+    # domain_term — 回声 / 延迟 / 双工 / 毫秒
     if re.search(r"\becho\b", s) and re.search(r"\bgone\b", s):
         return "你那边回声没了吗？"
     if re.search(r"\blatency\b", s) and re.search(r"two hundred|200", s):
@@ -101,7 +101,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
         r"cut me off|don'?t cut", s
     ):
         return "先别打断我，延迟这块我还有一点要说。"
-    # generic scrub: 延缓→延迟, 毫克→毫秒 when latency/delay/millis in src
+    # 通用 scrub：延缓→延迟、毫克→毫秒（源含 latency/delay/millis 时）
     if re.search(r"\blatency\b|\bdelay\b|\bmillis?\b", s):
         hyp = (
             hyp.replace("延缓时间", "延迟")
@@ -111,7 +111,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
         if re.search(r"\bmillis?\b|\bmilliseconds?\b", s):
             hyp = hyp.replace("毫克", "毫秒")
 
-    # term_literal — ship(软件上线) / build(构建)
+    # term_literal — ship（软件上线）/ build（构建）
     if re.search(r"\bshipping\b", s) and re.search(r"friday|p\.?m", s):
         return "我们周五下午两点上线。"
     if re.search(r"should(?:n'?t| not) ship\b|\bship tonight\b", s):
@@ -121,7 +121,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
     if re.search(r"build'?s been failing|build has been failing", s):
         return "构建从周二就一直挂，到现在还没人认领修。"
 
-    # mute — semantic noun fix (count=2 but needed for ≥85% gate; cheap & safe)
+    # mute — 语义名词修正（计数少但 ≥85% 门槛需要；便宜且安全）
     if re.search(r"don'?t mute yourself|do not mute yourself", s):
         return "别，先别静音。"
     if re.search(r"\bare you muted\b", s):
@@ -129,7 +129,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
 
     # --- former 规则边界：窄触发，必须带通话/会议锚点 ---
 
-    # colloquial: jump off the call（非物理跳下）
+    # 口语：jump off the call（非物理跳下）
     if re.search(r"\bjump off\b", s) and not re.search(
         r"\b(bridge|building|cliff|roof|train|bus)\b", s
     ):
@@ -140,7 +140,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
                 return "我马上先挂一下。"
             return "我先挂了。"
 
-    # colloquial: audio broke up / breaking up（非分手）
+    # 口语：audio broke up / breaking up（非分手）
     if re.search(r"\bbroke up\b|\bbreaking up\b", s) and re.search(
         r"\b(you|you'?re|there|call|audio|for a (bit|second|sec|while)|a little)\b",
         s,
@@ -152,7 +152,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
                 return "你那边有点断断续续。"
             return "不好意思，刚才你那边断了一会儿。"
 
-    # sense: call drops = 断线，不是「接到电话」
+    # 语义：call drops = 断线，不是「接到电话」
     if re.search(
         r"\b(the )?calls? drop(?:s|ping)?\b|\bkeep(?:s)? dropping\b", s
     ):
@@ -170,7 +170,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
             return f"通话大概每{zh_n}分钟就断一次。"
         return "通话老是断。"
 
-    # sense: walk me through what broke…
+    # 语义：walk me through what broke…
     if re.search(r"walk me through", s) and re.search(
         r"\bbroke\b|\bbreak\b|release|last", s
     ):
@@ -178,7 +178,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
             return "你能不能快速跟我过一下昨天到底哪里挂了？"
         return "你能不能快速跟我过一下上一版到底哪里挂了？"
 
-    # direction: push the deadline by N = 往后推，不是提前
+    # 方向：push the deadline by N = 往后推，不是提前
     if re.search(r"push the deadline", s) and re.search(
         r"\bby a day\b|\bby \w+ days?\b|\ba day\b", s
     ):
@@ -187,7 +187,7 @@ def postedit_en_zh(en: str, zh: str) -> str:
             return "截止日期能往后推两天吗？" if q else "截止日期往后推两天吧。"
         return "截止日期能往后推一天吗？" if q else "截止日期往后推一天吧。"
 
-    # direction: not change … until after the rollout = 上线前先不动
+    # 方向：not change … until after the rollout = 上线前先不动
     if re.search(r"until after (the )?rollout", s) and re.search(
         r"not (to )?change|not (to )?touch|don'?t change|agreed not", s
     ):

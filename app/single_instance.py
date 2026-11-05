@@ -1,4 +1,4 @@
-"""Prevent multiple run.py VAD/duplex instances (echo / double TTS)."""
+"""防止多个 run.py VAD/双工实例（回声 / 重复 TTS）。"""
 from __future__ import annotations
 
 import atexit
@@ -12,7 +12,7 @@ _lock_fh: BinaryIO | None = None
 
 
 def acquire_run_lock(label: str = "run") -> bool:
-    """Non-blocking exclusive lock on cache/run.lock. Returns False if busy."""
+    """对 cache/run.lock 非阻塞独占锁；忙则返回 False。"""
     global _lock_fh
     if not bool(getattr(config, "SINGLE_INSTANCE_LOCK", True)):
         return True

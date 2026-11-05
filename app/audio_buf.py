@@ -1,4 +1,4 @@
-"""Growable float32 audio buffer without per-chunk O(n) full copies."""
+"""可增长的 float32 音频缓冲，避免每块 O(n) 全量拷贝。"""
 from __future__ import annotations
 
 import numpy as np
@@ -25,7 +25,7 @@ class AudioBuffer:
         self._size += int(chunk.size)
 
     def asarray(self) -> np.ndarray:
-        """Materialize contiguous view; coalesces chunks in place."""
+        """物化为连续视图；就地合并各块。"""
         if self._size == 0:
             return np.zeros(0, dtype=np.float32)
         if len(self._chunks) == 1:

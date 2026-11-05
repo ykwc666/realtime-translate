@@ -1,0 +1,328 @@
+{
+  "results": [
+    {
+      "name": "pre",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "legacy",
+        "ASR_LOOP_KEEP_TAIL": false,
+        "ASR_SPEC_REJECT_STALE": false,
+        "ASR_SPEC_MISS_GROW_USE_P90": false
+      },
+      "pipeline_ok": 21,
+      "pipeline_ok_rate": 0.4375,
+      "empty_n": 16,
+      "wer_mean": 0.5832,
+      "focus": {
+        "ami_008": {
+          "verdict": "wrong",
+          "asr_wer": 0.8947,
+          "n_utts": 1,
+          "src": "Read through。"
+        },
+        "ami_040": {
+          "verdict": "wrong",
+          "asr_wer": 0.4545,
+          "n_utts": 1,
+          "src": "But the okay , the global one。"
+        },
+        "ami_039": {
+          "verdict": "wrong",
+          "asr_wer": 0.8235,
+          "n_utts": 1,
+          "src": "It doesn't any need。"
+        },
+        "ami_036": {
+          "verdict": "wrong",
+          "asr_wer": 0.7778,
+          "n_utts": 1,
+          "src": "Is done。"
+        },
+        "ami_046": {
+          "verdict": "awkward",
+          "asr_wer": 0.3333,
+          "n_utts": 2,
+          "src": "So I I have you already calculated。 Are you supposed to do that？"
+        },
+        "ami_010": {
+          "verdict": "wrong",
+          "asr_wer": 1.0,
+          "n_utts": 1,
+          "src": "Yeah。"
+        },
+        "ami_042": {
+          "verdict": "wrong",
+          "asr_wer": 0.6957,
+          "n_utts": 1,
+          "src": "Yeah ,，just to give them an idea。"
+        },
+        "ami_031": {
+          "verdict": "ok",
+          "asr_wer": 0.3043,
+          "n_utts": 1,
+          "src": "That will mean that you can only do things on S know , cause you can do things o"
+        },
+        "ami_006": {
+          "verdict": "wrong",
+          "asr_wer": 0.4667,
+          "n_utts": 1,
+          "src": "So even if it doesn't work ,，you can jigery poke。"
+        },
+        "ami_033": {
+          "verdict": "wrong",
+          "asr_wer": 0.6471,
+          "n_utts": 1,
+          "src": "Yeah , okay . actually , no , no , actually that'。"
+        },
+        "ami_004": {
+          "verdict": "wrong",
+          "asr_wer": 0.75,
+          "n_utts": 1,
+          "src": "Yeah。"
+        }
+      }
+    },
+    {
+      "name": "a_only",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "soft",
+        "ASR_LOOP_KEEP_TAIL": true,
+        "ASR_SPEC_REJECT_STALE": false,
+        "ASR_SPEC_MISS_GROW_USE_P90": false
+      },
+      "pipeline_ok": 21,
+      "pipeline_ok_rate": 0.4375,
+      "empty_n": 16,
+      "wer_mean": 0.5902,
+      "focus": {
+        "ami_008": {
+          "verdict": "wrong",
+          "asr_wer": 0.8947,
+          "n_utts": 1,
+          "src": "Read through。"
+        },
+        "ami_040": {
+          "verdict": "wrong",
+          "asr_wer": 0.4545,
+          "n_utts": 1,
+          "src": "But the okay , the global one。"
+        },
+        "ami_039": {
+          "verdict": "wrong",
+          "asr_wer": 0.8235,
+          "n_utts": 1,
+          "src": "It doesn't any need。"
+        },
+        "ami_036": {
+          "verdict": "wrong",
+          "asr_wer": 0.7778,
+          "n_utts": 1,
+          "src": "Is done。"
+        },
+        "ami_046": {
+          "verdict": "wrong",
+          "asr_wer": 0.6667,
+          "n_utts": 1,
+          "src": "So I I have you already calculated。"
+        },
+        "ami_010": {
+          "verdict": "wrong",
+          "asr_wer": 1.0,
+          "n_utts": 1,
+          "src": "Yeah。"
+        },
+        "ami_042": {
+          "verdict": "wrong",
+          "asr_wer": 0.6957,
+          "n_utts": 1,
+          "src": "Yeah ,，just to give them an idea。"
+        },
+        "ami_031": {
+          "verdict": "ok",
+          "asr_wer": 0.3043,
+          "n_utts": 1,
+          "src": "That will mean that you can only do things on S know , cause you can do things o"
+        },
+        "ami_006": {
+          "verdict": "wrong",
+          "asr_wer": 0.4667,
+          "n_utts": 1,
+          "src": "So even if it doesn't work ,，you can jigery poke。"
+        },
+        "ami_033": {
+          "verdict": "wrong",
+          "asr_wer": 0.6471,
+          "n_utts": 1,
+          "src": "Yeah , okay . actually , no , no , actually that'。"
+        },
+        "ami_004": {
+          "verdict": "wrong",
+          "asr_wer": 0.75,
+          "n_utts": 1,
+          "src": "Yeah。"
+        }
+      }
+    },
+    {
+      "name": "b_only",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "legacy",
+        "ASR_LOOP_KEEP_TAIL": true,
+        "ASR_SPEC_REJECT_STALE": true,
+        "ASR_SPEC_MISS_GROW_USE_P90": true
+      },
+      "pipeline_ok": 23,
+      "pipeline_ok_rate": 0.4792,
+      "empty_n": 16,
+      "wer_mean": 0.5656,
+      "focus": {
+        "ami_008": {
+          "verdict": "ok",
+          "asr_wer": 0.2632,
+          "n_utts": 1,
+          "src": "Read through it ,，you might click on ,。you know，, close it again，straight away。"
+        },
+        "ami_040": {
+          "verdict": "wrong",
+          "asr_wer": 0.4545,
+          "n_utts": 1,
+          "src": "But the okay , the global one。"
+        },
+        "ami_039": {
+          "verdict": "wrong",
+          "asr_wer": 0.4118,
+          "n_utts": 1,
+          "src": "It doesn't make any difference really either way to me。"
+        },
+        "ami_036": {
+          "verdict": "wrong",
+          "asr_wer": 0.7778,
+          "n_utts": 1,
+          "src": "Is done。"
+        },
+        "ami_046": {
+          "verdict": "ok",
+          "asr_wer": 0.2778,
+          "n_utts": 2,
+          "src": "So I I have you already calculated。 We calculated all this data .。What are you s"
+        },
+        "ami_010": {
+          "verdict": "wrong",
+          "asr_wer": 1.0,
+          "n_utts": 1,
+          "src": "Yeah。"
+        },
+        "ami_042": {
+          "verdict": "wrong",
+          "asr_wer": 0.6957,
+          "n_utts": 1,
+          "src": "Yeah ,，just to give them an idea。"
+        },
+        "ami_031": {
+          "verdict": "ok",
+          "asr_wer": 0.3043,
+          "n_utts": 1,
+          "src": "That will mean that you can only do things on S know , cause you can do things o"
+        },
+        "ami_006": {
+          "verdict": "wrong",
+          "asr_wer": 0.4667,
+          "n_utts": 1,
+          "src": "So even if it doesn't work ,，you can jigery poke。"
+        },
+        "ami_033": {
+          "verdict": "wrong",
+          "asr_wer": 0.6471,
+          "n_utts": 1,
+          "src": "Yeah , okay . actually , no , no , actually that'。"
+        },
+        "ami_004": {
+          "verdict": "wrong",
+          "asr_wer": 1.0,
+          "n_utts": 1,
+          "src": "He。"
+        }
+      }
+    },
+    {
+      "name": "both",
+      "config": {
+        "ASR_LOOP_GUARD_MODE": "soft",
+        "ASR_LOOP_KEEP_TAIL": true,
+        "ASR_SPEC_REJECT_STALE": true,
+        "ASR_SPEC_MISS_GROW_USE_P90": true
+      },
+      "pipeline_ok": 22,
+      "pipeline_ok_rate": 0.4583,
+      "empty_n": 16,
+      "wer_mean": 0.5737,
+      "focus": {
+        "ami_008": {
+          "verdict": "ok",
+          "asr_wer": 0.2632,
+          "n_utts": 1,
+          "src": "Read through it ,，you might click on ,。you know，, close it again，straight away。"
+        },
+        "ami_040": {
+          "verdict": "wrong",
+          "asr_wer": 0.4545,
+          "n_utts": 1,
+          "src": "But the okay , the global one。"
+        },
+        "ami_039": {
+          "verdict": "wrong",
+          "asr_wer": 0.4118,
+          "n_utts": 1,
+          "src": "It doesn't make any difference really either way to me。"
+        },
+        "ami_036": {
+          "verdict": "wrong",
+          "asr_wer": 0.7778,
+          "n_utts": 1,
+          "src": "Is done。"
+        },
+        "ami_046": {
+          "verdict": "wrong",
+          "asr_wer": 0.6667,
+          "n_utts": 1,
+          "src": "So I I have you already calculated。"
+        },
+        "ami_010": {
+          "verdict": "wrong",
+          "asr_wer": 1.0,
+          "n_utts": 1,
+          "src": "Yeah。"
+        },
+        "ami_042": {
+          "verdict": "wrong",
+          "asr_wer": 0.6957,
+          "n_utts": 1,
+          "src": "Yeah ,，just to give them an idea。"
+        },
+        "ami_031": {
+          "verdict": "ok",
+          "asr_wer": 0.3043,
+          "n_utts": 1,
+          "src": "That will mean that you can only do things on S know , cause you can do things o"
+        },
+        "ami_006": {
+          "verdict": "wrong",
+          "asr_wer": 0.4667,
+          "n_utts": 1,
+          "src": "So even if it doesn't work ,，you can jigery poke。"
+        },
+        "ami_033": {
+          "verdict": "wrong",
+          "asr_wer": 0.6471,
+          "n_utts": 1,
+          "src": "Yeah , okay . actually , no , no , actually that'。"
+        },
+        "ami_004": {
+          "verdict": "wrong",
+          "asr_wer": 1.0,
+          "n_utts": 1,
+          "src": "He。"
+        }
+      }
+    }
+  ]
+}

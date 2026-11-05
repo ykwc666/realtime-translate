@@ -1,0 +1,10 @@
+{
+  "name": "len40_beam3_nr3_pen1.1_else_greedy",
+  "n": 64,
+  "repetition_rate": 0.0,
+  "mt_ms_p50": 177.33,
+  "mt_ms_p95": 569.67,
+  "mt_ms_mean": 239.0,
+  "p95_gate_120ms": false,
+  "n_long": 48
+}

@@ -1,0 +1,92 @@
+{
+  "n_items": 60,
+  "table_wer": {
+    "ami": {
+      "n": 48,
+      "wer_coverage": 48,
+      "wer_mean": 0.4433
+    },
+    "fleurs": {
+      "n": 12,
+      "wer_coverage": 12,
+      "wer_mean": 0.1352
+    }
+  },
+  "table_fragment": {
+    "n": 53,
+    "short_lt_1s": 0,
+    "short_rate": 0.0,
+    "func_end": 3,
+    "func_end_rate": 0.0566
+  },
+  "table_split_ledger": {
+    "ami": {
+      "pipeline": {
+        "n": 48,
+        "ok": 27,
+        "ok_rate": 0.5625,
+        "counts": {
+          "ok": 27,
+          "awkward": 0,
+          "wrong": 21
+        }
+      },
+      "mt_only": {
+        "n": 48,
+        "ok": 45,
+        "ok_rate": 0.9375,
+        "counts": {
+          "ok": 45,
+          "awkward": 2,
+          "wrong": 1
+        }
+      }
+    },
+    "fleurs": {
+      "pipeline": {
+        "n": 12,
+        "ok": 11,
+        "ok_rate": 0.9167,
+        "counts": {
+          "ok": 11,
+          "awkward": 0,
+          "wrong": 1
+        }
+      },
+      "mt_only": {
+        "n": 12,
+        "ok": 11,
+        "ok_rate": 0.9167,
+        "counts": {
+          "ok": 11,
+          "awkward": 0,
+          "wrong": 1
+        }
+      }
+    }
+  },
+  "table_a5": {
+    "online": {
+      "n": 0,
+      "wer_mean": null,
+      "ok_rate": null
+    },
+    "offline": {
+      "n": 0,
+      "wer_mean": null,
+      "ok_rate": null
+    },
+    "merged": {
+      "n": 0,
+      "wer_mean": null,
+      "ok_rate": null
+    }
+  },
+  "main_corpora": [
+    "ami",
+    "fleurs"
+  ],
+  "ood_corpora": [
+    "libri"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "ami": {
+      "n": 48,
+      "merged_wer": 0.2001,
+      "online_wer": 0.5475,
+      "offline_wer": 0.1565
+    },
+    "fleurs": {
+      "n": 12,
+      "merged_wer": 0.1469,
+      "online_wer": 0.3168,
+      "offline_wer": 0.0739
+    },
+    "libri": {
+      "n": 4,
+      "merged_wer": 1.2203,
+      "online_wer": 1.174,
+      "offline_wer": 1.1488
+    }
+  },
+  "n": 64
+}

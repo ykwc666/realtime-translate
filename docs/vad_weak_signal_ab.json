@@ -1,0 +1,277 @@
+{
+  "results": [
+    {
+      "candidate": "baseline",
+      "vad_gain": 1.0,
+      "VAD_BACKEND": "silero",
+      "VAD_SILERO_THRESHOLD": 0.85,
+      "empty_never_n": 20,
+      "rescued": 0,
+      "rescue_rate": 0.0,
+      "normal_n": 23,
+      "normal_ok": 23,
+      "false_open_noise": 0,
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期啊。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "silero_thr0.5",
+      "vad_gain": 1.0,
+      "VAD_BACKEND": "silero",
+      "VAD_SILERO_THRESHOLD": 0.5,
+      "empty_never_n": 20,
+      "rescued": 7,
+      "rescue_rate": 0.35,
+      "normal_n": 23,
+      "normal_ok": 22,
+      "false_open_noise": 0,
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期啊。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "silero_thr0.3",
+      "vad_gain": 1.0,
+      "VAD_BACKEND": "silero",
+      "VAD_SILERO_THRESHOLD": 0.3,
+      "empty_never_n": 20,
+      "rescued": 4,
+      "rescue_rate": 0.2,
+      "normal_n": 23,
+      "normal_ok": 21,
+      "false_open_noise": 0,
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期啊。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "silero_thr0.2",
+      "vad_gain": 1.0,
+      "VAD_BACKEND": "silero",
+      "VAD_SILERO_THRESHOLD": 0.2,
+      "empty_never_n": 20,
+      "rescued": 1,
+      "rescue_rate": 0.05,
+      "normal_n": 23,
+      "normal_ok": 17,
+      "false_open_noise": 0,
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期啊。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "ten",
+      "vad_gain": 1.0,
+      "VAD_BACKEND": "ten",
+      "VAD_SILERO_THRESHOLD": 0.85,
+      "empty_never_n": 20,
+      "rescued": 6,
+      "rescue_rate": 0.3,
+      "normal_n": 23,
+      "normal_ok": 23,
+      "false_open_noise": 0,
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期啊。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "gain_x3_vad_only",
+      "vad_gain": 3.0,
+      "VAD_BACKEND": "silero",
+      "VAD_SILERO_THRESHOLD": 0.85,
+      "empty_never_n": 20,
+      "rescued": 15,
+      "rescue_rate": 0.75,
+      "normal_n": 23,
+      "normal_ok": 23,
+      "false_open_noise": 1,
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期啊。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    },
+    {
+      "candidate": "gain_x4_vad_only",
+      "vad_gain": 4.0,
+      "VAD_BACKEND": "silero",
+      "VAD_SILERO_THRESHOLD": 0.85,
+      "empty_never_n": 20,
+      "rescued": 17,
+      "rescue_rate": 0.85,
+      "normal_n": 23,
+      "normal_ok": 23,
+      "false_open_noise": 1,
+      "synth_same": 3,
+      "synth_n": 3,
+      "synth_detail": {
+        "accept_phrases.wav": {
+          "srcs": [
+            "你好，延迟大概有多少？",
+            "今天天气怎么样？",
+            "现在是星期二。",
+            "他现在没有回我的消息。"
+          ],
+          "same_as_baseline": true
+        },
+        "tail_duosimo.wav": {
+          "srcs": [
+            "延迟大概有多少？",
+            "今天天气怎么样？"
+          ],
+          "same_as_baseline": true
+        },
+        "pause_xingqi_er.wav": {
+          "srcs": [
+            "现在是星期啊。"
+          ],
+          "same_as_baseline": true
+        }
+      }
+    }
+  ],
+  "recommend": "ten",
+  "recommend_reason": "best rescue=6/20 with false_open=0, normal_ok=23/23, synth_same=3/3; gain_* false_opens; silero_thr0.5 drops normal_ok",
+  "default_changed": {
+    "VAD_BACKEND": "ten",
+    "VAD_SILERO_THRESHOLD": 0.85,
+    "evidence": "docs/vad_weak_signal_ab.json results[ten]"
+  }
+}

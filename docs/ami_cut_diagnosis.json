@@ -1,0 +1,18 @@
+[
+  {
+    "src": "even though there all the other same topics，where doesn't。",
+    "t_end_sec": 16.3,
+    "audio_sec_final": 4.799999999999999,
+    "rms_pre_200ms": 0.00506,
+    "rms_post_200ms": 0.00546,
+    "endswith_func": "doesn't"
+  },
+  {
+    "src": "This would , yeah。",
+    "t_end_sec": 20.9,
+    "audio_sec_final": 2.400000000000001,
+    "rms_pre_200ms": 0.01342,
+    "rms_post_200ms": 0.00957,
+    "endswith_func": "yeah"
+  }
+]

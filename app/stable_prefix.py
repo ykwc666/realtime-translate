@@ -25,7 +25,7 @@ def _content_chars(s: str) -> str:
 
 
 def untranslated_tail(final_text: str, translated_src: str) -> str:
-    """Return final suffix not yet covered by WRITE cursor (punct-insensitive)."""
+    """返回 WRITE 游标尚未覆盖的最终后缀（标点不敏感）。"""
     final_text = (final_text or "").strip()
     translated_src = (translated_src or "").strip()
     if not final_text:
@@ -43,7 +43,7 @@ def untranslated_tail(final_text: str, translated_src: str) -> str:
         need = len(tn)
     else:
         need = len(common_prefix(fn, tn))
-        # SenseVoice final often differs by 1–2 chars (打/达); keep overlap
+        # SenseVoice 最终句常差 1–2 字（打/达）；保留重叠
         if need < max(2, int(0.35 * min(len(tn), len(fn)))):
             return final_text
 
@@ -59,12 +59,12 @@ def untranslated_tail(final_text: str, translated_src: str) -> str:
 @dataclass
 class StablePrefixTracker:
     """
-    Commit stable text from streaming/partial ASR.
+    从流式/ partial ASR 提交稳定文本。
 
-    Cursors (source side):
-    - stable/committed: confirmed ASR prefix
-    - asr_seq: only accept newer ASR hypotheses
-    Target TTS pending buffer is separate (pending_tts).
+    游标（源语侧）：
+    - stable/committed：已确认 ASR 前缀
+    - asr_seq：仅接受更新的 ASR 假设
+    目标 TTS 待播缓冲单独维护（pending_tts）。
     """
 
     agree_needed: int = 2
@@ -101,14 +101,14 @@ class StablePrefixTracker:
 
         self._last_partial = partial
 
-        # Prefer the confirmed older span when growing
+        # 增长时优先已确认的旧 span
         target = last_core if growing and last_core else shared
         if len(target) <= len(self.committed):
             return ""
         if not target.startswith(self.committed) and not self.committed.startswith(
             target[: min(len(self.committed), len(target))]
         ):
-            # hard rewrite — wait for finalize
+            # 硬改写 — 等 finalize
             return ""
         if not partial.startswith(self.committed) and not target.startswith(self.committed):
             return ""
@@ -124,7 +124,7 @@ class StablePrefixTracker:
             self._agree = self.agree_needed
             return delta
 
-        # flickering path
+        # 闪烁路径
         if shared == self._candidate:
             self._agree += 1
         else:
@@ -142,15 +142,15 @@ class StablePrefixTracker:
 
     def finalize(self, final_text: str, translated_src: str = "") -> str:
         """
-        Accept final ASR as new stable text.
-        Return only the untranslated tail relative to translated_src (WRITE cursor),
-        so already-WRITEn source is not re-queued for MT.
+        接受最终 ASR 为新稳定文本。
+        仅返回相对 translated_src（WRITE 游标）尚未翻译的尾部，
+        避免已 WRITE 的源语再次入队 MT。
         """
         final_text = (final_text or "").strip()
-        # WRITE cursor only — never fall back to ASR committed (untranslated stable
-        # text would be skipped and only a short tail like「期一」gets MT).
+        # 仅用 WRITE 游标 — 勿回退 ASR committed（未译稳定段会被跳过，
+        # 只剩「期一」之类短尾进 MT）。
         translated_src = (translated_src or "").strip()
-        self.asr_seq = max(self.asr_seq + 1, 10_000_000)  # final beats partials
+        self.asr_seq = max(self.asr_seq + 1, 10_000_000)  # final 优先于 partial
         leftover = untranslated_tail(final_text, translated_src)
         self.committed = final_text
         self._last_partial = final_text
@@ -172,7 +172,7 @@ class StablePrefixTracker:
             self.pending_tts = ""
             return []
 
-        # Protect EN abbreviations (p.m. / a.m. / U.S.) from splits on '.'
+        # 保护英文缩写（p.m. / a.m. / U.S.）不被 '.' 切开
         masked = re.sub(r"\b([A-Za-z])\.", lambda m: m.group(1) + "\0", buf)
         parts = _SENT_END.split(masked)
         out: list[str] = []
@@ -182,7 +182,7 @@ class StablePrefixTracker:
             if not p:
                 continue
             is_last = i == len(parts) - 1
-            # sentence-final: CJK/!/? or '.' that is not only an abbrev tail
+            # 句末：CJK/!/? 或非纯缩写尾的 '.'
             stripped = buf.strip()
             complete = bool(re.search(r"[。！？!]$", stripped)) or (
                 stripped.endswith(".")

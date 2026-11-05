@@ -35,7 +35,7 @@ _UTT_STATS_BOUND = 16
 
 @dataclass
 class SpecOfflineHint:
-    """Re-arm offline-only hit: CUT must merge with live online finalize."""
+    """re-arm 仅 offline 命中：CUT 须与 live online finalize 合并。"""
 
     offline_text: str
     offline_ms: float
@@ -55,22 +55,22 @@ class DualTrackStats:
     first_partial_ms: float | None = None
     first_stable_mt_ms: float | None = None
     utt_wall_ms: float | None = None
-    # Perceived latency (speech_end → …); dualsim wall is NOT this
+    # 感知延迟（speech_end → …）；dualsim wall 不是此项
     t_cut_ms: float | None = None
     t_asr_done_ms: float | None = None
     t_mt_done_ms: float | None = None
-    # Legacy deprecated: speech_end → MT enqueue (NOT device first audio)
+    # 遗留已弃用：speech_end → MT 入队（非设备首帧音频）
     t_first_audio_ms: float | None = None
-    # Same meaning as legacy t_first_audio_ms (explicit name for migration)
+    # 与遗留 t_first_audio_ms 同义（迁移用显式命名）
     t_mt_enqueue_ms: float | None = None
-    # speech_end → MT ready (legacy latency_perceived_ms; display as mt_ready)
+    # speech_end → MT ready（遗留 latency_perceived_ms；展示为 mt_ready）
     latency_perceived_ms: float | None = None
-    # speech_end → first nonempty PCM ready for this utt's TTS
+    # speech_end → 本句 TTS 首段非空 PCM 就绪
     t_tts_pcm_ms: float | None = None
-    # speech_end → device callback first nonzero PCM (true device TTFA)
+    # speech_end → 设备回调首帧非零 PCM（真实 device TTFA）
     t_first_audio_callback_ms: float | None = None
     latency_device_ttfa_ms: float | None = None
-    # MT ready → device first audio
+    # MT ready → 设备首帧音频
     mt_ready_to_callback_ms: float | None = None
     tts_active_underruns: int | None = None
     tts_samples_expected: int | None = None
@@ -81,11 +81,11 @@ class DualTrackStats:
     speculate_hit: bool = False
     source: str = ""
     translated: str = ""
-    # Observational (harvest): pre-postedit MT text; null until final MT runs
+    # 观测（harvest）：postedit 前 MT 文本；final MT 跑完前为 null
     mt_raw: str | None = None
     partial_interval_used: list[float] = field(default_factory=list)
     utt_id: int = 0
-    # Read-only early-cut probe oracle (None unless ENDPOINT_EARLY_CUT_PROBE)
+    # 只读 early-cut 探针 oracle（未开 ENDPOINT_EARLY_CUT_PROBE 则为 None）
     early_cut_probe: dict | None = None
     audio_sec_final: float | None = None
 
@@ -106,10 +106,10 @@ class DualTrackEngine:
         self.translator = translator
         self.tts = tts
         self.play = play
-        # Fixed direction for duplex (mic=zh, loopback=en); None → detect_lang
+        # 双工固定方向（mic=zh, loopback=en）；None → detect_lang
         self.force_src_lang = force_src_lang
         self.label = label or ""
-        # Side-channel only (e.g. HarvestWriter); never on the critical latency path.
+        # 仅旁路（如 HarvestWriter）；不在关键延迟路径上。
         self.on_utt_final = None
         self.endpoint = create_endpoint()
         tag = f" {self.label}" if self.label else ""
@@ -143,10 +143,10 @@ class DualTrackEngine:
             enabled=bool(play and config.TTS_ASYNC and tts is not None),
             on_play_event=self._on_tts_play_event,
         )
-        # Late TTS events after reset_utt: keyed by utt_id (bounded)
+        # reset_utt 后迟到的 TTS 事件：按 utt_id 索引（有界）
         self._utt_stats: dict[int, DualTrackStats] = {}
         self._utt_speech_end: dict[int, float] = {}
-        # Session-wide speculate accounting (extra CPU / cancels)
+        # 会话级投机统计（额外 CPU / cancel）
         self.spec_counters = {
             "starts": 0,
             "hits": 0,
@@ -155,7 +155,7 @@ class DualTrackEngine:
             "miss_timeout": 0,
             "skip_headstart": 0,
             "restarts": 0,
-            "cpu_ms": 0.0,  # sum of speculate job wall clocks
+            "cpu_ms": 0.0,  # 投机任务墙钟之和
         }
         self.reset_utt()
         self._probe_reset()
@@ -166,13 +166,13 @@ class DualTrackEngine:
         self._probe_max_sil = 0.0
 
     def _probe_tick(self) -> None:
-        """Read-only: snapshot at silence checkpoints; never cuts or cancels spec."""
+        """只读：在静音检查点快照；不切句、不 cancel 投机。"""
         if not bool(getattr(config, "ENDPOINT_EARLY_CUT_PROBE", False)):
             return
         if not self.in_speech:
             return
         sil = float(self._trailing_silence_sec())
-        # Speech resumed after we had climbed into the probe band
+        # 已进入探针带后又恢复说话
         if self._probe_max_sil >= 0.30 and sil + 0.02 < self._probe_max_sil:
             for cp in list(self._probe_snaps.keys()):
                 if sil < cp <= self._probe_max_sil:
@@ -189,7 +189,7 @@ class DualTrackEngine:
                 continue
             if sil + 1e-6 < cp:
                 continue
-            # First time silence reaches this checkpoint
+            # 静音首次到达该检查点
             spec = self._spec
             spec_exists = spec is not None
             spec_done = bool(spec_exists and spec.get("done") and spec["done"].is_set())
@@ -217,14 +217,14 @@ class DualTrackEngine:
     def _probe_finalize(self, final_src: str) -> None:
         if not bool(getattr(config, "ENDPOINT_EARLY_CUT_PROBE", False)):
             return
-        # Ensure 0.45 snap exists at cut if we crossed the band
+        # 若曾穿过探针带，切句时确保存在 0.45 快照
         sil = float(self._trailing_silence_sec())
         if 0.45 not in self._probe_snaps and sil >= 0.40:
-            # Synthetic final checkpoint from current state (still read-only)
+            # 由当前状态合成最终检查点（仍只读）
             self._probe_max_sil = max(self._probe_max_sil, 0.45)
-            # Temporarily allow recording 0.45
+            # 临时允许记录 0.45
             old_sil_note = sil
-            # Reuse tick path by faking: record manually
+            # 伪造走 tick 路径：手动记录
             spec = self._spec
             spec_exists = spec is not None
             spec_done = bool(spec_exists and spec.get("done") and spec["done"].is_set())
@@ -259,7 +259,7 @@ class DualTrackEngine:
     def _prune_utt_maps(self) -> None:
         if len(self._utt_stats) <= _UTT_STATS_BOUND:
             return
-        # Drop oldest keys (lowest utt_id)
+        # 丢弃最旧键（最小 utt_id）
         for k in sorted(self._utt_stats.keys())[: len(self._utt_stats) - _UTT_STATS_BOUND]:
             self._utt_stats.pop(k, None)
             self._utt_speech_end.pop(k, None)
@@ -274,17 +274,17 @@ class DualTrackEngine:
         self._prune_utt_maps()
 
     def _notify_utt_final(self, stats: DualTrackStats) -> None:
-        """Side-channel hook (harvest). Must not raise into finalize."""
+        """旁路钩子（harvest）。不得向 finalize 抛异常。"""
         cb = getattr(self, "on_utt_final", None)
         if not callable(cb):
             return
         try:
             cb(stats)
-        except Exception as exc:  # noqa: BLE001 — never break capture
+        except Exception as exc:  # noqa: BLE001 — 绝不影响采集
             print(f"[harvest hook error] {exc}")
 
     def _on_tts_play_event(self, ev: TtsPlayEvent) -> None:
-        """Fill device-TTFA fields on the utt that owned this job (safe after reset)."""
+        """填充拥有该 TTS 任务的 utt 的 device-TTFA 字段（reset 后仍安全）。"""
         st = self._utt_stats.get(int(ev.utt_id))
         if st is None:
             return
@@ -299,8 +299,8 @@ class DualTrackEngine:
             return
         if ev.first_pcm_ready_t is not None and st.t_tts_pcm_ms is None:
             st.t_tts_pcm_ms = (ev.first_pcm_ready_t - t_end) * 1000
-        # Keep first-callback even if a later utt's invalidate() stops playback —
-        # device TTFA already happened before the barge-in.
+        # 保留首次 callback，即便后续 utt 的 invalidate() 停播 —
+        # device TTFA 已在 barge-in 之前发生。
         if ev.callback_valid and ev.first_callback_t is not None:
             cb_ms = (ev.first_callback_t - t_end) * 1000
             if st.t_first_audio_callback_ms is None or cb_ms < st.t_first_audio_callback_ms:
@@ -312,7 +312,7 @@ class DualTrackEngine:
                 )
 
     def wait_tts_idle(self, timeout: float = 120.0) -> None:
-        """Block until TTS queue drained (late events already applied)."""
+        """阻塞直到 TTS 队列排空（迟到事件已应用）。"""
         self.tts_q.wait_idle(timeout=timeout)
 
     def reset_utt(self) -> None:
@@ -340,7 +340,9 @@ class DualTrackEngine:
         self._utt_announced = False
         self._forced_truncation = False
         self._holding_cut = False
+        self._hold_t0 = 0.0
         self._asr_loop = False
+        self._loop_hits = 0
         self._cut_ready: SpeechSegment | None = None
         self._spec: dict | None = None
         self._spec_starts_utt = 0
@@ -348,7 +350,14 @@ class DualTrackEngine:
         self.arbiter.reset()
         self._probe_reset()
 
-    def _begin_utt(self) -> None:
+    def _begin_utt(self, *, preserve_hold: bool = False) -> None:
+        """开始新一句。
+
+        preserve_hold=True：VAD 已发出切分候选且仲裁在等待 —
+        勿清空 holding_cut / arbiter（ami_000 swallow 类）。
+        """
+        keep_hold = bool(preserve_hold and self._holding_cut)
+        hold_t0 = float(getattr(self, "_hold_t0", 0.0) or 0.0)
         self.buf.clear()
         self.tracker.reset()
         self.mt_ms_sum = 0.0
@@ -364,12 +373,17 @@ class DualTrackEngine:
         self._tts_seq = 0
         self._tts_version = 0
         self._forced_truncation = False
-        self._holding_cut = False
         self._asr_loop = False
+        self._loop_hits = 0
         self._cut_ready = None
         self._spec = None
         self._spec_starts_utt = 0
-        self.arbiter.reset()
+        if not keep_hold:
+            self._holding_cut = False
+            self._hold_t0 = 0.0
+            self.arbiter.reset()
+        else:
+            self._hold_t0 = hold_t0 or time.perf_counter()
         self.tts_q.invalidate(self._utt_id, 0, min_version=0)
         self.stats = DualTrackStats()
         self.utt_t0 = time.perf_counter()
@@ -387,7 +401,7 @@ class DualTrackEngine:
         return max(vad_sil, float(getattr(self, "_engine_silence_sec", 0.0)))
 
     def _note_chunk_energy(self, chunk: np.ndarray) -> None:
-        """Engine-side silence clock — VAD may jump 0→cut inside one feed()."""
+        """引擎侧静音钟 — VAD 可能在单次 feed() 内从 0 跳到 cut。"""
         chunk = np.asarray(chunk, dtype=np.float32).reshape(-1)
         if chunk.size == 0:
             return
@@ -426,7 +440,7 @@ class DualTrackEngine:
             return
         sil = self._trailing_silence_sec()
         min_sil = float(getattr(config, "ASR_SPECULATE_MIN_SILENCE_SEC", 0.08))
-        # Speech resumed → abandon stale speculative job
+        # 恢复说话 → 放弃过期投机任务
         if sil < min_sil:
             self._clear_speculate(reason="speech")
             return
@@ -449,7 +463,7 @@ class DualTrackEngine:
             ),
         )
         pred_ms = estimate_2pass_wall_ms(audio_sec)
-        # Also kick when partial frozen (pause) even if VAD silence counter lagged
+        # partial 冻结（停顿）时也触发，即便 VAD 静音计数滞后
         paused = self._unchanged_partials >= 1 and bool(
             (self._last_partial_text or "").strip()
         )
@@ -523,18 +537,35 @@ class DualTrackEngine:
         grew_n = int(audio.size) - n0
         if grew_n > int(0.15 * config.SAMPLE_RATE):
             tail = np.asarray(audio[n0:], dtype=np.float32).reshape(-1)
-            rms = (
-                float(np.sqrt(np.mean(np.square(tail), dtype=np.float64)))
-                if tail.size
-                else 0.0
-            )
+            use_p90 = bool(getattr(config, "ASR_SPEC_MISS_GROW_USE_P90", True))
+            rms = 0.0
+            if tail.size:
+                if use_p90:
+                    # 30ms 帧 p90：避免「语音+长尾静音」均值被稀释漏判 miss_grow
+                    win = max(1, int(0.03 * config.SAMPLE_RATE))
+                    if tail.size < win:
+                        rms = float(
+                            np.sqrt(np.mean(np.square(tail), dtype=np.float64))
+                        )
+                    else:
+                        n_fr = int(tail.size // win)
+                        frames = tail[: n_fr * win].reshape(n_fr, win)
+                        fr = np.sqrt(
+                            np.mean(np.square(frames), axis=1, dtype=np.float64)
+                        )
+                        rms = float(np.percentile(fr, 90))
+                else:
+                    rms = float(
+                        np.sqrt(np.mean(np.square(tail), dtype=np.float64))
+                    )
             floor = float(getattr(config, "VAD_SPEECH_RMS_MIN", 0.035)) * 0.45
-            # Silence-only growth after snap is expected (VAD floor); speech growth → miss
+            # 快照后仅静音增长属预期（VAD 底限）；有语音增长 → miss
             if rms >= floor:
                 self.spec_counters["miss_grow"] = (
                     int(self.spec_counters.get("miss_grow", 0)) + 1
                 )
-                print(f"[ASR spec miss audio+{grew_n} rms={rms:.4f}]")
+                tag = "rms_p90" if use_p90 else "rms"
+                print(f"[ASR spec miss audio+{grew_n} {tag}={rms:.4f}]")
                 self._note_spec_cpu(job)
                 return None
 
@@ -542,8 +573,8 @@ class DualTrackEngine:
         done = bool(job["done"].is_set())
         age = time.perf_counter() - float(job.get("t0", time.perf_counter()))
         headstart = float(getattr(config, "ASR_SPECULATE_MIN_HEADSTART_SEC", 0.15))
-        # First-shot only: re-arm jobs already paid cancel_speech; skipping them
-        # forces a fresh serial 2pass (often slower than draining the in-flight snap).
+        # 仅首枪：re-arm 已付 cancel_speech；跳过会
+        # 强制新的串行 2pass（常比 drain 在途快照更慢）。
         if (
             not done
             and age < headstart
@@ -601,9 +632,28 @@ class DualTrackEngine:
                     getattr(res, "audio_samples", 0) or job.get("n", 0)
                 ),
             )
+        spec_t = (res.text or "").strip()
+        partial = (self._last_partial_text or "").strip()
+        # 早投机短稿 vs 已变长的 live partial：拒绝过期 hit（ASR_SPEC_REJECT_STALE 可关）
+        if (
+            bool(getattr(config, "ASR_SPEC_REJECT_STALE", True))
+            and partial
+            and spec_t
+            and len(partial) >= len(spec_t) + 12
+            and spec_t.lower() not in partial.lower()
+        ):
+            self.spec_counters["miss_stale"] = (
+                int(self.spec_counters.get("miss_stale", 0)) + 1
+            )
+            print(
+                f"[ASR spec miss stale short={spec_t[:40]!r} "
+                f"partial={partial[:48]!r}]"
+            )
+            self._note_spec_cpu(job)
+            return None
         print(
             f"[ASR spec hit {res.ms:.0f}ms waited={waited:.0f}ms] "
-            f"{(res.text or '').strip()!r}"
+            f"{spec_t!r}"
         )
         return res
 
@@ -668,7 +718,7 @@ class DualTrackEngine:
         self.stats.mt_triggers += 1
         self.stats.mt_reasons.append("final")
         self.tgt_lang = mt.tgt_lang
-        # harvest observational field (no behavior change)
+        # harvest 观测字段（不改变行为）
         self.stats.mt_raw = getattr(mt, "mt_raw", None) or mt.text
         now = time.perf_counter()
         if self.stats.first_stable_mt_ms is None and self.utt_t0:
@@ -680,15 +730,15 @@ class DualTrackEngine:
             return
         self.translated_bits.append(mt.text)
         self._translated_src = pending
-        # final_only: one shot whole sentence — avoid "Just..." → Just. / . / .
+        # final_only：整句一次 — 避免 "Just..." → Just. / . / .
         speakable = [mt.text.strip()]
-        # Legacy: "first audio" was actually MT-enqueue / MT-ready proxy.
+        # 遗留：「first audio」实为 MT 入队 / MT-ready 代理。
         if self.stats.t_first_audio_ms is None and getattr(self, "_t_speech_end", 0.0):
             ready_ms = (time.perf_counter() - self._t_speech_end) * 1000
-            self.stats.t_first_audio_ms = ready_ms  # deprecated alias
+            self.stats.t_first_audio_ms = ready_ms  # 已弃用别名
             self.stats.t_mt_enqueue_ms = ready_ms
             self.stats.latency_perceived_ms = ready_ms  # mt_ready / perceived_mt
-        # Register before enqueue so late/fast TTS events never miss the map.
+        # 入队前先注册，避免迟到/过快 TTS 事件找不到 map。
         self.stats.utt_id = self._utt_id
         self._register_utt_stats(self.stats)
         self._enqueue_speak(speakable, mute_cb=mute_cb)
@@ -730,6 +780,19 @@ class DualTrackEngine:
                     f"[partial {partial.ms:.0f}ms #{seq} samples={partial.audio_samples}] {text}"
                 )
                 if has_repeated_span(text):
+                    self._loop_hits = int(getattr(self, "_loop_hits", 0) or 0) + 1
+                else:
+                    self._loop_hits = 0
+                guard = str(
+                    getattr(config, "ASR_LOOP_GUARD_MODE", "soft") or "soft"
+                ).strip().lower()
+                streak = max(1, int(getattr(config, "ASR_LOOP_STREAK", 2) or 2))
+                if guard == "soft":
+                    if self._loop_hits >= streak:
+                        self._asr_loop = True
+                        print("--- ASR 复读检测，准备强切 ---")
+                elif has_repeated_span(text):
+                    # legacy：一次命中即 latch（与旧行为一致）
                     self._asr_loop = True
                     print("--- ASR 复读检测，准备强切 ---")
                 with self._lock:
@@ -742,6 +805,8 @@ class DualTrackEngine:
 
     def _apply_arbiter(self, dec, mute_cb=None) -> SpeechSegment | None:  # noqa: ANN001
         if dec.action in (ArbiterAction.WAIT_PARTIAL, ArbiterAction.WAIT_COMPLETION):
+            if not self._holding_cut:
+                self._hold_t0 = time.perf_counter()
             self._holding_cut = True
             reopen = getattr(self.endpoint, "reopen_after_hold", None)
             if callable(reopen):
@@ -749,6 +814,7 @@ class DualTrackEngine:
             return None
         if dec.action in (ArbiterAction.CUT, ArbiterAction.CUT_FORCED):
             self._holding_cut = False
+            self._hold_t0 = 0.0
             self._forced_truncation = bool(dec.forced_truncation)
             print(
                 f"--- 仲裁收句（{dec.reason}"
@@ -762,10 +828,56 @@ class DualTrackEngine:
             return seg
         return None
 
+    def _force_hold_cut(self, reason: str) -> SpeechSegment | None:
+        """释放卡住的仲裁 hold → 必须进入 finalize（不可静默丢弃）。"""
+        if not self._holding_cut:
+            return None
+        print(f"--- 仲裁收句（{reason}, hold_timeout）---")
+        self._holding_cut = False
+        self._hold_t0 = 0.0
+        self.arbiter.reset()
+        # reset 仲裁等效 cut_done；从 buf/seg 构造 seg
+        audio = self.buf.asarray()
+        if audio.size <= 0:
+            return None
+        seg = SpeechSegment(audio=audio, start_sample=0, end_sample=int(audio.size))
+        self._cut_ready = seg
+        return seg
+
     def _finalize_utt(self, seg: SpeechSegment, mute_cb=None):  # noqa: ANN001
-        if not self._utt_announced and not (self._last_partial_text or "").strip():
-            self.endpoint.reset()
-            self.reset_utt()
+        # 此前：VAD 在任意 partial 前切句时静默 return None →
+        # emitted_swallowed。现始终跑 final ASR 以保证 utt 有结尾。
+        if not self.in_speech:
+            # 引擎未开说时从 segment 播种（配合 feed_chunk 修复）
+            self.in_speech = True
+            if self.utt_t0 <= 0:
+                self.utt_t0 = time.perf_counter()
+            if self.buf.size <= 0 and getattr(seg, "audio", None) is not None:
+                audio0 = np.asarray(seg.audio, dtype=np.float32).reshape(-1)
+                if audio0.size:
+                    self.buf.append(audio0)
+                    self.audio_sec = audio0.size / float(config.SAMPLE_RATE)
+
+        # Phase C：无句末标点的不足 1 秒碎片 hold 在同一句
+        #（与后续语音合并）。VAD_MIN_UTT_SEC=0 时关闭。
+        min_utt = float(getattr(config, "VAD_MIN_UTT_SEC", 0.0) or 0.0)
+        partial = (self._last_partial_text or "").strip()
+        has_term = partial.endswith((".", "?", "!", "。", "？", "！"))
+        max_utt = float(getattr(config, "VAD_MAX_UTT_SEC", 15.0) or 0.0)
+        under_max = max_utt <= 0 or self.audio_sec < max_utt
+        if (
+            min_utt > 0
+            and self.audio_sec < min_utt
+            and not has_term
+            and under_max
+            and not getattr(self, "_forced_truncation", False)
+        ):
+            reopen = getattr(self.endpoint, "reopen_after_hold", None)
+            if callable(reopen):
+                reopen()
+            else:
+                self.endpoint.reset()
+                # 保持 in_speech / 保留 buf — 不 reset_utt
             return None
 
         t_wait = time.perf_counter()
@@ -794,8 +906,8 @@ class DualTrackEngine:
                 else self.buf.asarray()
             )
 
-        # Offline re-arm: run online finalize in parallel with draining the
-        # offline hint so CUT wall ≈ max(online, offline_remain), not sum.
+        # Offline re-arm：online finalize 与 drain offline hint 并行，
+        # 使 CUT wall ≈ max(online, offline_remain)，非相加。
         pending = self._spec
         if (
             pending is not None
@@ -823,7 +935,7 @@ class DualTrackEngine:
                 )
                 self.stats.speculate_hit = True
             elif isinstance(online, AsrResult):
-                # Offline miss/timeout — stream already flushed; only need offline
+                # Offline miss/timeout — stream 已 flush；只需 offline
                 off = self.asr.transcribe_offline_only(audio)
                 final = self.asr.merge_online_with_offline_hint(
                     online, off.text, off.ms
@@ -843,7 +955,7 @@ class DualTrackEngine:
             elif isinstance(spec, AsrResult):
                 final = spec
                 self.stats.speculate_hit = True
-                # Live stream abandoned; next utt gets fresh AsrIncState
+                # 放弃 live stream；下一句新建 AsrIncState
                 self._asr_state.finished = True
             else:
                 final = self.asr.finalize_stream(audio, self._asr_state)
@@ -872,9 +984,19 @@ class DualTrackEngine:
         if not full:
             if self._utt_announced:
                 print("--- 空识别，跳过翻译/播报 ---")
+            else:
+                print("--- 空识别（无 partial），仍记 finalize_empty ---")
+            self.stats.source = ""
+            self.stats.translated = ""
+            if self.utt_t0:
+                self.stats.utt_wall_ms = (time.perf_counter() - self.utt_t0) * 1000
+            out = self.stats
+            out.utt_id = self._utt_id
+            out.audio_sec_final = float(self.audio_sec)
+            self._notify_utt_final(out)
             self.endpoint.reset()
             self.reset_utt()
-            return None
+            return out
 
         content = re.sub(r"[^\w\u4e00-\u9fff]+", "", full, flags=re.UNICODE)
         min_chars = int(getattr(config, "MIN_FINAL_ASR_CHARS", 2))
@@ -893,8 +1015,8 @@ class DualTrackEngine:
         with self._lock:
             self.tracker.finalize(full, translated_src="")
         self.translated_bits.clear()
-        # MT on raw ASR; optional display punct (OfflinePunctuation always
-        # terminal-izes — do not feed punctuated text into Opus-MT).
+        # MT 吃裸 ASR；可选展示标点（OfflinePunctuation 总会句末化 —
+        # 勿把带标点文本喂给 Opus-MT）。
         self._translate_final(full, mute_cb=mute_cb)
         display_src = full
         if bool(getattr(config, "ASR_PUNCT_DISPLAY", False)):
@@ -904,7 +1026,7 @@ class DualTrackEngine:
             if punct_ms > 0 and display_src != full:
                 print(f"[punct {punct_ms:.0f}ms] {full!r} → {display_src!r}")
 
-        # P0-3: optional — don't block the audio/feed thread on playback.
+        # P0-3：可选 — 不因播放在音频/feed 线程阻塞。
         if bool(getattr(config, "FINALIZE_WAIT_TTS", True)):
             self.tts_q.wait_idle(timeout=60)
         if self.tts_q.stats.synth_ms:
@@ -959,7 +1081,7 @@ class DualTrackEngine:
             self._cut_ready = None
             return self._finalize_utt(seg_ready, mute_cb=mute_cb)
 
-        # Kick speculate on prior silence before this chunk may emit a cut
+        # 本块可能 emit cut 前，基于已有静音触发投机
         if self.in_speech:
             self._maybe_speculate()
             self._probe_tick()
@@ -970,19 +1092,28 @@ class DualTrackEngine:
             chunk_f = np.asarray(chunk, dtype=np.float32).reshape(-1)
             self.buf.append(chunk_f)
             self.audio_sec += chunk_f.size / float(config.SAMPLE_RATE)
-            # Must update silence clock during hold — otherwise mid-utt breath
-            # starts a spec job, speech resumes, sil stays high, never cancel,
-            # and CUT sees miss_grow on a stale snapshot (weekday holding_cut).
+            # hold 期间必须更新静音钟 — 否则句中气口
+            # 会起 spec job，恢复说话后 sil 仍高、不 cancel，
+            # CUT 对过期快照见 miss_grow（weekday holding_cut）。
             self._note_chunk_energy(chunk_f)
             reopen = getattr(self.endpoint, "reopen_after_hold", None)
             if callable(reopen):
                 reopen()
-            # Speech resume while holding → drop stale spec before arbiter may CUT
+            # hold 中恢复说话 → 仲裁可能 CUT 前先丢过期 spec
             self._maybe_speculate()
-            dec = self.arbiter.tick(
-                self._last_partial_text, self._asr_seq, now=time.perf_counter()
-            )
-            held = self._apply_arbiter(dec, mute_cb=mute_cb)
+            now = time.perf_counter()
+            hold_lim = float(getattr(config, "ENDPOINT_HOLD_TIMEOUT_SEC", 3.0) or 0.0)
+            if (
+                hold_lim > 0
+                and self._hold_t0 > 0
+                and (now - self._hold_t0) >= hold_lim
+            ):
+                held = self._force_hold_cut("hold_timeout")
+            else:
+                dec = self.arbiter.tick(
+                    self._last_partial_text, self._asr_seq, now=now
+                )
+                held = self._apply_arbiter(dec, mute_cb=mute_cb)
             if held is not None:
                 return self._finalize_utt(held, mute_cb=mute_cb)
 
@@ -990,7 +1121,8 @@ class DualTrackEngine:
         # 若只看 endpoint 会丢掉收尾 chunk → final ASR 少末字（多少/怎么样）。
         if self.in_speech or self.endpoint.in_speech or self._holding_cut:
             if not self.in_speech:
-                self._begin_utt()
+                # 若已在 hold VAD 候选，保留仲裁状态。
+                self._begin_utt(preserve_hold=bool(self._holding_cut))
             if not self._holding_cut:
                 chunk_f = np.asarray(chunk, dtype=np.float32).reshape(-1)
                 self.buf.append(chunk_f)
@@ -1064,9 +1196,29 @@ class DualTrackEngine:
                     has_text and self._unchanged_partials >= need_unchanged
                 )
                 too_long = max_utt > 0 and self.audio_sec >= max_utt
-                if freeze or too_long or self._asr_loop:
-                    if self._asr_loop and not freeze and not too_long:
+                force_loop = False
+                if self._asr_loop and not freeze and not too_long:
+                    guard = str(
+                        getattr(config, "ASR_LOOP_GUARD_MODE", "soft") or "soft"
+                    ).strip().lower()
+                    if guard == "soft":
+                        # 流式 partial 无否决权：整段 offline 复核后再决定是否强切
+                        off = self.asr.transcribe_offline_only(self.buf.asarray())
+                        off_t = (off.text or "").strip()
+                        if has_repeated_span(off_t):
+                            force_loop = True
+                            print("--- 强制收句（ASR 复读，offline 复核）---")
+                        else:
+                            print(
+                                f"--- ASR 复读 offline 复核通过，取消强切 "
+                                f"({off_t[:48]!r}) ---"
+                            )
+                            self._asr_loop = False
+                            self._loop_hits = 0
+                    else:
+                        force_loop = True
                         print("--- 强制收句（ASR 复读）---")
+                if freeze or too_long or force_loop:
                     if not has_text:
                         if self._utt_announced:
                             print(
@@ -1080,6 +1232,17 @@ class DualTrackEngine:
                         f"audio={self.audio_sec:.1f}s）---"
                     )
                     audio = self.buf.asarray()
+                    # P2：复读强切后把末尾播入下一句，避免余音永久丢失
+                    keep_tail = bool(
+                        force_loop
+                        and getattr(config, "ASR_LOOP_KEEP_TAIL", True)
+                    )
+                    tail = np.zeros(0, dtype=np.float32)
+                    if keep_tail and audio.size:
+                        n_tail = min(int(audio.size), int(0.8 * config.SAMPLE_RATE))
+                        min_tail = int(0.35 * config.SAMPLE_RATE)
+                        if n_tail >= min_tail:
+                            tail = np.asarray(audio[-n_tail:], dtype=np.float32).copy()
                     seg = SpeechSegment(
                         audio=audio,
                         start_sample=0,
@@ -1087,10 +1250,35 @@ class DualTrackEngine:
                     )
                     self._forced_truncation = True
                     self.endpoint.reset()
-                    return self._finalize_utt(seg, mute_cb=mute_cb)
+                    out = self._finalize_utt(seg, mute_cb=mute_cb)
+                    if keep_tail and tail.size >= int(0.35 * config.SAMPLE_RATE):
+                        self._begin_utt()
+                        self.in_speech = True
+                        if self.utt_t0 <= 0:
+                            self.utt_t0 = time.perf_counter()
+                        self.buf.append(tail)
+                        self.audio_sec = float(tail.size) / float(config.SAMPLE_RATE)
+                        reopen = getattr(self.endpoint, "reopen_after_hold", None)
+                        if callable(reopen):
+                            reopen()
+                        print(
+                            f"--- ASR 复读强切保留尾音 {tail.size / config.SAMPLE_RATE:.2f}s ---"
+                        )
+                    return out
 
         if seg is None:
             return None
+
+        # 短/弱片段：VAD 可能在 engine.in_speech 前 emit segment。
+        # 在仲裁 hold 前先 _begin_utt（从 seg 播种 buf），避免
+        # _begin_utt 抹掉候选（ami_000 emitted_swallowed）。
+        if not self.in_speech:
+            self._begin_utt(preserve_hold=False)
+            seg_audio = getattr(seg, "audio", None)
+            if seg_audio is not None and np.asarray(seg_audio).size:
+                a = np.asarray(seg_audio, dtype=np.float32).reshape(-1)
+                self.buf.append(a)
+                self.audio_sec = a.size / float(config.SAMPLE_RATE)
 
         if not self._holding_cut:
             dec = self.arbiter.on_vad_candidate(
@@ -1114,7 +1302,7 @@ class DualTrackEngine:
             )
             if finished is not None:
                 results.append(finished)
-        if self.in_speech and self.buf.size:
+        if self._holding_cut or (self.in_speech and self.buf.size):
             pad = np.zeros(
                 int(config.VAD_SILENCE_SEC * config.SAMPLE_RATE) + 1600, np.float32
             )
@@ -1126,7 +1314,13 @@ class DualTrackEngine:
                     results.append(finished)
                     break
             else:
-                if self.buf.size:
+                if self._holding_cut:
+                    held = self._force_hold_cut("flush_hold")
+                    if held is not None:
+                        finished = self._finalize_utt(held, mute_cb=mute_cb)
+                        if finished is not None:
+                            results.append(finished)
+                elif self.buf.size:
                     print("--- 强制收尾（仿真） ---")
                     audio = self.buf.asarray()
                     seg = SpeechSegment(

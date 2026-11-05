@@ -15,7 +15,7 @@ class SpeechSegment:
 
 
 def create_endpoint():
-    """Factory: silero (default) | ten | energy fallback."""
+    """工厂：silero（默认）| ten | energy 回退。"""
     backend = (config.VAD_BACKEND or "silero").lower()
     if backend == "ten" and config.TEN_VAD_ONNX.exists():
         try:
@@ -32,7 +32,7 @@ def create_endpoint():
 
 
 class EnergyEndpoint:
-    """Lightweight end-of-utterance detector for half-duplex mic loop."""
+    """半双工麦环路的轻量句尾检测。"""
 
     def __init__(
         self,
@@ -75,7 +75,7 @@ class EnergyEndpoint:
     def _is_speech(self, chunk: np.ndarray) -> bool:
         rms = self._rms(chunk)
         if not self._speech_started:
-            # adapt noise floor slowly in silence
+            # 静音时缓慢适应噪声底
             self._noise_ema = 0.95 * self._noise_ema + 0.05 * rms
             thr = max(self.energy_threshold, self._noise_ema * 3.5)
         else:
@@ -115,7 +115,7 @@ class EnergyEndpoint:
 
 
 class SherpaVadEndpoint:
-    """sherpa-onnx Silero / TEN-VAD with EnergyEndpoint-compatible API."""
+    """sherpa-onnx Silero / TEN-VAD，API 与 EnergyEndpoint 兼容。"""
 
     def __init__(self, kind: str = "silero") -> None:
         import sherpa_onnx
@@ -171,7 +171,7 @@ class SherpaVadEndpoint:
 
     @property
     def in_speech(self) -> bool:
-        # Prefer our latch; silero flag can lag after segment pop
+        # 优先用本侧 latch；segment pop 后 silero 标志可能滞后
         return self._speech_started or (
             bool(self._vad.is_speech_detected) and self._utt_audio.size > 0
         )
@@ -183,12 +183,12 @@ class SherpaVadEndpoint:
         return float(self._silence_samples) / float(self.sr)
 
     def set_hang_hold(self, hold: bool) -> None:
-        """Ignore early segment pops while strong-hang; silence floor unchanged."""
+        """strong-hang 期间忽略过早 segment pop；静音底限不变。"""
         self._hang_hold = bool(hold)
         self._silence_needed = self._silence_base
 
     def reopen_after_hold(self) -> None:
-        """Keep listening after a swallowed candidate cut (arbiter completion window)."""
+        """候选切被吞后继续听（仲裁补全窗）。"""
         self._speech_started = True
         self._silence_samples = 0
 
@@ -200,7 +200,7 @@ class SherpaVadEndpoint:
         self._silence_samples = 0
         self._hang_hold = False
         self._silence_needed = self._silence_base
-        # keep absolute_pos continuous
+        # 保持 absolute_pos 连续
 
 
 
@@ -218,7 +218,7 @@ class SherpaVadEndpoint:
         return SpeechSegment(audio=audio.copy(), start_sample=start, end_sample=end)
 
     def flush(self) -> SpeechSegment | None:
-        """Flush remaining buffered speech (file/sim end)."""
+        """刷出缓冲中剩余语音（文件/仿真结束）。"""
         try:
             self._vad.flush()
         except Exception:
@@ -252,10 +252,28 @@ class SherpaVadEndpoint:
         while self._pending.size >= self._window:
             win = self._pending[: self._window]
             self._pending = self._pending[self._window :]
-            self._vad.accept_waveform(win.tolist())
+            # 弱峰窗：只放大送进 VAD / RMS 门的副本；_utt_audio 与 dual_track.buf 仍用原窗
+            win_vad = win
+            gain_max = float(getattr(config, "VAD_WEAK_GAIN_MAX", 0.0) or 0.0)
+            peak_cap = float(getattr(config, "VAD_WEAK_GAIN_PEAK_MAX", 0.03) or 0.03)
+            if gain_max > 1.0:
+                peak = float(np.max(np.abs(win))) if win.size else 0.0
+                if 0.0 < peak < peak_cap:
+                    rms0 = float(np.sqrt(np.mean(np.square(win), dtype=np.float64)))
+                    target = float(
+                        getattr(
+                            config,
+                            "VAD_SPEECH_RMS_MIN",
+                            getattr(config, "VAD_ENERGY_THRESHOLD", 0.015),
+                        )
+                    )
+                    if rms0 > 1e-6 and rms0 < target:
+                        g = min(gain_max, target / rms0)
+                        win_vad = np.clip(win * np.float32(g), -1.0, 1.0)
+            self._vad.accept_waveform(win_vad.tolist())
             if self._vad.is_speech_detected:
-                # Soft energy gate: reject near-silent / fan-floor false starts
-                rms = float(np.sqrt(np.mean(np.square(win), dtype=np.float64)))
+                # 软能量门：拒绝近静音/风扇底噪误开说（用与 VAD 相同的增益窗）
+                rms = float(np.sqrt(np.mean(np.square(win_vad), dtype=np.float64)))
                 energy_floor = float(
                     getattr(
                         config,
@@ -273,8 +291,8 @@ class SherpaVadEndpoint:
                         self._utt_audio = np.zeros(0, dtype=np.float32)
                     self._utt_audio = np.concatenate([self._utt_audio, win])
             elif self._speech_started:
-                # VAD often stops flagging speech without popping a segment —
-                # count trailing silence ourselves and force endpoint.
+                # VAD 常在不 pop segment 时停止标语音 —
+                # 自行累计尾静音并强制 endpoint。
                 self._utt_audio = np.concatenate([self._utt_audio, win])
                 self._silence_samples += int(win.size)
                 if self._silence_samples >= self._silence_needed:
@@ -289,8 +307,8 @@ class SherpaVadEndpoint:
                 self._vad.pop()
                 if samples.size < self._min_speech:
                     continue
-                # Always emit — dual_track arbiter decides hold vs cut.
-                # Swallowing pops here caused「星期」粘住直到 unchanged=9.
+                # 始终 emit — dual_track 仲裁决定 hold 或 cut。
+                # 此处吞 pop 会导致「星期」粘住直到 unchanged=9。
                 start = self._utt_start
                 end = start + samples.size
                 out = SpeechSegment(
@@ -304,7 +322,7 @@ class SherpaVadEndpoint:
 
 
 
-# Back-compat alias (default kind=silero)
+# 向后兼容别名（默认 kind=silero）
 SileroVadEndpoint = SherpaVadEndpoint
 
 
@@ -318,7 +336,7 @@ def vad_backend_label(ep: object) -> str:
 def segment_audio(
     audio: np.ndarray, block_ms: int = 100
 ) -> list[SpeechSegment]:
-    """Split a wav with the same Silero/TEN/Energy endpoint used live (no FunASR)."""
+    """用与实机相同的 Silero/TEN/Energy endpoint 切 wav（无 FunASR）。"""
     audio = np.asarray(audio, dtype=np.float32).reshape(-1)
     if audio.size == 0:
         return []
@@ -329,7 +347,7 @@ def segment_audio(
         seg = ep.feed(audio[i : i + block])
         if seg is not None:
             out.append(seg)
-    # drain trailing speech
+    # 排空尾段语音
     pad = np.zeros(
         int(config.VAD_SILENCE_SEC * config.SAMPLE_RATE) + block * 2, dtype=np.float32
     )

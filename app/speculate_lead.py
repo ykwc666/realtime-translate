@@ -1,21 +1,21 @@
-"""Pure helpers: when to start speculative 2-pass finalize.
+"""纯函数：何时启动 speculative 2-pass finalize。
 
-Coefficients from scripts/bench_2pass_ab.py parallel online=3 offline=2
-on accept_phrases + tail_duosimo (6 segs), linear fit:
+系数来自 scripts/bench_2pass_ab.py，parallel online=3 offline=2，
+在 accept_phrases + tail_duosimo（6 段）上线性拟合：
 
   audio_sec: 1.476, 1.380, 1.188, 1.732, 1.540, 1.380
   wall_med:  353,   293,   266,   497,   402,   294
   wall_ms ≈ -310.93 + 456.60 * audio_sec   (R≈OK; clamp floor 180ms)
 
-trigger_silence ≈ VAD_SILENCE − pred_decode − margin,
-clamped to [min_silence, fixed ASR_SPECULATE_SILENCE_SEC].
+trigger_silence ≈ VAD_SILENCE − pred_decode − margin，
+钳制在 [min_silence, fixed ASR_SPECULATE_SILENCE_SEC]。
 """
 from __future__ import annotations
 
 import math
 
 
-# Fit from docs/bench_2pass_ab_raw.txt (par o=3 f=2 wall_med), 2026-11-04.
+# 拟合自 docs/bench_2pass_ab_raw.txt（par o=3 f=2 wall_med），2026-11-04。
 DECODE_MS_BIAS = -310.93
 DECODE_MS_PER_AUDIO_SEC = 456.60
 DECODE_MS_FLOOR = 180.0
@@ -48,7 +48,7 @@ def speculate_trigger_silence_sec(
     per_audio_sec_ms: float = DECODE_MS_PER_AUDIO_SEC,
     floor_ms: float = DECODE_MS_FLOOR,
 ) -> float:
-    """Return silence seconds required before starting a speculative job."""
+    """返回启动 speculative 任务前所需的静音秒数。"""
     fixed = float(fixed_silence_sec)
     lo = float(min_silence_sec)
     hi = fixed

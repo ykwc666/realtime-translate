@@ -1,0 +1,58 @@
+{
+  "greedy": {
+    "n": 46,
+    "repetition_rate": 0.0217,
+    "mt_ms_p50": 113.63,
+    "mt_ms_p95": 270.12,
+    "mt_ms_mean": 135.45,
+    "p95_gate_120ms": false,
+    "knobs": {
+      "name": "greedy",
+      "beam": 1,
+      "ngram": 0,
+      "penalty": 1.0
+    }
+  },
+  "beam3": {
+    "n": 46,
+    "repetition_rate": 0.0,
+    "mt_ms_p50": 133.2,
+    "mt_ms_p95": 345.13,
+    "mt_ms_mean": 161.29,
+    "p95_gate_120ms": false,
+    "knobs": {
+      "name": "beam3",
+      "beam": 3,
+      "ngram": 0,
+      "penalty": 1.0
+    }
+  },
+  "beam3_norepeat3": {
+    "n": 46,
+    "repetition_rate": 0.0,
+    "mt_ms_p50": 138.87,
+    "mt_ms_p95": 267.93,
+    "mt_ms_mean": 141.39,
+    "p95_gate_120ms": false,
+    "knobs": {
+      "name": "beam3_norepeat3",
+      "beam": 3,
+      "ngram": 3,
+      "penalty": 1.0
+    }
+  },
+  "beam3_norepeat3_pen1.1": {
+    "n": 46,
+    "repetition_rate": 0.0,
+    "mt_ms_p50": 121.72,
+    "mt_ms_p95": 251.93,
+    "mt_ms_mean": 132.5,
+    "p95_gate_120ms": false,
+    "knobs": {
+      "name": "beam3_norepeat3_pen1.1",
+      "beam": 3,
+      "ngram": 3,
+      "penalty": 1.1
+    }
+  }
+}

@@ -14,6 +14,8 @@ cache/
 logs/
 output/
 *.log
+data/ledger_corpus/
+data/probe/
 
 # 编辑器/系统
 .vscode/

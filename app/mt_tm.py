@@ -1,7 +1,7 @@
-"""Exact-match translation memory for high-frequency call phrases.
+"""高频通话短语的精确匹配翻译记忆（TM）。
 
-Hit → skip CT2 (≈0ms). Miss → caller falls through to MT + postedit.
-Keys are normalized (case/punct/whitespace); values are canonical spoken forms.
+命中 → 跳过 CT2（≈0ms）。未命中 → 调用方走 MT + 后编辑。
+键经规范化（大小写/标点/空白）；值为规范口语形式。
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def normalize_tm_key(text: str, lang: str) -> str:
 
 @lru_cache(maxsize=1)
 def _load_maps() -> tuple[dict[str, str], dict[str, str]]:
-    """Return (zh_key→en, en_key→zh)."""
+    """返回 (zh_key→en, en_key→zh)。"""
     path = Path(getattr(config, "MT_TM_PATH", config.ROOT / "data" / "mt_tm.jsonl"))
     zh2en: dict[str, str] = {}
     en2zh: dict[str, str] = {}
@@ -52,7 +52,7 @@ def _load_maps() -> tuple[dict[str, str], dict[str, str]]:
 
 
 def lookup_tm(text: str, src_lang: str) -> str | None:
-    """Exact TM hit for src_lang in {zh,en}. None on miss."""
+    """src_lang 为 {zh,en} 时的精确 TM 命中；未命中为 None。"""
     if not getattr(config, "MT_TM_ENABLED", True):
         return None
     key = normalize_tm_key(text, src_lang)

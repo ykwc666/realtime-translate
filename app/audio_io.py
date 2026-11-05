@@ -12,7 +12,7 @@ from . import config
 
 
 def list_loopback_devices() -> list[str]:
-    """Names of WASAPI loopback capture endpoints (needs package `soundcard`)."""
+    """WASAPI 环回采集端点名称（需 `soundcard` 包）。"""
     try:
         import soundcard as sc
     except ImportError:
@@ -25,7 +25,7 @@ def list_loopback_devices() -> list[str]:
 
 
 def list_output_devices() -> list[tuple[int, str, int]]:
-    """sounddevice playback devices: (index, name, max_output_channels)."""
+    """sounddevice 播放设备：(index, name, max_output_channels)。"""
     rows: list[tuple[int, str, int]] = []
     for i, d in enumerate(sd.query_devices()):
         ch = int(d.get("max_output_channels") or 0)
@@ -35,7 +35,7 @@ def list_output_devices() -> list[tuple[int, str, int]]:
 
 
 def resolve_output_device(name_substr: str | None = None) -> int | None:
-    """Match TTS_OUTPUT_DEVICE_NAME substring → device index; None = default."""
+    """TTS_OUTPUT_DEVICE_NAME 子串匹配 → 设备 index；None 为默认。"""
     needle = (name_substr if name_substr is not None else getattr(config, "TTS_OUTPUT_DEVICE_NAME", "")) or ""
     needle = needle.strip().lower()
     if not needle:
@@ -57,7 +57,7 @@ def load_wav(path: str, target_sr: int = config.SAMPLE_RATE) -> np.ndarray:
     if data.ndim > 1:
         data = data.mean(axis=1)
     if sr != target_sr:
-        # linear resample; good enough for prototype
+        # 线性重采样；原型足够
         duration = len(data) / float(sr)
         n = int(duration * target_sr)
         x_old = np.linspace(0.0, 1.0, num=len(data), endpoint=False)
@@ -67,7 +67,7 @@ def load_wav(path: str, target_sr: int = config.SAMPLE_RATE) -> np.ndarray:
 
 
 class MicStream:
-    """Background mic capture into a queue of float32 chunks."""
+    """后台麦克风采集，写入 float32 块队列。"""
 
     def __init__(
         self,
@@ -122,13 +122,13 @@ class MicStream:
     def mute(self, muted: bool = True) -> None:
         if muted:
             self._muted.set()
-            # Drop anything already queued — otherwise TTS leak stays in the pipeline
+            # 丢弃已排队数据 — 否则 TTS 泄漏会留在管线里
             self.drain()
         else:
             self._muted.clear()
 
     def drain(self) -> int:
-        """Drop queued mic chunks (call after TTS to avoid backlog false speech)."""
+        """清空已排队 mic 块（TTS 后调用，避免积压误判为语音）。"""
         n = 0
         while True:
             try:
@@ -147,10 +147,10 @@ class MicStream:
 
 
 class LoopbackStream:
-    """WASAPI loopback capture via soundcard (system / peer playback).
+    """经 soundcard 的 WASAPI 环回采集（系统 / 对端播放）。
 
-    For real calls: route *peer* audio to the loopback device, and play our TTS
-    on a different output (e.g. VB-CABLE) — otherwise TTS is re-captured.
+    真实通话：将对端音频路由到环回设备，TTS 播到
+    另一路输出（如 VB-CABLE）— 否则 TTS 会被再次采集。
     """
 
     def __init__(
@@ -186,7 +186,7 @@ class LoopbackStream:
                     return m
             raise RuntimeError(f"找不到环回设备含名 {name!r}；可选: {list_loopback_devices()}")
         spk = sc.default_speaker()
-        # Prefer loopback of the current default speaker
+        # 优先当前默认扬声器的环回
         for m in sc.all_microphones(include_loopback=True):
             if getattr(m, "isloopback", False) and spk and spk.name in m.name:
                 return m
@@ -203,7 +203,7 @@ class LoopbackStream:
 
     @staticmethod
     def _co_initialize() -> None:
-        """WASAPI/soundcard on a worker thread needs COM init (0x800401f0 otherwise)."""
+        """工作线程上的 WASAPI/soundcard 需 COM 初始化（否则 0x800401f0）。"""
         try:
             import pythoncom  # type: ignore
 
@@ -287,7 +287,7 @@ class LoopbackStream:
 
 
 def record_until_enter(sample_rate: int = config.SAMPLE_RATE) -> np.ndarray:
-    """Push-to-talk: record until user presses Enter."""
+    """按住说话：直到用户按 Enter 结束录音。"""
     print("录音中… 说完后按 Enter 结束本句")
     q: queue.Queue[np.ndarray] = queue.Queue()
 

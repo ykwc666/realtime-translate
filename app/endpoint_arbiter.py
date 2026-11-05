@@ -1,15 +1,14 @@
-"""Utterance-scoped endpoint arbiter: VAD candidate × text completeness × timeout.
+"""按句 endpoint 仲裁：VAD 候选 × 文本完整性 × 超时。
 
-VAD silence only proposes a cut. Completeness decides immediate cut vs a short
-completion window. Never lengthens the global silence floor.
+VAD 静音仅提出切分候选。完整性决定立即 CUT 或短补全窗。
+不拉长全局静音底限。
 
-Completion window timing (frozen): after silence candidate + partial sync, if
-text is weekday-incomplete, deadline = now + ENDPOINT_COMPLETION_WINDOW_SEC
-(additive to VAD_SILENCE_SEC, not carved out of it).
+补全窗计时（冻结）：静音候选 + partial sync 之后，若文本为「星期」未完成，
+deadline = now + ENDPOINT_COMPLETION_WINDOW_SEC（与 VAD_SILENCE_SEC 叠加，非从中扣除）。
 
-Assumption: final-only MT quality depends on final ASR completeness (trailing
-chars). Do not reintroduce open hang blacklists to paper over ASR truncation.
-See docs/BASELINE_FINAL_ONLY.md.
+假设：final-only MT 质量依赖 final ASR 完整（末字）。
+勿再用开放 hang 黑名单掩盖 ASR 截断。
+见 docs/BASELINE_FINAL_ONLY.md。
 """
 from __future__ import annotations
 
@@ -38,7 +37,7 @@ class ArbiterDecision:
 
 
 class EndpointArbiter:
-    """Per-utterance state machine; call reset() on every new utt."""
+    """每句状态机；新 utt 时须 reset()。"""
 
     def __init__(self) -> None:
         self.reset()
@@ -57,7 +56,7 @@ class EndpointArbiter:
         return self._candidate and not self._cut_done
 
     def on_vad_candidate(self, asr_seq: int, now: float | None = None) -> ArbiterDecision:
-        """Silence floor hit → candidate cut; sync to a fresher partial first."""
+        """静音底限到达 → 候选切分；先 sync 到更新的 partial。"""
         if self._cut_done:
             return ArbiterDecision(ArbiterAction.NONE, reason="already_cut")
         now = time.perf_counter() if now is None else now
@@ -79,20 +78,20 @@ class EndpointArbiter:
         return self._judge_text(self._last_text, now)
 
     def tick(self, text: str, asr_seq: int, now: float | None = None) -> ArbiterDecision:
-        """Poll while holding a candidate (no new partial)."""
+        """持有候选时轮询（无新 partial）。"""
         self._last_text = text or self._last_text
         if not self._candidate or self._cut_done:
             return ArbiterDecision(ArbiterAction.NONE)
         now = time.perf_counter() if now is None else now
 
-        # Still in partial-sync window
+        # 仍在 partial-sync 窗内
         if self._completion_deadline <= 0:
             if self._wait_seq is not None and asr_seq <= self._wait_seq and now < self._sync_deadline:
                 return ArbiterDecision(ArbiterAction.WAIT_PARTIAL, reason="await_newer_seq")
-            # sync timeout or seq advanced → judge
+            # sync 超时或 seq 前进 → 判定
             return self._judge_text(self._last_text, now)
 
-        # Completion window
+        # 补全窗
         if now < self._completion_deadline:
             if not is_weekday_incomplete(self._last_text):
                 return self._cut(forced=False, reason="resolved")

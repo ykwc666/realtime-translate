@@ -40,9 +40,11 @@ ONLINE_TAIL_PAD_SEC = 0.5
 SILERO_VAD_ONNX = MODELS_DIR / "silero_vad.onnx"
 TEN_VAD_ONNX = MODELS_DIR / "ten-vad.onnx"
 # vad: silero | ten | energy（ten=TEN-VAD，需 models/ten-vad.onnx）
-VAD_BACKEND = "silero"
+# 2026-11-05 弱信号 A/B（docs/vad_weak_signal_ab.json）：ten 救回 6/20 个 vad_never_open，
+# false_open=0 且合成文本完好；silero 降阈值会伤害正常场景；仅调 VAD 增益会在噪声上误开。Silero 阈值保持不变。
+VAD_BACKEND = "ten"
 # TEN-VAD 语音概率阈值（官方示例常用 0.2–0.5）
-VAD_TEN_THRESHOLD = 0.5
+VAD_TEN_THRESHOLD = 0.4
 
 # mt: transformers | ct2
 MT_BACKEND = "ct2"
@@ -82,6 +84,23 @@ ASR_FINAL_2PASS = True
 # Paraformer oneshot 与 SenseVoice 二遍并行。
 # 6+6 并行会抢核变慢；配合 ASR_THREADS_ONLINE/OFFLINE=3/2 后有净收益（见上注释）。
 ASR_2PASS_PARALLEL = True
+# 2pass 文本合并策略（不换模型）：
+#   legacy            — 旧启发式（冲突时常留 online）
+#   offline           — 有 offline 就用 offline
+#   offline_conflict  — 一致/包含仍走 legacy；明显冲突时改信 offline
+# 默认 offline：docs/asr_2pass_merge_ab.json — AMI WER 0.200→0.157，FLEURS 亦降
+ASR_2PASS_MERGE_MODE = "offline"
+# ASR 复读/投机相关（docs/ASR_LOOP_CUT_AB.md 去混淆 + ab_loop_vs_stale_6arm.json）
+# 本次默认 = GUARD_MODE=legacy / KEEP_TAIL=False / REJECT_STALE=True / P90=False
+# （stale_only：AMI 22/48；008 归 STALE；046 回 awkward=ASR 漏字，不靠 TAIL 二次转写）
+ASR_LOOP_GUARD_MODE = "legacy"
+ASR_LOOP_STREAK = 2
+# 复读强切后把末 0.8s 塞进下一句：会边界重复；046「赚 ok」是漏字补偿。默认关。
+ASR_LOOP_KEEP_TAIL = False
+# 投机过期短稿拒绝：ami_008 主因（stale_only 臂干净归因）
+ASR_SPEC_REJECT_STALE = True
+# miss_grow 用 p90：与 STALE 捆在旧 b_only 里；stale_only 证明 008/039 不依赖它 → 默认关
+ASR_SPEC_MISS_GROW_USE_P90 = False
 # 静音达到该秒数时后台投机定稿（独立 stream，CUT 时优先取）
 ASR_SPECULATE_ENABLED = True
 ASR_SPECULATE_SILENCE_SEC = 0.25
@@ -91,7 +110,7 @@ ASR_SPECULATE_SILENCE_SEC = 0.25
 ASR_SPECULATE_ADAPTIVE_LEAD = True
 ASR_SPECULATE_MIN_SILENCE_SEC = 0.08  # 自适应/paused 都不得早于此
 ASR_SPECULATE_ADAPTIVE_MARGIN_SEC = 0.05  # VAD_SILENCE − pred − margin
-ASR_SPECULATE_WAIT_SEC = 0.55  # from spec start; CUT waits only the remainder
+ASR_SPECULATE_WAIT_SEC = 0.55  # 自投机启动起算；CUT 只等剩余预算
 # 快照仍有效时，额外允许等投机结果算完（避免超时后整段重跑 = ASR 付两遍）
 ASR_SPECULATE_LATE_WAIT_SEC = 0.80
 # 提前量不足该秒数就不等投机（强切/极短静音时投机不划算）
@@ -120,12 +139,21 @@ ENDPOINT_EARLY_CUT_PROBE = False
 ENDPOINT_COMPLETION_WINDOW_SEC = 0.85
 # A/B（synth dualsim）：1 与 2 得分相同 → 选 1，缩短真停在「星期」时的最坏等待
 ENDPOINT_COMPLETION_MAX_ROUNDS = 1
+# Arbiter hold 墙上超时（秒）：无新文本变化则强制 CUT。0=关。
+# 防短/弱信号「VAD 已弹出但 engine 未 in_speech」后 hold 被 _begin_utt 清掉，或快进 wav 时 sync 窗饿死。
+ENDPOINT_HOLD_TIMEOUT_SEC = 3.0
 
 # 能量门限（自适应噪声地板之上；energy 后端用）
 VAD_ENERGY_THRESHOLD = 0.015
 
-# Silero 开说额外 RMS 门槛（抑制风扇/底噪误触发；说话通常 ≥0.03）
+# Silero/TEN 开说额外 RMS 门槛（抑制风扇/底噪误触发；说话通常 ≥0.03）
 VAD_SPEECH_RMS_MIN = 0.035
+# 弱信号 VAD 专用增益：仅当窗 peak < VAD_WEAK_GAIN_PEAK_MAX 时，把送入 VAD/RMS 门的
+# 窗放大（ASR 仍吃原始块）。0=关。
+# A/B（docs/VAD_WEAK_GAIN_AB.md）：gain=3 空检 16→8、噪声 false_open=0，但紧闸门
+# AMI pipeline ok 41.7%→25%（正常句被切碎 −13），默认保持关闭。
+VAD_WEAK_GAIN_MAX = 0.0
+VAD_WEAK_GAIN_PEAK_MAX = 0.03
 
 # 播放 TTS 后继续静音麦（秒），盖住扬声器尾音/房间混响，减轻回授
 PLAYBACK_MUTE_PAD_SEC = 0.50
@@ -176,6 +204,21 @@ MID_MT_ENABLED = False
 # 精确翻译记忆：高频通话句命中则跳过 CT2（≈0ms）
 MT_TM_ENABLED = True
 MT_TM_PATH = ROOT / "data" / "mt_tm.jsonl"
+# CT2 解码：beam 保持 1（ledger 参考上 beam3 无法满足 ≤120ms P95）。
+# 已开 anti-rep：docs/mt_decode_ab_summary.json + g_nr3_pen11
+#（rep 2.6%→0.9%，p50 改善；beam 仍为 1）。
+MT_DECODE_BEAM = 1
+MT_NO_REPEAT_NGRAM = 3
+MT_REPETITION_PENALTY = 1.1
+# 若 >0 且源文字数 ≥ 此值，改用 MT_DECODE_BEAM_LONG / ngram / penalty。
+# 0 = 始终用上面三个旋钮（不按长度分流）。
+MT_BEAM_MIN_SRC_CHARS = 0
+MT_DECODE_BEAM_LONG = 3
+MT_NO_REPEAT_NGRAM_LONG = 3
+MT_REPETITION_PENALTY_LONG = 1.1
+# 将不足 1 秒的碎片并入下一句（0=关）。已在 dual_track 接线；
+# 连续音频碎片 A/B 完成前保持关（ledger 片段已预切）。
+VAD_MIN_UTT_SEC = 0.0
 
 # 译文累计到多少字才中途播报（legacy）
 MIN_SPEAK_CHARS = 12

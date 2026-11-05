@@ -17,12 +17,12 @@ class TranslateResult:
     text: str
     ms: float
     from_tm: bool = False
-    # Observational only (harvest): model/TM text before postedit. Production path unchanged.
+    # 仅观测（harvest）：postedit 前的模型/TM 文本；生产路径不变。
     mt_raw: str | None = None
 
 
 def detect_lang(text: str) -> str:
-    """Rough ZH/EN detect for bilingual call use."""
+    """双语通话场景的粗略中/英检测。"""
     t = text.strip()
     if not t:
         return "zh"
@@ -114,15 +114,50 @@ class Translator:
         out = mt.generate(**batch, max_new_tokens=128)
         return tok.decode(out[0], skip_special_tokens=True).strip()
 
+    def _ct2_decode_kwargs(self, text: str) -> dict:
+        """按 config 选择 CT2 beam / 防重复参数。"""
+        min_chars = int(getattr(config, "MT_BEAM_MIN_SRC_CHARS", 0) or 0)
+        use_long = min_chars > 0 and len((text or "").strip()) >= min_chars
+        if use_long:
+            return {
+                "beam_size": int(getattr(config, "MT_DECODE_BEAM_LONG", 3)),
+                "no_repeat_ngram_size": int(
+                    getattr(config, "MT_NO_REPEAT_NGRAM_LONG", 3)
+                ),
+                "repetition_penalty": float(
+                    getattr(config, "MT_REPETITION_PENALTY_LONG", 1.1)
+                ),
+            }
+        return {
+            "beam_size": int(getattr(config, "MT_DECODE_BEAM", 1)),
+            "no_repeat_ngram_size": int(getattr(config, "MT_NO_REPEAT_NGRAM", 0)),
+            "repetition_penalty": float(
+                getattr(config, "MT_REPETITION_PENALTY", 1.0)
+            ),
+        }
+
     def _translate_ct2(self, text: str, src: str) -> str:
         tok = self._tok_zh_en if src == "zh" else self._tok_en_zh
         mt = self._mt_zh_en if src == "zh" else self._mt_en_zh
         ids = tok.encode(text, truncation=True, max_length=256)
         tokens = tok.convert_ids_to_tokens(ids)
-        results = mt.translate_batch(
-            [tokens],
-            beam_size=1,
-            max_decoding_length=128,
-        )
+        kw = self._ct2_decode_kwargs(text)
+        try:
+            results = mt.translate_batch(
+                [tokens],
+                beam_size=kw["beam_size"],
+                no_repeat_ngram_size=kw["no_repeat_ngram_size"],
+                repetition_penalty=kw["repetition_penalty"],
+                max_decoding_length=128,
+            )
+        except TypeError as exc:
+            print(f"[MT decode fallback] {exc}")
+            results = mt.translate_batch(
+                [tokens],
+                beam_size=1,
+                max_decoding_length=128,
+            )
         out_tokens = results[0].hypotheses[0]
-        return tok.decode(tok.convert_tokens_to_ids(out_tokens), skip_special_tokens=True).strip()
+        return tok.decode(
+            tok.convert_tokens_to_ids(out_tokens), skip_special_tokens=True
+        ).strip()

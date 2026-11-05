@@ -1,0 +1,77 @@
+{
+  "n": 64,
+  "n_empty": 41,
+  "n_produced": 23,
+  "by_reason": {
+    "emitted_swallowed": 19,
+    "vad_never_open": 20,
+    "mt_skip": 2,
+    "produced": 23
+  },
+  "by_corpus": {
+    "ami": {
+      "emitted_swallowed": 16,
+      "vad_never_open": 16,
+      "mt_skip": 2,
+      "produced": 14
+    },
+    "fleurs": {
+      "produced": 5,
+      "emitted_swallowed": 3,
+      "vad_never_open": 4
+    },
+    "libri": {
+      "produced": 4
+    }
+  },
+  "empty_ids": {
+    "vad_never_open": [
+      "ami_001",
+      "ami_005",
+      "ami_007",
+      "ami_012",
+      "ami_014",
+      "ami_016",
+      "ami_018",
+      "ami_020",
+      "ami_022",
+      "ami_034",
+      "ami_035",
+      "ami_037",
+      "ami_038",
+      "ami_043",
+      "ami_044",
+      "ami_047",
+      "fleurs_003",
+      "fleurs_006",
+      "fleurs_007",
+      "fleurs_010"
+    ],
+    "emitted_swallowed": [
+      "ami_000",
+      "ami_002",
+      "ami_003",
+      "ami_008",
+      "ami_010",
+      "ami_011",
+      "ami_015",
+      "ami_019",
+      "ami_021",
+      "ami_023",
+      "ami_024",
+      "ami_025",
+      "ami_028",
+      "ami_032",
+      "ami_036",
+      "ami_045",
+      "fleurs_001",
+      "fleurs_005",
+      "fleurs_009"
+    ],
+    "finalize_empty": [],
+    "mt_skip": [
+      "ami_004",
+      "ami_041"
+    ]
+  }
+}

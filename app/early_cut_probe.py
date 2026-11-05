@@ -1,19 +1,19 @@
-"""Read-only early-cut oracle helpers (no production cut decisions)."""
+"""只读早切 oracle 辅助（不参与生产切分决策）。"""
 from __future__ import annotations
 
 import re
 from dataclasses import asdict, dataclass, field
 
-# Checkpoints (seconds of trailing silence) sampled while still waiting for 0.45 cut.
+# 仍在等待 0.45 切分时，对尾部静音时长（秒）采样的检查点。
 PROBE_CHECKPOINTS = (0.30, 0.35, 0.40, 0.45)
 
 
 def normalize_asr_text(text: str) -> str:
-    """Compare ASR src: drop whitespace/punct; keep CJK / letters / digits."""
+    """对比 ASR 原文：去空白/标点；保留 CJK / 字母 / 数字。"""
     t = (text or "").strip()
     if not t:
         return ""
-    # Keep unicode word chars (incl. CJK); drop other punctuation/symbols/space.
+    # 保留 unicode 词字符（含 CJK）；去掉其它标点/符号/空格。
     return re.sub(r"[^\w]+", "", t, flags=re.UNICODE)
 
 
@@ -33,7 +33,7 @@ class ProbeSnap:
 
 @dataclass
 class ProbeOracle:
-    """Oracle labels vs final 0.45 cut — analysis only, not a live gate."""
+    """相对最终 0.45 切的 oracle 标签 — 仅分析用，非在线门控。"""
 
     ready_at_350: bool = False
     same_text_at_350: bool = False
@@ -111,7 +111,7 @@ def classify_utt_bucket(audio_sec: float, wav_name: str) -> str:
 def compare_segmentations(
     ref_srcs: list[str], cand_srcs: list[str]
 ) -> dict:
-    """Judge merge/split/tail_loss/mismatch vs reference (0.45) src list."""
+    """相对参考（0.45）原文列表，判定 merge/split/tail_loss/mismatch。"""
     ref_n = [normalize_asr_text(s) for s in ref_srcs]
     cand_n = [normalize_asr_text(s) for s in cand_srcs]
     out = {
@@ -126,7 +126,7 @@ def compare_segmentations(
         "cand_srcs": list(cand_srcs),
     }
     if len(cand_n) < len(ref_n):
-        # Fewer utts: possible merge if a cand covers concatenated refs
+        # 句数更少：若某 cand 覆盖拼接后的 ref，则可能 merge
         out["merge"] = True
     if len(cand_n) > len(ref_n):
         out["split"] = True
@@ -134,14 +134,14 @@ def compare_segmentations(
         for a, b in zip(ref_n, cand_n, strict=True):
             if a != b:
                 out["text_mismatch"] = True
-                # tail_loss: cand is proper prefix of ref (lost ending)
+                # tail_loss：cand 为 ref 的真前缀（丢句尾）
                 if a.startswith(b) and len(b) < len(a):
                     out["tail_loss"] = True
                 if b.startswith(a) and len(a) < len(b):
-                    # cand longer — not tail_loss; still mismatch
+                    # cand 更长 — 非 tail_loss；仍为 mismatch
                     pass
     else:
-        # Also flag tail_loss if any aligned prefix-shortening is obvious
+        # 若存在明显的前缀缩短，也标 tail_loss
         for a in ref_n:
             for b in cand_n:
                 if a.startswith(b) and 0 < len(b) < len(a) and len(a) - len(b) <= 4:

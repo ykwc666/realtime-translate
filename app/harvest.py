@@ -1,26 +1,24 @@
-"""Session harvest: side-channel utt logger (queue + writer thread).
+"""会话 harvest：旁路 utt 日志（队列 + 写盘线程）。
 
-Contract (one JSON object per finalized utterance, UTF-8 JSONL):
-  t_wall                  ISO-ish local wall clock when the row was queued
-  src                     final ASR text (display; may include punct if enabled)
-  tgt                     text sent toward TTS (post TM/postedit)
-  mt_raw                  CT2/transformers output before postedit; TM hit → same as tgt
+契约（每句 finalize 一行 JSON 对象，UTF-8 JSONL）：
+  t_wall                  入队时的本地墙钟（类 ISO）
+  src                     最终 ASR 文本（展示；若开启则可能含标点）
+  tgt                     送往 TTS 的文本（经 TM/postedit）
+  mt_raw                  postedit 前 CT2/transformers 输出；TM 命中则与 tgt 相同
   spec_hit                DualTrackStats.speculate_hit
-  asr_wait_ms             t_asr_done_ms - t_cut_ms, or null
-  latency_perceived_ms    DualTrackStats.latency_perceived_ms (mt_ready), or null
-  latency_device_ttfa_ms  DualTrackStats.latency_device_ttfa_ms, or null if not yet known
-  mode                    run mode string (loopback|vad|duplex|file|…)
-  source_desc             free-text sound-source note from CLI
+  asr_wait_ms             t_asr_done_ms - t_cut_ms，或 null
+  latency_perceived_ms    DualTrackStats.latency_perceived_ms（mt_ready），或 null
+  latency_device_ttfa_ms  DualTrackStats.latency_device_ttfa_ms，未知则为 null
+  mode                    运行模式字符串（loopback|vad|duplex|file|…）
+  source_desc             CLI 传入的声源说明
 
-Hot path: put_nowait only. A daemon thread does open/write/flush so capture/finalize
-never blocks on disk IO. close() drains the queue.
+热路径：仅 put_nowait。daemon 线程负责 open/write/flush，采集/finalize 不因磁盘 IO 阻塞。close() 排空队列。
 """
 from __future__ import annotations
 
 import json
 import queue
 import threading
-import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -47,7 +45,7 @@ def row_from_stats(
     source_desc: str,
     t_wall: str | None = None,
 ) -> dict:
-    """Map DualTrackStats → harvest row. Missing timers → null (never invent)."""
+    """DualTrackStats → harvest 行。缺失计时器 → null（不编造）。"""
     t_cut = getattr(stats, "t_cut_ms", None)
     t_asr = getattr(stats, "t_asr_done_ms", None)
     asr_wait = None
@@ -78,7 +76,7 @@ def row_from_stats(
 
 
 class HarvestWriter:
-    """Async JSONL writer. emit() is safe from the audio/finalize thread."""
+    """异步 JSONL 写入；emit() 可从音频/finalize 线程安全调用。"""
 
     def __init__(self, path: Path, *, mode: str, source_desc: str) -> None:
         self.path = Path(path)
@@ -104,7 +102,7 @@ class HarvestWriter:
         try:
             self._q.put_nowait(row)
         except queue.Full:
-            # unbounded Queue never Full; keep branch for safety
+            # 无界 Queue 不会 Full；保留分支以防万一
             print("[harvest] queue full, drop row")
 
     def _run(self) -> None:
@@ -126,7 +124,7 @@ class HarvestWriter:
         print(f"[harvest] 结束，已写 {n} 行 → {self.path}")
 
     def attach_engine(self, engine: Any) -> None:
-        """Side hook: DualTrackEngine.on_utt_final."""
+        """旁路钩子：DualTrackEngine.on_utt_final。"""
         prev = getattr(engine, "on_utt_final", None)
 
         def _cb(stats: Any) -> None:
