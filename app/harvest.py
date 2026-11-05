@@ -5,6 +5,7 @@
   src                     最终 ASR 文本（展示；若开启则可能含标点）
   tgt                     送往 TTS 的文本（经 TM/postedit）
   mt_raw                  postedit 前 CT2/transformers 输出；TM 命中则与 tgt 相同
+  sub_lines               可选；final 二次切分后 [{src,tgt},…]；未拆则为 null
   spec_hit                DualTrackStats.speculate_hit
   asr_wait_ms             t_asr_done_ms - t_cut_ms，或 null
   latency_perceived_ms    DualTrackStats.latency_perceived_ms（mt_ready），或 null
@@ -57,11 +58,13 @@ def row_from_stats(
     tgt = getattr(stats, "translated", "") or ""
     if mt_raw is None:
         mt_raw = tgt
+    sub = getattr(stats, "sub_lines", None)
     return {
         "t_wall": t_wall or datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "src": getattr(stats, "source", "") or "",
         "tgt": tgt,
         "mt_raw": mt_raw,
+        "sub_lines": sub if sub else None,
         "spec_hit": bool(getattr(stats, "speculate_hit", False)),
         "asr_wait_ms": asr_wait,
         "latency_perceived_ms": (

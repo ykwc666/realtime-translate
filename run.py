@@ -107,7 +107,7 @@ def main(argv: list[str] | None = None) -> int:
     from app.pipeline import TranslatePipeline
 
     session_recorder = None
-    if args.mode in ("vad", "duplex") and not args.no_record:
+    if args.mode in ("vad", "duplex", "dualsim") and not args.no_record:
         from app.session_record import SessionRecorder
 
         session_recorder = SessionRecorder(

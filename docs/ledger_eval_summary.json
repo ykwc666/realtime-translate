@@ -23,12 +23,12 @@
     "ami": {
       "pipeline": {
         "n": 48,
-        "ok": 27,
-        "ok_rate": 0.5625,
+        "ok": 26,
+        "ok_rate": 0.5417,
         "counts": {
-          "ok": 27,
+          "ok": 26,
           "awkward": 0,
-          "wrong": 21
+          "wrong": 22
         }
       },
       "mt_only": {

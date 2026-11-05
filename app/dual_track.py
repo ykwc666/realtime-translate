@@ -83,6 +83,8 @@ class DualTrackStats:
     translated: str = ""
     # 观测（harvest）：postedit 前 MT 文本；final MT 跑完前为 null
     mt_raw: str | None = None
+    # final 二次切分后的子句（仅 >=2 句时有值）；旧字段 src/tgt 不变
+    sub_lines: list[dict] | None = None
     partial_interval_used: list[float] = field(default_factory=list)
     utt_id: int = 0
     # 只读 early-cut 探针 oracle（未开 ENDPOINT_EARLY_CUT_PROBE 则为 None）
@@ -759,6 +761,40 @@ class DualTrackEngine:
                     if mute_cb:
                         mute_cb(False)
 
+    @staticmethod
+    def _count_sent_ends(text: str) -> int:
+        return len(re.findall(r"[。？！?!.;]", text or ""))
+
+    def _final_mt_clauses(self, pending: str) -> list[str]:
+        """仅 final：>=2 个句末标点则按标点拆成子句；否则整句。
+
+        若裸 ASR 标点不足，在 ASR_PUNCT_DISPLAY 开启时用标点模型补全后再数/拆
+        （MT 仍逐子句调用；partial 路径不走这里）。
+        """
+        pending = (pending or "").strip()
+        if not pending:
+            return []
+        split_src = pending
+        if self._count_sent_ends(pending) < 2 and bool(
+            getattr(config, "ASR_PUNCT_DISPLAY", False)
+        ):
+            try:
+                from .punct import add_punctuation, punct_available
+
+                if punct_available():
+                    puncted, _ms = add_punctuation(pending)
+                    puncted = (puncted or "").strip()
+                    if puncted and self._count_sent_ends(puncted) >= 2:
+                        split_src = puncted
+            except Exception:  # noqa: BLE001
+                pass
+        if self._count_sent_ends(split_src) < 2:
+            return [pending]
+        from .retranscribe import split_sentences
+
+        parts = split_sentences(split_src)
+        return parts if len(parts) >= 2 else [pending]
+
     def _translate_final(self, text: str, mute_cb=None) -> None:  # noqa: ANN001
         pending = (text or "").strip()
         if not pending:
@@ -766,30 +802,43 @@ class DualTrackEngine:
         if should_skip_final_mt(pending, self._forced_truncation):
             print(f"[MT skip unfinished] {pending!r}")
             return
-        if self.force_src_lang in ("zh", "en"):
-            src = self.force_src_lang
-        else:
-            src = detect_lang(pending)
-        mt = self.translator.translate(pending, src_lang=src)
-        self.mt_ms_sum += mt.ms
-        self.stats.mt_ms.append(mt.ms)
-        self.stats.mt_triggers += 1
-        self.stats.mt_reasons.append("final")
-        self.tgt_lang = mt.tgt_lang
-        # harvest 观测字段（不改变行为）
-        self.stats.mt_raw = getattr(mt, "mt_raw", None) or mt.text
+        clauses = self._final_mt_clauses(pending)
+        speakable: list[str] = []
+        sub_lines: list[dict] = []
+        raw_bits: list[str] = []
         now = time.perf_counter()
+        for clause in clauses:
+            clause = (clause or "").strip()
+            if not clause:
+                continue
+            if self.force_src_lang in ("zh", "en"):
+                src = self.force_src_lang
+            else:
+                src = detect_lang(clause)
+            mt = self.translator.translate(clause, src_lang=src)
+            self.mt_ms_sum += mt.ms
+            self.stats.mt_ms.append(mt.ms)
+            self.stats.mt_triggers += 1
+            self.stats.mt_reasons.append("final")
+            self.tgt_lang = mt.tgt_lang
+            raw_bits.append(getattr(mt, "mt_raw", None) or mt.text or "")
+            print(f"[MT {mt.ms:.0f}ms reason=final] {clause!r} => {mt.text}")
+            if not mt.text:
+                continue
+            self.translated_bits.append(mt.text)
+            speakable.append(mt.text.strip())
+            sub_lines.append({"src": clause, "tgt": mt.text})
+        self.stats.mt_raw = " ".join(raw_bits).strip() if raw_bits else None
+        # 仅真正拆开时暴露 sub_lines（单句保持 null，兼容旧消费者）
+        self.stats.sub_lines = sub_lines if len(sub_lines) >= 2 else None
+        self._translated_src = pending
         if self.stats.first_stable_mt_ms is None and self.utt_t0:
             self.stats.first_stable_mt_ms = (now - self.utt_t0) * 1000
         if getattr(self, "_t_speech_end", 0.0):
-            self.stats.t_mt_done_ms = (now - self._t_speech_end) * 1000
-        print(f"[MT {mt.ms:.0f}ms reason=final] {pending!r} => {mt.text}")
-        if not mt.text:
+            self.stats.t_mt_done_ms = (time.perf_counter() - self._t_speech_end) * 1000
+        if not speakable:
             return
-        self.translated_bits.append(mt.text)
-        self._translated_src = pending
-        # final_only：整句一次 — 避免 "Just..." → Just. / . / .
-        speakable = [mt.text.strip()]
+        # final 可多句播：partial 仍禁止碎切（见历史 Just. / . / .）
         # 遗留：「first audio」实为 MT 入队 / MT-ready 代理。
         if self.stats.t_first_audio_ms is None and getattr(self, "_t_speech_end", 0.0):
             ready_ms = (time.perf_counter() - self._t_speech_end) * 1000
