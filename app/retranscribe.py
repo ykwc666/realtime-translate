@@ -143,20 +143,25 @@ def split_chunks(
     return chunks, dropped
 
 
+def _is_contentful(text: str) -> bool:
+    content = re.sub(r"[^\w\u4e00-\u9fff]+", "", text or "", flags=re.UNICODE)
+    return len(content) >= 2
+
+
 def split_sentences(text: str) -> list[str]:
     t = (text or "").strip()
     if not t:
         return []
     # 已有句末标点？
     if re.search(r"[。？！；.!?;]", t):
-        parts = [p.strip() for p in _SENT_SPLIT.split(t) if p.strip()]
-        return parts or [t]
+        parts = [p.strip() for p in _SENT_SPLIT.split(t) if p.strip() and _is_contentful(p)]
+        return parts or ([t] if _is_contentful(t) else [])
     if punct_available():
         puncted, _ms = add_punctuation(t)
         t2 = (puncted or t).strip()
-        parts = [p.strip() for p in _SENT_SPLIT.split(t2) if p.strip()]
-        return parts or [t2]
-    return [t]
+        parts = [p.strip() for p in _SENT_SPLIT.split(t2) if p.strip() and _is_contentful(p)]
+        return parts or ([t2] if _is_contentful(t2) else [])
+    return [t] if _is_contentful(t) else []
 
 
 def _alloc_timestamps(
@@ -320,7 +325,9 @@ def retranscribe_audio(
         res = asr.transcribe_offline_only(piece)
         asr_ms_sum += float(res.ms)
         text = (res.text or "").strip()
-        if not text:
+        # 近静音块上 SenseVoice 常幻觉出 "." / "。" / 单符号——当空丢弃
+        content = re.sub(r"[^\w\u4e00-\u9fff]+", "", text, flags=re.UNICODE)
+        if not text or len(content) < 2:
             empty_asr += 1
             continue
         sents = split_sentences(text)
@@ -381,15 +388,24 @@ def retranscribe_session(
         translator=translator,
         force_src_lang=force_src_lang,
     )
+    # live_compare：仅同一 session 的 live.jsonl；非 vad/duplex 或空文件 → null
+    # 绝不回退去读 data/harvest/
+    report["live_compare"] = None
+    meta_mode = ""
+    meta_file = session / "meta.json"
+    if meta_file.is_file():
+        try:
+            meta_mode = str(json.loads(meta_file.read_text(encoding="utf-8")).get("mode") or "")
+        except Exception:  # noqa: BLE001
+            meta_mode = ""
     live_file = Path(live_path) if live_path else (session / "live.jsonl")
-    live_rows: list[dict] = []
-    if live_file.is_file():
+    if meta_mode in ("vad", "duplex") and live_file.is_file():
+        live_rows: list[dict] = []
         for line in live_file.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 live_rows.append(json.loads(line))
-        report["live_compare"] = compare_live(live_rows, segments)
-    else:
-        report["live_compare"] = {"note": "no live.jsonl"}
+        if live_rows:
+            report["live_compare"] = compare_live(live_rows, segments)
     write_outputs(session, segments, report)
     print(
         f"[post] segments={len(segments)} chunks={report['chunks']} "
