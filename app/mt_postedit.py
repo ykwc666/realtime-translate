@@ -5,12 +5,14 @@
 
 锚定约束（2026-11-05）：
 1. canned 规则只用 re.fullmatch（整句命中）
-2. 源句含子句分隔符（，,；;）时跳过所有 canned，直接返回 hyp
-3. canned 词数 < hyp 词数 50% 时退回 hyp
+2. 源句含子句分隔符时跳过所有 canned，直接返回 hyp
+   （曾有「canned 词数 < hyp 50%」长度闸；fullmatch 后属冗余，且会误杀
+    「短 canned vs 啰嗦 hyp」的正常路径，已删除）
 """
 from __future__ import annotations
 
 import re
+
 
 def _has_clause_sep(text: str, *, lang: str) -> bool:
     """含子句分隔 → 跳过 canned。
@@ -28,7 +30,9 @@ def _has_clause_sep(text: str, *, lang: str) -> bool:
         return True
     return bool(re.search(r",\s+(and|but|so|then|while|which)\b", t, re.I))
 
+
 def _token_count(text: str) -> int:
+    """测试/诊断用；不再参与 canned 决策。"""
     t = (text or "").strip()
     if not t:
         return 0
@@ -41,13 +45,9 @@ def _token_count(text: str) -> int:
     return max(1, len(parts) or 1)
 
 
-def _canned(hyp: str, out: str) -> str:
-    """第三道闸：替换后相对 hyp 过短 → 保留 hyp。"""
-    hn = _token_count(hyp)
-    if hn > 0 and _token_count(out) < 0.5 * hn:
-        return hyp
+def _canned(_hyp: str, out: str) -> str:
+    """整句 canned 命中后的返回（不再做长度回退）。"""
     return out
-
 
 def _fm(pattern: str, text: str, flags: int = 0) -> bool:
     return bool(re.fullmatch(pattern, text, flags=flags))

@@ -55,9 +55,22 @@ def test_en_zh_reply_fullmatch_not_substring() -> None:
     assert out == hyp
 
 
-def test_length_gate_prefers_hyp() -> None:
-    # 人为：若规则误触发，短 canned 相对长 hyp 应被第三道闸打回
-    # 「听不清」短句正常命中；这里用复合句确保不命中
+def test_short_canned_beats_verbose_hyp() -> None:
+    """长度闸已删：fullmatch 短句必须吃 canned，即使 hyp 更长。"""
+    hyp = (
+        "I am afraid that I am not able to hear what you are saying "
+        "clearly enough right now"
+    )
+    assert postedit_zh_en("听不清", hyp) == "I can't hear clearly."
+
+
+def test_clause_gate_still_blocks_compound_reply() -> None:
+    src = "现在是星期二，他现在没有回我的消息。"
+    hyp = "It is Tuesday and he has not replied to my message now."
+    assert postedit_zh_en(src, hyp) == hyp
+
+
+def test_clause_compound_hear_keeps_hyp() -> None:
     src = "我觉得听不清，另外会议室空调太吵了。"
     hyp = "I can't hear clearly, and the AC in the meeting room is too loud."
     assert postedit_zh_en(src, hyp) == hyp
