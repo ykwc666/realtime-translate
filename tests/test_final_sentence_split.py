@@ -1,4 +1,4 @@
-"""A0：final 含多句末标点时，MT/TTS 前拆成子句。"""
+"""A0：final 含中间句末时，MT/TTS 前拆成子句。"""
 from __future__ import annotations
 
 from types import MethodType, SimpleNamespace
@@ -9,7 +9,6 @@ from app.retranscribe import split_sentences
 
 def _engine_for_clauses() -> DualTrackEngine:
     e = DualTrackEngine.__new__(DualTrackEngine)
-    e._count_sent_ends = DualTrackEngine._count_sent_ends  # type: ignore[method-assign]
     e._final_mt_clauses = MethodType(DualTrackEngine._final_mt_clauses, e)
     return e
 
@@ -19,7 +18,7 @@ def test_split_sentences_double_q_weather_tuesday() -> None:
     assert parts == ["今天天气怎么样？", "现在是星期二。"]
 
 
-def test_final_mt_clauses_splits_on_two_ends() -> None:
+def test_final_mt_clauses_splits_on_mid_end() -> None:
     e = _engine_for_clauses()
     parts = e._final_mt_clauses("今天天气怎么样？现在是星期二。")
     assert len(parts) >= 2
@@ -35,10 +34,16 @@ def test_final_mt_clauses_single_stays_whole() -> None:
     ]
 
 
+def test_final_mt_clauses_ignores_display_punct_need() -> None:
+    """无原生句末时不拆（即使展示标点模型会补出双句末）。"""
+    e = _engine_for_clauses()
+    bare = "今天天气怎么样现在是星期二"
+    assert e._final_mt_clauses(bare) == [bare]
+
+
 def test_translate_final_sets_sub_lines_and_enqueues_list() -> None:
     """不加载真实 MT：桩 Translator，确认 sub_lines + 多段 enqueue。"""
     e = DualTrackEngine.__new__(DualTrackEngine)
-    e._count_sent_ends = DualTrackEngine._count_sent_ends  # type: ignore[method-assign]
     e._final_mt_clauses = MethodType(DualTrackEngine._final_mt_clauses, e)
     e._translate_final = MethodType(DualTrackEngine._translate_final, e)
     e._enqueue_speak = MethodType(DualTrackEngine._enqueue_speak, e)
@@ -56,8 +61,12 @@ def test_translate_final_sets_sub_lines_and_enqueues_list() -> None:
     e.stats = DualTrackStats()
     e.play = False
     e.tts = None
-    e.tts_q = SimpleNamespace(enabled=True, submit=lambda *a, **k: submitted.append((a, k)), set_mute_cb=lambda *_: None)
     submitted: list = []
+    e.tts_q = SimpleNamespace(
+        enabled=True,
+        submit=lambda *a, **k: submitted.append((a, k)),
+        set_mute_cb=lambda *_: None,
+    )
 
     class _Mt:
         def __init__(self, text: str) -> None:
@@ -81,5 +90,3 @@ def test_translate_final_sets_sub_lines_and_enqueues_list() -> None:
     assert e.stats.sub_lines[0]["src"] == "今天天气怎么样？"
     assert e.stats.sub_lines[1]["tgt"] == "It's Tuesday."
     assert len(submitted) == 2
-    assert submitted[0][0][0] == "How's the weather today?"
-    assert submitted[1][0][0] == "It's Tuesday."

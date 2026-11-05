@@ -761,38 +761,19 @@ class DualTrackEngine:
                     if mute_cb:
                         mute_cb(False)
 
-    @staticmethod
-    def _count_sent_ends(text: str) -> int:
-        return len(re.findall(r"[。？！?!.;]", text or ""))
-
     def _final_mt_clauses(self, pending: str) -> list[str]:
-        """仅 final：>=2 个句末标点则按标点拆成子句；否则整句。
+        """仅 final：ASR 原生文本上有「非串尾句末 + 其后足够长」则拆子句。
 
-        若裸 ASR 标点不足，在 ASR_PUNCT_DISPLAY 开启时用标点模型补全后再数/拆
-        （MT 仍逐子句调用；partial 路径不走这里）。
+        切分决策不调用标点模型（展示标点只在 _finalize_utt 跑一次）。
         """
         pending = (pending or "").strip()
         if not pending:
             return []
-        split_src = pending
-        if self._count_sent_ends(pending) < 2 and bool(
-            getattr(config, "ASR_PUNCT_DISPLAY", False)
-        ):
-            try:
-                from .punct import add_punctuation, punct_available
+        from .retranscribe import has_splitworthy_mid_end, split_sentences
 
-                if punct_available():
-                    puncted, _ms = add_punctuation(pending)
-                    puncted = (puncted or "").strip()
-                    if puncted and self._count_sent_ends(puncted) >= 2:
-                        split_src = puncted
-            except Exception:  # noqa: BLE001
-                pass
-        if self._count_sent_ends(split_src) < 2:
+        if not has_splitworthy_mid_end(pending):
             return [pending]
-        from .retranscribe import split_sentences
-
-        parts = split_sentences(split_src)
+        parts = split_sentences(pending)
         return parts if len(parts) >= 2 else [pending]
 
     def _translate_final(self, text: str, mute_cb=None) -> None:  # noqa: ANN001
@@ -1135,8 +1116,8 @@ class DualTrackEngine:
         with self._lock:
             self.tracker.finalize(full, translated_src="")
         self.translated_bits.clear()
-        # MT 吃裸 ASR；可选展示标点（OfflinePunctuation 总会句末化 —
-        # 勿把带标点文本喂给 Opus-MT）。
+        # MT 吃裸 ASR（切分也只看 ASR 原生标点）；展示标点整句只跑一次。
+        # OfflinePunctuation 总会句末化 — 勿把带标点整句喂给 Opus-MT。
         self._translate_final(full, mute_cb=mute_cb)
         display_src = full
         if bool(getattr(config, "ASR_PUNCT_DISPLAY", False)):

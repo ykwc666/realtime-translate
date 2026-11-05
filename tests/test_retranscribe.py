@@ -39,6 +39,12 @@ def test_split_sentences_mixed_punct() -> None:
     assert any("你好" in p for p in parts)
 
 
+def test_split_sentences_decimal_and_abbrev() -> None:
+    assert split_sentences("大概10.5秒") == ["大概10.5秒"]
+    assert split_sentences("Mr. Smith") == ["Mr. Smith"]
+    assert split_sentences("a.m.") == ["a.m."]
+
+
 def test_alloc_timestamps_covers_span() -> None:
     sents = ["短", "这是长一点的句子内容"]
     stamped = _alloc_timestamps(sents, 1.0, 5.0)

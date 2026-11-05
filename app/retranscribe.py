@@ -17,7 +17,28 @@ from .punct import add_punctuation, punct_available
 from .session_record import latest_session_dir
 from .translate import Translator, detect_lang
 
-_SENT_SPLIT = re.compile(r"(?<=[。？！；.!?;])\s*")
+# 句末（不含 ';'）；'.' 另走 _is_dot_sentence_end（数字/缩写保护）
+_SENT_END_CHARS = frozenset("。？！?!")
+_DOT_ABBREV = frozenset(
+    {
+        "mr",
+        "mrs",
+        "ms",
+        "dr",
+        "prof",
+        "sr",
+        "jr",
+        "st",
+        "vs",
+        "etc",
+        "approx",
+        "dept",
+        "gen",
+        "gov",
+        "lt",
+        "col",
+    }
+)
 _CHUNK_TARGET_SEC = 25.0
 _CHUNK_SEARCH_SEC = 3.0
 _ENERGY_WIN_SEC = 0.2
@@ -148,19 +169,121 @@ def _is_contentful(text: str) -> bool:
     return len(content) >= 2
 
 
+def _latin_word_before(text: str, dot_i: int) -> str:
+    j = dot_i - 1
+    while j >= 0 and text[j].isalpha():
+        j -= 1
+    return text[j + 1 : dot_i]
+
+
+def _is_dot_sentence_end(text: str, i: int) -> bool:
+    """英文 '.'：排除 10.5 / a.m. / U.S. / Mr. Smith。"""
+    if i < 0 or i >= len(text) or text[i] != ".":
+        return False
+    if (
+        i > 0
+        and i + 1 < len(text)
+        and text[i - 1].isdigit()
+        and text[i + 1].isdigit()
+    ):
+        return False
+    word = _latin_word_before(text, i)
+    if len(word) == 1:  # a.m. / U.S.
+        return False
+    if word.lower() in _DOT_ABBREV:  # Mr. Smith
+        return False
+    rest = text[i + 1 :]
+    if not rest.strip():
+        return True
+    if re.match(r"\s+[A-Z]", rest):
+        return True
+    if re.match(r"\s+[\u4e00-\u9fff]", rest):
+        return True
+    return False
+
+
+def _is_sentence_end_at(text: str, i: int) -> bool:
+    if i < 0 or i >= len(text):
+        return False
+    ch = text[i]
+    if ch in _SENT_END_CHARS:
+        return True
+    if ch == ".":
+        return _is_dot_sentence_end(text, i)
+    return False
+
+
+def _tail_substantial(tail: str) -> bool:
+    """切分触发：标点后内容 >=4 汉字或 >=3 英文词。"""
+    t = re.sub(r"^[\s。？！?!.;]+", "", tail or "")
+    if not t:
+        return False
+    cjk = len(re.findall(r"[\u4e00-\u9fff]", t))
+    if cjk >= 4:
+        return True
+    words = re.findall(r"[A-Za-z]+(?:'[A-Za-z]+)?", t)
+    return len(words) >= 3
+
+
+def has_splitworthy_mid_end(text: str) -> bool:
+    """存在不在串尾的句末标点，且其后内容足够长 → 值得拆。
+
+    只看 ASR 原生文本；不调用标点模型。
+    """
+    t = text or ""
+    n = len(t)
+    for i in range(n - 1):
+        if not _is_sentence_end_at(t, i):
+            continue
+        if _tail_substantial(t[i + 1 :]):
+            return True
+    return False
+
+
+def _split_on_sentence_ends(t: str) -> list[str]:
+    parts: list[str] = []
+    start = 0
+    i = 0
+    n = len(t)
+    while i < n:
+        if _is_sentence_end_at(t, i):
+            part = t[start : i + 1].strip()
+            j = i + 1
+            while j < n and t[j].isspace():
+                j += 1
+            if part and _is_contentful(part):
+                parts.append(part)
+            start = j
+            i = j
+            continue
+        i += 1
+    tail = t[start:].strip()
+    if tail and _is_contentful(tail):
+        parts.append(tail)
+    elif tail and not parts:
+        parts.append(tail)
+    return parts
+
+
 def split_sentences(text: str) -> list[str]:
     t = (text or "").strip()
     if not t:
         return []
-    # 已有句末标点？
-    if re.search(r"[。？！；.!?;]", t):
-        parts = [p.strip() for p in _SENT_SPLIT.split(t) if p.strip() and _is_contentful(p)]
+    parts = _split_on_sentence_ends(t)
+    if len(parts) >= 2:
+        return parts
+    # 已有真句末（含串尾 。）但只得一段 → 保持；假 '.'（10.5）也走这里
+    if any(_is_sentence_end_at(t, i) for i in range(len(t))):
         return parts or ([t] if _is_contentful(t) else [])
+    if "." in t:
+        # 仅有受保护的 '.'，禁止再被拆，也不喂标点模型二次加工
+        return [t] if _is_contentful(t) else []
+    # 完全无句末：会后重译可补标点后再拆
     if punct_available():
         puncted, _ms = add_punctuation(t)
         t2 = (puncted or t).strip()
-        parts = [p.strip() for p in _SENT_SPLIT.split(t2) if p.strip() and _is_contentful(p)]
-        return parts or ([t2] if _is_contentful(t2) else [])
+        parts2 = _split_on_sentence_ends(t2)
+        return parts2 or ([t2] if _is_contentful(t2) else [])
     return [t] if _is_contentful(t) else []
 
 
