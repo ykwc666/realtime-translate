@@ -23,7 +23,7 @@
 | 并句 dualsim | `accept_phrases_weather_tue_merged.wav` → ASR `…怎么样？现在是星期二` → 2×MT，`sub_lines` 两条；`[punct …]` 日志 1 次 |
 | ami_008 回归 | 无标点英文不拆 |
 | pytest | 全绿 |
-| eval_ledger `--skip-a5 --corpus ami,fleurs` | AMI **27/48**、FLEURS **11/12**；WER 0.4433 / 0.1352 |
+| eval_ledger `--skip-a5 --corpus ami,fleurs` | AMI 27/48（WER 0.4433–0.4485，两次跑差在 ami_004 单条 ASR：Yeah。→ He。），FLEURS 11/12 / 0.1352 |
 
 ## Ledger 历程
 
@@ -31,3 +31,5 @@
 |---|---|---|
 | A0 前 / 本修后 | **27/48** | **11/12** |
 | A0 初版（标点模型参与决策） | 26/48 | 11/12 |
+
+已知抖动：AMI 约 1/60 条 ASR 输出可复现性不足，判回归时先逐条比对再下结论。
