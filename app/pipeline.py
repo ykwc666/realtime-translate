@@ -51,7 +51,11 @@ def _post_utt_echo_pad(mute_fn, *drain_fns) -> None:  # noqa: ANN001
 
 class TranslatePipeline:
     def __init__(
-        self, enable_tts: bool = True, harvest=None, mic_probe=None
+        self,
+        enable_tts: bool = True,
+        harvest=None,
+        mic_probe=None,
+        session_recorder=None,
     ) -> None:  # noqa: ANN001
         print(
             f"加载模型中（CPU）ASR={config.ASR_BACKEND} MT={config.MT_BACKEND} …"
@@ -64,6 +68,8 @@ class TranslatePipeline:
         self.harvest = harvest
         # 实麦自检埋点（由 run.py 注入；只记录，见 app/mic_probe.py）
         self.mic_probe = mic_probe
+        # 会后重译旁路录音（降噪前；见 app/session_record.py）
+        self.session_recorder = session_recorder
         if self.tts:
             if self.tts.output_device is not None:
                 print(f"TTS 输出设备 index={self.tts.output_device}")
@@ -88,10 +94,18 @@ class TranslatePipeline:
     def _attach_engine(self, engine: DualTrackEngine) -> None:
         if self.harvest is not None:
             self.harvest.attach_engine(engine)
+        if self.session_recorder is not None:
+            self.session_recorder.attach_engine(engine)
         if self.mic_probe is not None:
             self.mic_probe.attach_engine(engine)
 
     def close(self) -> None:
+        if self.session_recorder is not None:
+            try:
+                self.session_recorder.close()
+            except Exception as exc:  # noqa: BLE001
+                print(f"[record] close error: {exc}")
+            self.session_recorder = None
         if self.mic_probe is not None:
             self.mic_probe.close()
             self.mic_probe = None
@@ -175,6 +189,9 @@ class TranslatePipeline:
         mic.start()
         try:
             for chunk in mic.chunks():
+                # 会后录音：降噪前原麦块
+                if self.session_recorder is not None:
+                    self.session_recorder.write_chunk(chunk)
                 chunk = denoise.process(chunk)
                 if chunk.size == 0:
                     continue
@@ -269,6 +286,8 @@ class TranslatePipeline:
                 for chunk in mic.chunks():
                     if stop.is_set():
                         break
+                    if self.session_recorder is not None:
+                        self.session_recorder.write_chunk(chunk)
                     chunk = denoise.process(chunk)
                     if chunk.size == 0:
                         continue

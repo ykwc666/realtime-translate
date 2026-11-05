@@ -84,6 +84,18 @@ python scripts\ab_completion_rounds.py
 python run.py --mode ptt --no-tts
 ```
 
+## 会后重译
+
+`vad` / `duplex` 默认把降噪前麦音录到 `data/sessions/<时间戳>/`（`--no-record` 可关）。会后整段 SenseVoice → 同款 MT → 双语定稿：
+
+```powershell
+python run.py --post latest
+python run.py --post data\sessions\20261105-160805
+```
+
+产物：`transcript.md` / `transcript.srt` / `transcript.jsonl` / `report.json`。  
+**时间戳是按字符比例估算的近似值，不是逐字对齐。** 详见 `docs/OFFLINE_RETRANSCRIBE.md`。
+
 ## 说明
 
 - TTS 用 **Piper 离线合成**，不联网。

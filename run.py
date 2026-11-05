@@ -41,6 +41,23 @@ def main(argv: list[str] | None = None) -> int:
         default="",
         help="--harvest 时必填：音源描述（写入每行）",
     )
+    parser.add_argument(
+        "--no-record",
+        action="store_true",
+        help="关闭会后旁路录音（默认 vad/duplex 开启）",
+    )
+    parser.add_argument(
+        "--post",
+        type=str,
+        default="",
+        help="会后重译：latest 或 data/sessions/<id> 路径",
+    )
+    parser.add_argument(
+        "--live",
+        type=str,
+        default="",
+        help="会后对照用的 live/harvest jsonl（默认 session/live.jsonl）",
+    )
     args = parser.parse_args(argv)
 
     if args.list_loopback:
@@ -54,6 +71,16 @@ def main(argv: list[str] | None = None) -> int:
 
         for idx, name, ch in list_output_devices():
             print(f"{idx}\t{ch}ch\t{name}")
+        return 0
+
+    # 会后重译：不占实时锁、不启麦
+    if args.post.strip():
+        from app.retranscribe import retranscribe_session
+
+        retranscribe_session(
+            args.post.strip(),
+            live_path=args.live.strip() or None,
+        )
         return 0
 
     harvest = None
@@ -79,10 +106,23 @@ def main(argv: list[str] | None = None) -> int:
     from app.mic_probe import MicProbe
     from app.pipeline import TranslatePipeline
 
+    session_recorder = None
+    if args.mode in ("vad", "duplex") and not args.no_record:
+        from app.session_record import SessionRecorder
+
+        session_recorder = SessionRecorder(
+            mode=args.mode,
+            src_lang="zh",
+            tgt_lang="en",
+        )
+
     pipe = None
     try:
         pipe = TranslatePipeline(
-            enable_tts=not args.no_tts, harvest=harvest, mic_probe=MicProbe()
+            enable_tts=not args.no_tts,
+            harvest=harvest,
+            mic_probe=MicProbe(),
+            session_recorder=session_recorder,
         )
 
         if args.mode == "file":

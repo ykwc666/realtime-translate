@@ -16,6 +16,7 @@ output/
 *.log
 data/ledger_corpus/
 data/probe/
+data/sessions/
 
 # 编辑器/系统
 .vscode/
