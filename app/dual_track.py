@@ -88,6 +88,13 @@ class DualTrackStats:
     # 只读 early-cut 探针 oracle（未开 ENDPOINT_EARLY_CUT_PROBE 则为 None）
     early_cut_probe: dict | None = None
     audio_sec_final: float | None = None
+    # 实麦自检（只读；见 app/mic_probe.py）
+    probe_open_peak: float | None = None
+    probe_open_rms: float | None = None
+    probe_open_prob: float | None = None
+    probe_emit_path: str | None = None
+    probe_cut_reason: str | None = None
+    probe_trailing_silence_sec: float | None = None
 
 
 class DualTrackEngine:
@@ -109,8 +116,9 @@ class DualTrackEngine:
         # 双工固定方向（mic=zh, loopback=en）；None → detect_lang
         self.force_src_lang = force_src_lang
         self.label = label or ""
-        # 仅旁路（如 HarvestWriter）；不在关键延迟路径上。
+        # 仅旁路（如 HarvestWriter / MicProbe）；不在关键延迟路径上。
         self.on_utt_final = None
+        self._mic_probe = None
         self.endpoint = create_endpoint()
         tag = f" {self.label}" if self.label else ""
         print(f"[vad{tag}] backend={vad_backend_label(self.endpoint)}")
@@ -347,8 +355,52 @@ class DualTrackEngine:
         self._spec: dict | None = None
         self._spec_starts_utt = 0
         self._engine_silence_sec = 0.0
+        self._probe_open_peak: float | None = None
+        self._probe_open_rms: float | None = None
+        self._probe_open_prob: float | None = None
+        self._probe_emit_path: str | None = None
+        self._probe_cut_reason: str | None = None
         self.arbiter.reset()
         self._probe_reset()
+
+    def _capture_open_probe(self) -> None:
+        """从 endpoint 抄开说窗指标（只读）。"""
+        ep = self.endpoint
+        peak = getattr(ep, "open_peak", None)
+        if peak is None:
+            return
+        self._probe_open_peak = peak
+        self._probe_open_rms = getattr(ep, "open_rms", None)
+        self._probe_open_prob = getattr(ep, "open_prob", None)
+
+    def _capture_emit_path(self) -> None:
+        path = getattr(self.endpoint, "last_emit_path", None)
+        if path:
+            self._probe_emit_path = str(path)
+
+    def _stamp_probe_on_stats(self, out: DualTrackStats) -> None:
+        out.probe_open_peak = self._probe_open_peak
+        out.probe_open_rms = self._probe_open_rms
+        out.probe_open_prob = self._probe_open_prob
+        out.probe_emit_path = self._probe_emit_path
+        out.probe_cut_reason = self._probe_cut_reason
+        # 任务书要 endpoint.trailing_silence_sec（非引擎侧静音钟）
+        out.probe_trailing_silence_sec = float(
+            getattr(self.endpoint, "trailing_silence_sec", 0.0) or 0.0
+        )
+
+    def _note_empty_abort_probe(self) -> None:
+        probe = getattr(self, "_mic_probe", None)
+        if probe is None:
+            return
+        probe.note_empty_abort(
+            audio_sec=float(self.audio_sec),
+            open_peak=self._probe_open_peak,
+            open_rms=self._probe_open_rms,
+            open_prob=self._probe_open_prob,
+            emit_path=self._probe_emit_path
+            or getattr(self.endpoint, "last_emit_path", None),
+        )
 
     def _begin_utt(self, *, preserve_hold: bool = False) -> None:
         """开始新一句。
@@ -394,7 +446,13 @@ class DualTrackEngine:
         self._unchanged_partials = 0
         self._utt_announced = False
         self._engine_silence_sec = 0.0
+        self._probe_open_peak = None
+        self._probe_open_rms = None
+        self._probe_open_prob = None
+        self._probe_emit_path = None
+        self._probe_cut_reason = None
         self._probe_reset()
+        self._capture_open_probe()
 
     def _trailing_silence_sec(self) -> float:
         vad_sil = float(getattr(self.endpoint, "trailing_silence_sec", 0.0) or 0.0)
@@ -816,6 +874,8 @@ class DualTrackEngine:
             self._holding_cut = False
             self._hold_t0 = 0.0
             self._forced_truncation = bool(dec.forced_truncation)
+            # 仲裁 reason 透传；探针只记不改行为
+            self._probe_cut_reason = str(getattr(dec, "reason", "") or "arbiter")
             print(
                 f"--- 仲裁收句（{dec.reason}"
                 f"{', forced' if dec.forced_truncation else ''}）---"
@@ -836,6 +896,11 @@ class DualTrackEngine:
         self._holding_cut = False
         self._hold_t0 = 0.0
         self.arbiter.reset()
+        # hold_timeout / flush_hold → 探针 cut_reason
+        if reason == "flush_hold":
+            self._probe_cut_reason = "flush"
+        else:
+            self._probe_cut_reason = "hold_timeout"
         # reset 仲裁等效 cut_done；从 buf/seg 构造 seg
         audio = self.buf.asarray()
         if audio.size <= 0:
@@ -993,6 +1058,9 @@ class DualTrackEngine:
             out = self.stats
             out.utt_id = self._utt_id
             out.audio_sec_final = float(self.audio_sec)
+            if not self._probe_cut_reason:
+                self._probe_cut_reason = "vad_endpoint"
+            self._stamp_probe_on_stats(out)
             self._notify_utt_final(out)
             self.endpoint.reset()
             self.reset_utt()
@@ -1007,6 +1075,9 @@ class DualTrackEngine:
             if self.utt_t0:
                 self.stats.utt_wall_ms = (time.perf_counter() - self.utt_t0) * 1000
             out = self.stats
+            if not self._probe_cut_reason:
+                self._probe_cut_reason = "vad_endpoint"
+            self._stamp_probe_on_stats(out)
             self._notify_utt_final(out)
             self.endpoint.reset()
             self.reset_utt()
@@ -1060,6 +1131,9 @@ class DualTrackEngine:
         out = self.stats
         out.utt_id = self._utt_id
         out.audio_sec_final = float(self.audio_sec)
+        if not self._probe_cut_reason:
+            self._probe_cut_reason = "vad_endpoint"
+        self._stamp_probe_on_stats(out)
         self._probe_finalize(out.source or full)
         self._register_utt_stats(out)
         self._notify_utt_final(out)
@@ -1087,6 +1161,9 @@ class DualTrackEngine:
             self._probe_tick()
 
         seg = self.endpoint.feed(chunk)
+        if seg is not None:
+            self._capture_emit_path()
+            self._capture_open_probe()
 
         if self._holding_cut and self.in_speech:
             chunk_f = np.asarray(chunk, dtype=np.float32).reshape(-1)
@@ -1169,6 +1246,8 @@ class DualTrackEngine:
                 ):
                     if self._utt_announced:
                         print(f"--- 丢弃空录音（噪声 {self.audio_sec:.1f}s）---")
+                    self._probe_cut_reason = "empty_abort"
+                    self._note_empty_abort_probe()
                     self.endpoint.reset()
                     self.reset_utt()
                     return None
@@ -1224,6 +1303,8 @@ class DualTrackEngine:
                             print(
                                 f"--- 丢弃空录音（噪声 {self.audio_sec:.1f}s）---"
                             )
+                        self._probe_cut_reason = "empty_abort"
+                        self._note_empty_abort_probe()
                         self.endpoint.reset()
                         self.reset_utt()
                         return None
@@ -1231,6 +1312,13 @@ class DualTrackEngine:
                         f"--- 强制收句（unchanged={self._unchanged_partials} "
                         f"audio={self.audio_sec:.1f}s）---"
                     )
+                    if force_loop:
+                        self._probe_cut_reason = "asr_loop"
+                    elif too_long:
+                        self._probe_cut_reason = "max_utt"
+                    else:
+                        # unchanged freeze：任务表未列；记 unchanged 便于归因
+                        self._probe_cut_reason = "unchanged"
                     audio = self.buf.asarray()
                     # P2：复读强切后把末尾播入下一句，避免余音永久丢失
                     keep_tail = bool(
@@ -1290,6 +1378,8 @@ class DualTrackEngine:
             if held is not None:
                 return self._finalize_utt(held, mute_cb=mute_cb)
 
+        if not self._probe_cut_reason:
+            self._probe_cut_reason = "vad_endpoint"
         return self._finalize_utt(seg, mute_cb=mute_cb)
 
     def run_on_chunks(
@@ -1322,6 +1412,7 @@ class DualTrackEngine:
                             results.append(finished)
                 elif self.buf.size:
                     print("--- 强制收尾（仿真） ---")
+                    self._probe_cut_reason = "flush"
                     audio = self.buf.asarray()
                     seg = SpeechSegment(
                         audio=audio, start_sample=0, end_sample=int(audio.size)

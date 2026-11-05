@@ -50,7 +50,9 @@ def _post_utt_echo_pad(mute_fn, *drain_fns) -> None:  # noqa: ANN001
 
 
 class TranslatePipeline:
-    def __init__(self, enable_tts: bool = True, harvest=None) -> None:  # noqa: ANN001
+    def __init__(
+        self, enable_tts: bool = True, harvest=None, mic_probe=None
+    ) -> None:  # noqa: ANN001
         print(
             f"加载模型中（CPU）ASR={config.ASR_BACKEND} MT={config.MT_BACKEND} …"
         )
@@ -60,6 +62,8 @@ class TranslatePipeline:
         self.tts = TtsPlayer() if enable_tts else None
         # 可选 HarvestWriter（仅旁路；见 app/harvest.py）
         self.harvest = harvest
+        # 实麦自检埋点（由 run.py 注入；只记录，见 app/mic_probe.py）
+        self.mic_probe = mic_probe
         if self.tts:
             if self.tts.output_device is not None:
                 print(f"TTS 输出设备 index={self.tts.output_device}")
@@ -80,6 +84,17 @@ class TranslatePipeline:
                 add_punctuation("你好")  # lazy-load OfflinePunctuation
         print(f"模型就绪，用时 {(time.perf_counter() - t0):.1f}s")
         print("优化记录见 docs/OPTIMIZATION_LOG.md ；测速: python scripts/bench.py --tag ...")
+
+    def _attach_engine(self, engine: DualTrackEngine) -> None:
+        if self.harvest is not None:
+            self.harvest.attach_engine(engine)
+        if self.mic_probe is not None:
+            self.mic_probe.attach_engine(engine)
+
+    def close(self) -> None:
+        if self.mic_probe is not None:
+            self.mic_probe.close()
+            self.mic_probe = None
 
     def process_audio(self, audio: np.ndarray, play: bool = True) -> TurnResult | None:
         audio = np.asarray(audio, dtype=np.float32).reshape(-1)
@@ -156,8 +171,7 @@ class TranslatePipeline:
             force_src_lang="zh",
             label="mic",
         )
-        if self.harvest is not None:
-            self.harvest.attach_engine(engine)
+        self._attach_engine(engine)
         mic.start()
         try:
             for chunk in mic.chunks():
@@ -195,8 +209,7 @@ class TranslatePipeline:
             force_src_lang="en",
             label="loopback",
         )
-        if self.harvest is not None:
-            self.harvest.attach_engine(engine)
+        self._attach_engine(engine)
         lb.start()
         try:
             for chunk in lb.chunks():
@@ -242,9 +255,8 @@ class TranslatePipeline:
             force_src_lang="en",
             label="loopback",
         )
-        if self.harvest is not None:
-            self.harvest.attach_engine(eng_mic)
-            self.harvest.attach_engine(eng_lb)
+        self._attach_engine(eng_mic)
+        self._attach_engine(eng_lb)
         stop = threading.Event()
 
         def _mute_both(muted: bool) -> None:
@@ -318,4 +330,5 @@ class TranslatePipeline:
             f"partial={config.PARTIAL_INTERVAL_SEC}s play={play}"
         )
         engine = DualTrackEngine(self.asr, self.translator, self.tts, play=play)
+        self._attach_engine(engine)
         return engine.run_on_chunks(iter(chunks), mute_cb=None, async_partial=False)

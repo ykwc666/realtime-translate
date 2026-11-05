@@ -48,6 +48,12 @@ class EnergyEndpoint:
             config.VAD_ENERGY_THRESHOLD if energy_threshold is None else energy_threshold
         )
         self._noise_ema = self.energy_threshold * 0.4
+        # 实麦探针（只读）
+        self.open_peak: float | None = None
+        self.open_rms: float | None = None
+        self.open_prob: float | None = None
+        self.last_emit_path: str | None = None
+        self.emit_silence_forced_count = 0
         self.reset()
 
     @property
@@ -72,6 +78,18 @@ class EnergyEndpoint:
             return 0.0
         return float(np.sqrt(np.mean(np.square(chunk), dtype=np.float64)))
 
+    def _note_open(self, chunk: np.ndarray) -> None:
+        """开说那一窗原始峰值/RMS（未加权）；prob 无 API → null。"""
+        if chunk.size == 0:
+            self.open_peak = 0.0
+            self.open_rms = 0.0
+        else:
+            self.open_peak = float(np.max(np.abs(chunk)))
+            self.open_rms = float(
+                np.sqrt(np.mean(np.square(chunk), dtype=np.float64))
+            )
+        self.open_prob = None
+
     def _is_speech(self, chunk: np.ndarray) -> bool:
         rms = self._rms(chunk)
         if not self._speech_started:
@@ -93,6 +111,7 @@ class EnergyEndpoint:
                 self._speech_started = True
                 self._utt_start = self._absolute_pos
                 self._buf = np.zeros(0, dtype=np.float32)
+                self._note_open(chunk)
             self._silence = 0
             self._buf = np.concatenate([self._buf, chunk])
         elif self._speech_started:
@@ -106,6 +125,8 @@ class EnergyEndpoint:
                 audio = self._buf[:keep].copy()
                 start = self._utt_start
                 end = start + audio.size
+                self.last_emit_path = "silence_forced"
+                self.emit_silence_forced_count += 1
                 self.reset()
                 self._absolute_pos = end
                 return SpeechSegment(audio=audio, start_sample=start, end_sample=end)
@@ -168,6 +189,24 @@ class SherpaVadEndpoint:
         self._silence_needed = self._silence_base
         self._hang_hold = False
         self._min_speech = int(float(config.MIN_SPEECH_SEC) * self.sr)
+        # 实麦探针（只读；不参与切分）
+        self.open_peak: float | None = None
+        self.open_rms: float | None = None
+        self.open_prob: float | None = None
+        self.last_emit_path: str | None = None
+        self.emit_silence_forced_count = 0
+
+    def _note_open(self, win: np.ndarray) -> None:
+        """开说那一窗原始峰值/RMS（未加权增益）；TEN 窗概率 API 不可用 → null。"""
+        if win.size == 0:
+            self.open_peak = 0.0
+            self.open_rms = 0.0
+        else:
+            self.open_peak = float(np.max(np.abs(win)))
+            self.open_rms = float(
+                np.sqrt(np.mean(np.square(win), dtype=np.float64))
+            )
+        self.open_prob = None
 
     @property
     def in_speech(self) -> bool:
@@ -235,8 +274,11 @@ class SherpaVadEndpoint:
                     end_sample=self._utt_start + samples.size,
                 )
         if out is None and self._utt_audio.size:
+            self.last_emit_path = "flush"
             out = self._emit_utt(self._utt_audio)
         else:
+            if out is not None:
+                self.last_emit_path = "flush"
             self._speech_started = False
             self._utt_audio = np.zeros(0, dtype=np.float32)
             self._silence_samples = 0
@@ -289,15 +331,19 @@ class SherpaVadEndpoint:
                         self._speech_started = True
                         self._utt_start = self._absolute_pos
                         self._utt_audio = np.zeros(0, dtype=np.float32)
+                        self._note_open(win)  # 原始窗，非 win_vad
                     self._utt_audio = np.concatenate([self._utt_audio, win])
             elif self._speech_started:
                 # VAD 常在不 pop segment 时停止标语音 —
                 # 自行累计尾静音并强制 endpoint。
+                # 注：若 is_speech_detected 被当 bool 用而恒真，本分支不进（探针计数为证）。
                 self._utt_audio = np.concatenate([self._utt_audio, win])
                 self._silence_samples += int(win.size)
                 if self._silence_samples >= self._silence_needed:
                     forced = self._emit_utt(self._utt_audio)
                     if forced is not None:
+                        self.last_emit_path = "silence_forced"
+                        self.emit_silence_forced_count += 1
                         out = forced
             self._absolute_pos += win.size
 
@@ -314,6 +360,7 @@ class SherpaVadEndpoint:
                 out = SpeechSegment(
                     audio=samples.copy(), start_sample=start, end_sample=end
                 )
+                self.last_emit_path = "model_endpoint"
                 self._speech_started = False
                 self._utt_audio = np.zeros(0, dtype=np.float32)
                 self._silence_samples = 0

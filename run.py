@@ -76,10 +76,14 @@ def main(argv: list[str] | None = None) -> int:
                 harvest.close()
             return 3
 
+    from app.mic_probe import MicProbe
     from app.pipeline import TranslatePipeline
 
+    pipe = None
     try:
-        pipe = TranslatePipeline(enable_tts=not args.no_tts, harvest=harvest)
+        pipe = TranslatePipeline(
+            enable_tts=not args.no_tts, harvest=harvest, mic_probe=MicProbe()
+        )
 
         if args.mode == "file":
             if not args.file:
@@ -103,6 +107,8 @@ def main(argv: list[str] | None = None) -> int:
     finally:
         if harvest is not None:
             harvest.close()
+        if pipe is not None:
+            pipe.close()
 
 
 if __name__ == "__main__":
