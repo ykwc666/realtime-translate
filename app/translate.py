@@ -70,6 +70,7 @@ class Translator:
             config.OPUS_EN_ZH / "source.spm",
             config.OPUS_EN_ZH / "target.spm",
         )
+        print("[load] 加载 MT 模型（2×78MB，首次约 5s）…", flush=True)
         threads = max(1, int(config.MT_THREADS))
         self._mt_zh_en = ctranslate2.Translator(
             str(config.OPUS_ZH_EN_CT2),
