@@ -60,6 +60,7 @@ class Translator:
             raise FileNotFoundError(
                 "缺少 CT2 模型，请先运行: python scripts/convert_opus_ct2.py"
             )
+        t0 = time.perf_counter()
         self._tok_zh_en = AutoTokenizer.from_pretrained(str(config.OPUS_ZH_EN))
         self._tok_en_zh = AutoTokenizer.from_pretrained(str(config.OPUS_EN_ZH))
         threads = max(1, int(config.MT_THREADS))
@@ -76,6 +77,10 @@ class Translator:
             compute_type="int8",
             inter_threads=1,
             intra_threads=threads,
+        )
+        print(
+            f"[load] MT 中↔英 就绪 {(time.perf_counter() - t0):.1f}s",
+            flush=True,
         )
 
     def translate(self, text: str, src_lang: str | None = None) -> TranslateResult:

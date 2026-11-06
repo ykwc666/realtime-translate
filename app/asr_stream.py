@@ -209,6 +209,7 @@ class StreamingAsr:
             raise FileNotFoundError(
                 f"缺少 {config.SHERPA_SENSEVOICE_MODEL}，请运行 scripts/download_sherpa_sensevoice.py"
             )
+        t0 = time.perf_counter()
         self.recognizer = sherpa_onnx.OfflineRecognizer.from_sense_voice(
             model=str(config.SHERPA_SENSEVOICE_MODEL),
             tokens=str(config.SHERPA_SENSEVOICE_TOKENS),
@@ -218,6 +219,10 @@ class StreamingAsr:
             use_itn=True,
             debug=False,
             language="auto",
+        )
+        print(
+            f"[load] sensevoice 2pass 就绪 {(time.perf_counter() - t0):.1f}s",
+            flush=True,
         )
 
     def _init_sherpa_paraformer_online(self) -> None:
@@ -231,6 +236,7 @@ class StreamingAsr:
                 f"缺少流式 Paraformer，请运行 scripts/download_sherpa_paraformer_online.py\n"
                 f"  need {enc.name}, {dec.name}, {tok.name}"
             )
+        t0 = time.perf_counter()
         self.online = sherpa_onnx.OnlineRecognizer.from_paraformer(
             tokens=str(tok),
             encoder=str(enc),
@@ -242,6 +248,10 @@ class StreamingAsr:
             enable_endpoint_detection=False,
             provider="cpu",
             debug=False,
+        )
+        print(
+            f"[load] paraformer 在线识别就绪 {(time.perf_counter() - t0):.1f}s",
+            flush=True,
         )
 
     def transcribe(self, audio: np.ndarray) -> AsrResult:
