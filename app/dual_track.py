@@ -20,9 +20,8 @@ _COMMA_THEN_END = re.compile(r"[，,]+([。？！?!])")
 _END_THEN_COMMA = re.compile(r"([。？！?!])[，,]+")
 
 
-def dedupe_display_punct(raw: str, punctuated: str) -> str:
-    """只用于展示：去掉与原文叠出的连续句末/逗号垃圾。不改送 MT 的串。"""
-    del raw  # 契约保留 raw 对照位；当前按结果串坍塌即可覆盖实测 ？？
+def dedupe_display_punct(punctuated: str) -> str:
+    """只用于展示：去掉叠出的连续句末/逗号垃圾。不改送 MT 的串。"""
     s = punctuated or ""
     s = _DUP_SENT_END.sub(r"\1", s)
     s = _COMMA_THEN_END.sub(r"\1", s)
@@ -1157,7 +1156,7 @@ class DualTrackEngine:
             from .punct import add_punctuation
 
             puncted, punct_ms = add_punctuation(full)
-            display_src = dedupe_display_punct(full, puncted or full)
+            display_src = dedupe_display_punct(puncted or full)
             if punct_ms > 0 and display_src != full:
                 print(f"[punct {punct_ms:.0f}ms] {full!r} → {display_src!r}")
 

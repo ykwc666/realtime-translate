@@ -24,6 +24,7 @@ DEFAULT_SUBTITLE_PATH = Path(config.ROOT) / "data" / "live" / "subtitle.json"
 # 含 last 共 6 条：页面跳过 last.t 后历史最多仍显示 5 条
 _HISTORY_MAX = 6
 _IDLE_GAP_SEC = 3.0
+_QUEUE_MAX = 8
 
 
 @dataclass
@@ -72,7 +73,7 @@ class SubtitleWriter:
     def __init__(self, path: Path | str | None = None) -> None:
         self.path = Path(path) if path is not None else DEFAULT_SUBTITLE_PATH
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self._q: queue.Queue[tuple | None] = queue.Queue()
+        self._q: queue.Queue[tuple | None] = queue.Queue(maxsize=_QUEUE_MAX)
         self._last: dict[str, Any] | None = None
         self._history: list[dict[str, Any]] = []
         self._thread = threading.Thread(
@@ -82,33 +83,31 @@ class SubtitleWriter:
         self.idle()
         print(f"[subtitle] 写盘 → {self.path.resolve()}")
 
+    def _offer(self, item: tuple | None) -> None:
+        """有界队列：满则丢最旧再塞。"""
+        while True:
+            try:
+                self._q.put_nowait(item)
+                return
+            except queue.Full:
+                try:
+                    self._q.get_nowait()
+                except queue.Empty:
+                    return
+
     def speaking(self, partial_zh: str) -> None:
-        try:
-            self._q.put_nowait(("speaking", str(partial_zh or ""), time.time()))
-        except queue.Full:
-            pass
+        self._offer(("speaking", str(partial_zh or ""), time.time()))
 
     def final(self, zh: str, en: str) -> None:
-        try:
-            self._q.put_nowait(
-                ("final", str(zh or ""), str(en or ""), time.time())
-            )
-        except queue.Full:
-            pass
+        self._offer(("final", str(zh or ""), str(en or ""), time.time()))
 
     def idle(self) -> None:
-        try:
-            self._q.put_nowait(("idle", time.time()))
-        except queue.Full:
-            pass
+        self._offer(("idle", time.time()))
 
     def close(self) -> None:
         # 先 idle 落盘，再毒丸结束写线程
         self.idle()
-        try:
-            self._q.put_nowait(None)
-        except queue.Full:
-            self._q.put(None)
+        self._offer(None)
         self._thread.join(timeout=5.0)
 
     def _emit_idle(self, ts: float) -> None:
