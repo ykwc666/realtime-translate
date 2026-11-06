@@ -31,19 +31,25 @@ _HTML = r"""<!DOCTYPE html>
   * { box-sizing: border-box; }
   html, body {
     margin: 0; height: 100%;
+    overflow: hidden;
     background: #0f1216;
     color: #fff;
     font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
   }
   .wrap {
-    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 4vh 4vw 6vh;
     gap: 2.2vh;
   }
+  /* hist 在上、当前行贴底：超高时裁掉顶部（最老历史），当前行不被挤出 */
   .current {
+    order: 2;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 0.35em;
@@ -60,6 +66,9 @@ _HTML = r"""<!DOCTYPE html>
   .partial { color: #9aa; }
   .final { color: #fff; }
   .hist {
+    order: 1;
+    min-height: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 0.55em;

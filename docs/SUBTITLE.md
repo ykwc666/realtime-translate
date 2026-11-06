@@ -57,7 +57,7 @@ REM 离线 dualsim 联调
 
 | 闸 | 结果 |
 |---|---|
-| G1 pytest / ledger | **137 passed**；AMI **27/48** WER 0.4433；FLEURS **11/12** / 0.1352 |
+| G1 pytest / ledger | **144 passed**；AMI **27/48** WER 0.4433；FLEURS **11/12** / 0.1352 |
 | G2 live 内容 | 同 wav 不带/带 `--subtitle`：`src/tgt/mt_raw/sub_lines/spec_hit` **一致**（`t_wall`/计时/`source_desc` 随 session 变，不比） |
 | G3 wall 中位 | dualsim 抖动大：一轮约 +8.7%，复跑 **-30%**（字幕更快）。旁路 `put_nowait` 无阻塞；**不以 dualsim 单次中位卡死**，结论：无系统性 +5% 劣化 |
 | G4 页面 | 见下截图：partial 灰 / 定稿白 |
@@ -69,9 +69,10 @@ REM 离线 dualsim 联调
 - **idle/speaking 不跳过 last**（否则最新一句从历史消失）  
 - 定稿后 3s / `close()` → `idle`（当前行空，句子留在历史）  
 - 有界队列 maxsize=8；历史展示统一截到 5 行  
+- 全屏（1920×1080）不出现滚动条；`body overflow:hidden`，内容超高时切掉最老的历史行  
 
 
-### 截图
+### 截图（1920×1080）
 
 ![partial 灰](assets/subtitle_partial.png)
 
