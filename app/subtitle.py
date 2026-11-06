@@ -68,8 +68,8 @@ def render(state: dict[str, Any] | None) -> dict[str, Any]:
         if skip_t is not None and h.get("t") == skip_t:
             continue
         hist_rows.append(h)
-    # idle 可能多出一行（含 last）；与 final 统一截到 5 条
-    hist_rows = hist_rows[: _HISTORY_MAX - 1]
+    # 展示顺序旧→新（贴底当前行之上是最新历史）；契约 history 仍新在前
+    hist_rows = list(reversed(hist_rows))[-(_HISTORY_MAX - 1) :]
 
     return {"curZh": cur_zh, "curEn": cur_en, "histRows": hist_rows}
 

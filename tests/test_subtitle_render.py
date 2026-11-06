@@ -1,4 +1,4 @@
-"""字幕页 render：final 去重；idle/speaking 保留 last。"""
+"""字幕页 render：final 去重；idle/speaking 保留 last；历史旧→新。"""
 from __future__ import annotations
 
 from app.subtitle import render
@@ -17,6 +17,7 @@ def test_render_hist_skips_same_t_as_last() -> None:
     assert view["curZh"] == last["zh"]
     assert view["curEn"] == last["en"]
     assert view["histRows"] == [older]
+    assert view["histRows"][-1] == older  # 紧挨 last 的上一句
     assert all(h.get("t") != last["t"] for h in view["histRows"])
 
 
@@ -33,8 +34,8 @@ def test_render_idle_clears_current() -> None:
     )
     assert view["curZh"] == ""
     assert view["curEn"] == ""
-    assert view["histRows"][0]["zh"] == "对。我觉得可以。"
-    assert view["histRows"] == [last, older]
+    assert view["histRows"] == [older, last]
+    assert view["histRows"][-1] == last
 
 
 def test_render_speaking_keeps_last_in_history() -> None:
@@ -50,6 +51,7 @@ def test_render_speaking_keeps_last_in_history() -> None:
     assert view["curZh"] == "今天天气"
     assert view["curEn"] == ""
     assert view["histRows"] == [last]
+    assert view["histRows"][-1] == last
 
 
 def test_render_speaking_uses_partial() -> None:
@@ -97,7 +99,7 @@ def test_writer_finals_get_unique_t(tmp_path) -> None:  # noqa: ANN001
         assert len(ts) == len(set(ts))
         view = render(data)
         assert len(view["histRows"]) == 1
-        assert view["histRows"][0]["zh"] == "A。"
+        assert view["histRows"][-1]["zh"] == "A。"
         assert view["curZh"] == "B。"
     finally:
         w.close()

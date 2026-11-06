@@ -71,6 +71,7 @@ _HTML = r"""<!DOCTYPE html>
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     gap: 0.55em;
     opacity: 0.55;
     font-size: calc(clamp(22px, 3.6vw, 44px) * 0.62);
@@ -100,7 +101,7 @@ _HTML = r"""<!DOCTYPE html>
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  /** 与 app.subtitle.render 对齐：仅 final 时跳过 h.t === last.t */
+  /** 与 app.subtitle.render 对齐：仅 final 跳过 last.t；展示旧→新 */
   function render(st) {
     var state = (st && st.state) || "idle";
     var partial = (st && st.partial_zh) || "";
@@ -120,7 +121,8 @@ _HTML = r"""<!DOCTYPE html>
       if (skipT != null && h.t === skipT) continue;
       histRows.push(h);
     }
-    histRows = histRows.slice(0, 5);
+    histRows.reverse();
+    histRows = histRows.slice(-5);
     return { curZh: curZh, curEn: curEn, histRows: histRows };
   }
 
