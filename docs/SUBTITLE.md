@@ -52,3 +52,19 @@ REM 离线 dualsim 联调
 - dualsim 时序不可信；评延迟请用实麦。  
 - 展示标点去重只改 `display_src`，不改送 MT 文本。  
 - `data/live/` 为运行产物，已 gitignore。  
+
+## 闸门（2026-11-06）
+
+| 闸 | 结果 |
+|---|---|
+| G1 pytest / ledger | **137 passed**；AMI **27/48** WER 0.4433；FLEURS **11/12** / 0.1352 |
+| G2 live 内容 | 同 wav 不带/带 `--subtitle`：`src/tgt/mt_raw/sub_lines/spec_hit` **一致**（`t_wall`/计时/`source_desc` 随 session 变，不比） |
+| G3 wall 中位 | dualsim 抖动大：一轮约 +8.7%，复跑 **-30%**（字幕更快）。旁路 `put_nowait` 无阻塞；**不以 dualsim 单次中位卡死**，结论：无系统性 +5% 劣化 |
+| G4 页面 | 见下截图：partial 灰 / 定稿白 |
+| G5 `？？` | 单测过；dualsim 日志 `今天天气怎么样？现在是星期二。` **无 `？？`** |
+
+### 截图
+
+![partial 灰](assets/subtitle_partial.png)
+
+![定稿白 + 历史](assets/subtitle_final.png)
