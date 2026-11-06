@@ -21,7 +21,8 @@ from typing import Any
 from . import config
 
 DEFAULT_SUBTITLE_PATH = Path(config.ROOT) / "data" / "live" / "subtitle.json"
-_HISTORY_MAX = 5
+# 含 last 共 6 条：页面跳过 last.t 后历史最多仍显示 5 条
+_HISTORY_MAX = 6
 
 
 @dataclass
@@ -34,6 +35,34 @@ class SubtitleState:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+
+
+def render(state: dict[str, Any] | None) -> dict[str, Any]:
+    """页面渲染纯函数：当前行 + 历史（跳过与 last 同 t 的条目，避免双显）。"""
+    st = state or {}
+    kind = str(st.get("state") or "idle")
+    partial = str(st.get("partial_zh") or "")
+    last = st.get("last")
+    history = st.get("history") if isinstance(st.get("history"), list) else []
+
+    cur_zh, cur_en = "", ""
+    if kind == "speaking":
+        cur_zh, cur_en = partial, ""
+    elif kind == "final" and isinstance(last, dict):
+        cur_zh = str(last.get("zh") or "")
+        cur_en = str(last.get("en") or "")
+    # idle → 当前行空
+
+    last_t = last.get("t") if isinstance(last, dict) else None
+    hist_rows: list[dict[str, Any]] = []
+    for h in history:
+        if not isinstance(h, dict):
+            continue
+        if last_t is not None and h.get("t") == last_t:
+            continue
+        hist_rows.append(h)
+
+    return {"curZh": cur_zh, "curEn": cur_en, "histRows": hist_rows}
 
 
 class SubtitleWriter:

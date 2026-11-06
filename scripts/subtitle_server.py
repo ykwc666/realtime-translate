@@ -91,32 +91,46 @@ _HTML = r"""<!DOCTYPE html>
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  function apply(st) {
-    var state = st.state || "idle";
-    var partial = st.partial_zh || "";
-    var last = st.last || null;
-    var history = Array.isArray(st.history) ? st.history : [];
+  /** 与 app.subtitle.render 对齐：跳过 h.t === last.t */
+  function render(st) {
+    var state = (st && st.state) || "idle";
+    var partial = (st && st.partial_zh) || "";
+    var last = (st && st.last) || null;
+    var history = (st && Array.isArray(st.history)) ? st.history : [];
+    var curZh = "", curEn = "";
+    if (state === "speaking") {
+      curZh = partial; curEn = "";
+    } else if (state === "final" && last) {
+      curZh = last.zh || ""; curEn = last.en || "";
+    }
+    var lastT = last && last.t;
+    var histRows = [];
+    for (var i = 0; i < history.length; i++) {
+      var h = history[i] || {};
+      if (lastT != null && h.t === lastT) continue;
+      histRows.push(h);
+    }
+    return { curZh: curZh, curEn: curEn, histRows: histRows };
+  }
 
+  function apply(st) {
+    var state = (st && st.state) || "idle";
+    var view = render(st || {});
+    curZh.textContent = view.curZh;
+    curEn.textContent = view.curEn;
     if (state === "idle") {
-      curZh.textContent = "";
-      curEn.textContent = "";
       curZh.className = "zh";
       curEn.className = "en";
     } else if (state === "speaking") {
-      curZh.textContent = partial;
-      curEn.textContent = "";
       curZh.className = "zh partial";
       curEn.className = "en partial";
-    } else if (state === "final" && last) {
-      curZh.textContent = last.zh || "";
-      curEn.textContent = last.en || "";
+    } else {
       curZh.className = "zh final";
       curEn.className = "en final";
     }
-
     var html = "";
-    for (var i = 0; i < history.length; i++) {
-      var h = history[i] || {};
+    for (var i = 0; i < view.histRows.length; i++) {
+      var h = view.histRows[i] || {};
       html += '<div class="row"><div class="zh">' + esc(h.zh) +
         '</div><div class="en">' + esc(h.en) + '</div></div>';
     }
