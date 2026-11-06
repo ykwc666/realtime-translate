@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import time as _time
+
+PROCESS_T0 = _time.perf_counter()  # 进程内最早可用时刻
+
 import argparse
 import sys
 
@@ -119,6 +123,7 @@ def main(argv: list[str] | None = None) -> int:
                 harvest.close()
             return 3
 
+    print("[boot] 开始导入依赖 …", flush=True)
     from app.mic_probe import MicProbe
     from app.pipeline import TranslatePipeline
 
@@ -156,6 +161,7 @@ def main(argv: list[str] | None = None) -> int:
             mic_probe=MicProbe(),
             session_recorder=session_recorder,
             subtitle_writer=subtitle_writer,
+            process_t0=PROCESS_T0,
         )
 
         if args.mode == "file":

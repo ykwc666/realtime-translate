@@ -57,6 +57,7 @@ class TranslatePipeline:
         mic_probe=None,
         session_recorder=None,
         subtitle_writer=None,
+        process_t0: float | None = None,
     ) -> None:  # noqa: ANN001
         print(
             f"加载模型中（CPU）ASR={config.ASR_BACKEND} MT={config.MT_BACKEND} …"
@@ -91,7 +92,16 @@ class TranslatePipeline:
 
             if punct_available():
                 add_punctuation("你好")  # lazy-load OfflinePunctuation
-        print(f"模型就绪，用时 {(time.perf_counter() - t0):.1f}s")
+        now = time.perf_counter()
+        print(f"模型就绪，用时 {(now - t0):.1f}s")
+        if process_t0 is not None:
+            dep = t0 - process_t0
+            init = now - t0
+            total = now - process_t0
+            print(
+                f"[boot] 依赖导入 {dep:.1f}s | 模型初始化 {init:.1f}s | 进程总 {total:.1f}s",
+                flush=True,
+            )
         print("优化记录见 docs/OPTIMIZATION_LOG.md ；测速: python scripts/bench.py --tag ...")
 
     def _attach_engine(self, engine: DualTrackEngine) -> None:
