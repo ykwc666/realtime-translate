@@ -1,0 +1,54 @@
+# 双语字幕（旁路）
+
+日期：2026-11-06  
+相关提交：`feat(sub): subtitle state contract + writer` → `fix(display): …` → `feat(sub): browser caption page`
+
+## 契约 `data/live/subtitle.json`
+
+| 字段 | 类型 | 含义 |
+|---|---|---|
+| `ts` | float | epoch 秒 |
+| `state` | `idle` \| `speaking` \| `final` | 空闲 / partial / 定稿 |
+| `partial_zh` | str | 当前 partial 中文；无则 `""` |
+| `last` | `{zh,en,t}` \| null | 最近一条定稿 |
+| `history` | `[{zh,en,t},…]` | 最近 5 条，**新的在前** |
+
+写盘：队列 + daemon；`tmp` + `os.replace` 原子替换。无 `--subtitle` 时引擎不构造、不写（热路径零开销）。
+
+## 启动
+
+```bat
+cd /d D:\xuanjian\realtime-translate
+
+REM 只写盘
+.venv\Scripts\python.exe run.py --mode vad --subtitle
+
+REM 写盘 + 本机页（隐含 --subtitle）
+.venv\Scripts\python.exe run.py --mode vad --subtitle-serve
+REM 浏览器打开 http://127.0.0.1:8765/
+
+REM 离线 dualsim 联调
+.venv\Scripts\python.exe run.py --mode dualsim --file cache\mic_163258_trim.wav --no-tts --subtitle-serve
+```
+
+独立起页（已有写盘进程时）：
+
+```bat
+.venv\Scripts\python.exe scripts\subtitle_server.py --state data\live\subtitle.json
+```
+
+## 页面行为
+
+- 上中文、下英文；`clamp(22px, 3.6vw, 44px)`；优先 Microsoft YaHei  
+- partial `#9aa`，定稿白；历史 0.62× 字号、透明度 0.55  
+- 底色 `#0f1216`；150ms 轮询 `/state`，内容不变不改 DOM  
+- `idle` 清空当前行  
+
+绑定 **127.0.0.1:8765**（不做 0.0.0.0）。
+
+## 已知限制
+
+- 字幕只消费已有 ASR/MT 结果，不改善识别质量。  
+- dualsim 时序不可信；评延迟请用实麦。  
+- 展示标点去重只改 `display_src`，不改送 MT 文本。  
+- `data/live/` 为运行产物，已 gitignore。  

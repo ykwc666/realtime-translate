@@ -69,6 +69,11 @@ def main(argv: list[str] | None = None) -> int:
         default="",
         help="字幕 JSON 路径（配合 --subtitle；默认 data/live/subtitle.json）",
     )
+    parser.add_argument(
+        "--subtitle-serve",
+        action="store_true",
+        help="本机起字幕页 http://127.0.0.1:8765/（隐含开启 --subtitle）",
+    )
     args = parser.parse_args(argv)
 
     if args.list_loopback:
@@ -127,12 +132,21 @@ def main(argv: list[str] | None = None) -> int:
             tgt_lang="en",
         )
 
+    if args.subtitle_serve:
+        args.subtitle = True
+
     subtitle_writer = None
+    subtitle_httpd = None
     if args.subtitle:
         from app.subtitle import DEFAULT_SUBTITLE_PATH, SubtitleWriter
 
         sp = args.subtitle_path.strip()
-        subtitle_writer = SubtitleWriter(sp if sp else DEFAULT_SUBTITLE_PATH)
+        sub_path = sp if sp else str(DEFAULT_SUBTITLE_PATH)
+        subtitle_writer = SubtitleWriter(sub_path)
+        if args.subtitle_serve:
+            from scripts.subtitle_server import serve_in_thread
+
+            subtitle_httpd, _ = serve_in_thread(state_path=subtitle_writer.path)
 
     pipe = None
     try:
@@ -168,6 +182,11 @@ def main(argv: list[str] | None = None) -> int:
             harvest.close()
         if pipe is not None:
             pipe.close()
+        if subtitle_httpd is not None:
+            try:
+                subtitle_httpd.shutdown()
+            except Exception:  # noqa: BLE001
+                pass
 
 
 if __name__ == "__main__":
