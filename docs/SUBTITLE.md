@@ -63,8 +63,16 @@ REM 离线 dualsim 联调
 | G4 页面 | 见下截图：partial 灰 / 定稿白 |
 | G5 `？？` | 单测过；dualsim 日志 `今天天气怎么样？现在是星期二。` **无 `？？`** |
 
+### 显示修复（2026-11-06 续）
+
+- 当前行与 `history` 按 `t` 去重（`render()`）；`final.t` 写盘侧保证唯一  
+- 定稿后 3s / `close()` → `idle`（当前行空，句子留在历史）  
+- 有界队列 maxsize=8  
+
 ### 截图
 
 ![partial 灰](assets/subtitle_partial.png)
 
-![定稿白 + 历史](assets/subtitle_final.png)
+![定稿白 + 历史无重复](assets/subtitle_final.png)
+
+![idle 当前行空](assets/subtitle_idle.png)
