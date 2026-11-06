@@ -191,7 +191,12 @@ class SubtitleWriter:
                 f.write(raw)
                 f.flush()
                 os.fsync(f.fileno())
-            os.replace(tmp, self.path)
+            try:
+                os.replace(tmp, self.path)
+            except PermissionError:
+                # Windows 偶发文件锁：sleep 一次再试，仍失败再报
+                time.sleep(0.02)
+                os.replace(tmp, self.path)
         except OSError as exc:
             print(f"[subtitle] write failed: {exc}")
             try:
