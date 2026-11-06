@@ -24,6 +24,9 @@
 | 2026-11-04 | en→zh 边界类+holdout | 是 | 60/60，broken 0，P95 0.43ms | `MT_EN_ZH_QUALITY_STEP2.md` |
 | 2026-11-04 | 真实语料 harvest 闭环 | 工具 | 采集+人判；82×3 全绿 | `HARVEST_SESSION.md` |
 | 2026-11-04 | 公开 CC-BY 英文语音 harvest | 度量 | 50句 ok6%/wrong56%；规则命中0 | `HARVEST_PUBLIC_EN_2026-11-04.md` |
+| 2026-11-06 | device TTFA 落盘回填 | 是（度量） | 非空率 0%→94.7%，出声 p50 673 / p90 1222 | `BOOT_TIMING.md` / `CURSOR_TASK_TTFA_WARMUP.md` |
+| 2026-11-06 | 启动统一口径 `[boot]` | 是 | 进程总 27.6s（含 TTS） | `BOOT_TIMING.md` |
+| 2026-11-06 | CT2 tokenizer 换 sentencepiece | 是 | 模型初始化中位 −4.3s，166 条 DIFF=0 | `BOOT_TIMING.md` |
 
 ## 检查点约定
 
