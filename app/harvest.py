@@ -102,6 +102,9 @@ class HarvestWriter:
         self.emit(row)
 
     def emit(self, row: dict) -> None:
+        # src 全空无信息量，不写行；src 有内容但 tgt 空仍保留
+        if not str(row.get("src") or "").strip():
+            return
         try:
             self._q.put_nowait(row)
         except queue.Full:
