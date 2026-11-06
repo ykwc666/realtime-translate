@@ -47,3 +47,29 @@ def test_render_speaking_uses_partial() -> None:
     assert view["curZh"] == "今天天气"
     assert view["curEn"] == ""
     assert view["histRows"] == []
+
+
+def test_writer_finals_get_unique_t(tmp_path) -> None:  # noqa: ANN001
+    import time
+    from app.subtitle import SubtitleWriter
+
+    path = tmp_path / "s.json"
+    w = SubtitleWriter(path)
+    try:
+        w.final("A。", "A")
+        w.final("B。", "B")
+        deadline = time.time() + 2.0
+        data = {}
+        while time.time() < deadline:
+            data = __import__("json").loads(path.read_text(encoding="utf-8"))
+            if data.get("state") == "final" and len(data.get("history") or []) >= 2:
+                break
+            time.sleep(0.02)
+        ts = [h["t"] for h in data["history"]]
+        assert len(ts) == len(set(ts))
+        view = render(data)
+        assert len(view["histRows"]) == 1
+        assert view["histRows"][0]["zh"] == "A。"
+        assert view["curZh"] == "B。"
+    finally:
+        w.close()

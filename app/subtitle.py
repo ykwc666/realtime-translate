@@ -76,6 +76,7 @@ class SubtitleWriter:
         self._q: queue.Queue[tuple | None] = queue.Queue(maxsize=_QUEUE_MAX)
         self._last: dict[str, Any] | None = None
         self._history: list[dict[str, Any]] = []
+        self._t_seq = 0  # 保证 final.t 唯一（页面按 t 跳过 last）
         self._thread = threading.Thread(
             target=self._run, name="subtitle-writer", daemon=True
         )
@@ -156,6 +157,9 @@ class SubtitleWriter:
                 self._atomic_write(st.to_dict())
             elif kind == "final":
                 _zh, _en, ts = item[1], item[2], float(item[3])
+                # Windows time.time() 分辨率粗：连续 final 可能同戳 → 按 t 去重会误伤
+                self._t_seq += 1
+                ts = ts + self._t_seq * 1e-6
                 entry = {"zh": _zh, "en": _en, "t": ts}
                 self._last = entry
                 # 不去重短句/噪声句：一律进 history（含 The。→缩）
