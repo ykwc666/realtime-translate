@@ -65,9 +65,11 @@ REM 离线 dualsim 联调
 
 ### 显示修复（2026-11-06 续）
 
-- 当前行与 `history` 按 `t` 去重（`render()`）；`final.t` 写盘侧保证唯一  
+- **仅 `final`** 时按 `t` 跳过与大字行相同的 `last`（避免双显）；`final.t` 写盘侧保证唯一  
+- **idle/speaking 不跳过 last**（否则最新一句从历史消失）  
 - 定稿后 3s / `close()` → `idle`（当前行空，句子留在历史）  
-- 有界队列 maxsize=8  
+- 有界队列 maxsize=8；历史展示统一截到 5 行  
+
 
 ### 截图
 

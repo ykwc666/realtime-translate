@@ -1,4 +1,4 @@
-"""字幕页 render：当前行与历史不重复 last。"""
+"""字幕页 render：final 去重；idle/speaking 保留 last。"""
 from __future__ import annotations
 
 from app.subtitle import render
@@ -21,18 +21,35 @@ def test_render_hist_skips_same_t_as_last() -> None:
 
 
 def test_render_idle_clears_current() -> None:
-    last = {"zh": "对。", "en": "Yes.", "t": 1.0}
+    last = {"zh": "对。我觉得可以。", "en": "Yes.", "t": 100.1}
+    older = {"zh": "帮我发文件。", "en": "Send him the file.", "t": 99.0}
     view = render(
         {
             "state": "idle",
             "partial_zh": "残影",
             "last": last,
-            "history": [last],
+            "history": [last, older],
         }
     )
     assert view["curZh"] == ""
     assert view["curEn"] == ""
-    assert view["histRows"] == []
+    assert view["histRows"][0]["zh"] == "对。我觉得可以。"
+    assert view["histRows"] == [last, older]
+
+
+def test_render_speaking_keeps_last_in_history() -> None:
+    last = {"zh": "帮我发文件。", "en": "Send him the file.", "t": 100.0}
+    view = render(
+        {
+            "state": "speaking",
+            "partial_zh": "今天天气",
+            "last": last,
+            "history": [last],
+        }
+    )
+    assert view["curZh"] == "今天天气"
+    assert view["curEn"] == ""
+    assert view["histRows"] == [last]
 
 
 def test_render_speaking_uses_partial() -> None:

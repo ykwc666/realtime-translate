@@ -40,7 +40,11 @@ class SubtitleState:
 
 
 def render(state: dict[str, Any] | None) -> dict[str, Any]:
-    """页面渲染纯函数：当前行 + 历史（跳过与 last 同 t 的条目，避免双显）。"""
+    """页面渲染纯函数：当前行 + 历史。
+
+    仅 final 时跳过与 last 同 t 的条目（避免大字行双显）；
+    idle/speaking 时 last 不在大字行，必须留在历史。
+    """
     st = state or {}
     kind = str(st.get("state") or "idle")
     partial = str(st.get("partial_zh") or "")
@@ -56,13 +60,16 @@ def render(state: dict[str, Any] | None) -> dict[str, Any]:
     # idle → 当前行空
 
     last_t = last.get("t") if isinstance(last, dict) else None
+    skip_t = last_t if kind == "final" else None
     hist_rows: list[dict[str, Any]] = []
     for h in history:
         if not isinstance(h, dict):
             continue
-        if last_t is not None and h.get("t") == last_t:
+        if skip_t is not None and h.get("t") == skip_t:
             continue
         hist_rows.append(h)
+    # idle 可能多出一行（含 last）；与 final 统一截到 5 条
+    hist_rows = hist_rows[: _HISTORY_MAX - 1]
 
     return {"curZh": cur_zh, "curEn": cur_en, "histRows": hist_rows}
 

@@ -91,7 +91,7 @@ _HTML = r"""<!DOCTYPE html>
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  /** 与 app.subtitle.render 对齐：跳过 h.t === last.t */
+  /** 与 app.subtitle.render 对齐：仅 final 时跳过 h.t === last.t */
   function render(st) {
     var state = (st && st.state) || "idle";
     var partial = (st && st.partial_zh) || "";
@@ -104,12 +104,14 @@ _HTML = r"""<!DOCTYPE html>
       curZh = last.zh || ""; curEn = last.en || "";
     }
     var lastT = last && last.t;
+    var skipT = (state === "final") ? lastT : null;
     var histRows = [];
     for (var i = 0; i < history.length; i++) {
       var h = history[i] || {};
-      if (lastT != null && h.t === lastT) continue;
+      if (skipT != null && h.t === skipT) continue;
       histRows.push(h);
     }
+    histRows = histRows.slice(0, 5);
     return { curZh: curZh, curEn: curEn, histRows: histRows };
   }
 
