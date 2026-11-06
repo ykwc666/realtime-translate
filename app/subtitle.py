@@ -5,7 +5,7 @@
   state        idle | speaking | final
   partial_zh   当前 partial 中文（无则 ""）
   last         {zh, en, t} 最近定稿（无则 null）
-  history      [{zh, en, t}, ...] 最近 5 条，新的在前
+  history      [{zh, en, t}, ...] 最近若干条，新的在前
 """
 from __future__ import annotations
 
@@ -23,6 +23,7 @@ from . import config
 DEFAULT_SUBTITLE_PATH = Path(config.ROOT) / "data" / "live" / "subtitle.json"
 # 含 last 共 6 条：页面跳过 last.t 后历史最多仍显示 5 条
 _HISTORY_MAX = 6
+_IDLE_GAP_SEC = 3.0
 
 
 @dataclass
@@ -74,7 +75,6 @@ class SubtitleWriter:
         self._q: queue.Queue[tuple | None] = queue.Queue()
         self._last: dict[str, Any] | None = None
         self._history: list[dict[str, Any]] = []
-        self._stop = threading.Event()
         self._thread = threading.Thread(
             target=self._run, name="subtitle-writer", daemon=True
         )
@@ -103,27 +103,50 @@ class SubtitleWriter:
             pass
 
     def close(self) -> None:
+        # 先 idle 落盘，再毒丸结束写线程
+        self.idle()
         try:
             self._q.put_nowait(None)
         except queue.Full:
             self._q.put(None)
-        self._thread.join(timeout=3.0)
+        self._thread.join(timeout=5.0)
+
+    def _emit_idle(self, ts: float) -> None:
+        st = SubtitleState(
+            ts=ts,
+            state="idle",
+            partial_zh="",
+            last=self._last,
+            history=list(self._history),
+        )
+        self._atomic_write(st.to_dict())
 
     def _run(self) -> None:
+        idle_deadline: float | None = None
         while True:
-            item = self._q.get()
+            timeout: float | None = None
+            if idle_deadline is not None:
+                timeout = max(0.0, idle_deadline - time.time())
+            try:
+                if timeout is None:
+                    item = self._q.get()
+                else:
+                    item = self._q.get(timeout=timeout)
+            except queue.Empty:
+                # 定稿后静置到期 → idle（句子留在 history）
+                self._emit_idle(time.time())
+                idle_deadline = None
+                continue
+
             if item is None:
                 break
+
             kind = item[0]
             if kind == "idle":
-                st = SubtitleState(
-                    ts=float(item[1]),
-                    state="idle",
-                    partial_zh="",
-                    last=self._last,
-                    history=list(self._history),
-                )
+                idle_deadline = None
+                self._emit_idle(float(item[1]))
             elif kind == "speaking":
+                idle_deadline = None
                 st = SubtitleState(
                     ts=float(item[2]),
                     state="speaking",
@@ -131,13 +154,13 @@ class SubtitleWriter:
                     last=self._last,
                     history=list(self._history),
                 )
+                self._atomic_write(st.to_dict())
             elif kind == "final":
                 _zh, _en, ts = item[1], item[2], float(item[3])
                 entry = {"zh": _zh, "en": _en, "t": ts}
                 self._last = entry
-                self._history = [entry, *[h for h in self._history if h != entry]][
-                    :_HISTORY_MAX
-                ]
+                # 不去重短句/噪声句：一律进 history（含 The。→缩）
+                self._history = [entry, *self._history][:_HISTORY_MAX]
                 st = SubtitleState(
                     ts=ts,
                     state="final",
@@ -145,9 +168,10 @@ class SubtitleWriter:
                     last=self._last,
                     history=list(self._history),
                 )
+                self._atomic_write(st.to_dict())
+                idle_deadline = time.time() + _IDLE_GAP_SEC
             else:
                 continue
-            self._atomic_write(st.to_dict())
 
     def _atomic_write(self, payload: dict[str, Any]) -> None:
         raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
