@@ -54,15 +54,22 @@ class Translator:
 
     def _init_ct2(self) -> None:
         import ctranslate2
-        from transformers import AutoTokenizer
+
+        from .mt_spm import SpmTokenizer
 
         if not config.OPUS_ZH_EN_CT2.exists() or not config.OPUS_EN_ZH_CT2.exists():
             raise FileNotFoundError(
                 "缺少 CT2 模型，请先运行: python scripts/convert_opus_ct2.py"
             )
         t0 = time.perf_counter()
-        self._tok_zh_en = AutoTokenizer.from_pretrained(str(config.OPUS_ZH_EN))
-        self._tok_en_zh = AutoTokenizer.from_pretrained(str(config.OPUS_EN_ZH))
+        self._tok_zh_en = SpmTokenizer(
+            config.OPUS_ZH_EN / "source.spm",
+            config.OPUS_ZH_EN / "target.spm",
+        )
+        self._tok_en_zh = SpmTokenizer(
+            config.OPUS_EN_ZH / "source.spm",
+            config.OPUS_EN_ZH / "target.spm",
+        )
         threads = max(1, int(config.MT_THREADS))
         self._mt_zh_en = ctranslate2.Translator(
             str(config.OPUS_ZH_EN_CT2),
