@@ -58,6 +58,17 @@ def main(argv: list[str] | None = None) -> int:
         default="",
         help="会后对照用的 live/harvest jsonl（默认 session/live.jsonl）",
     )
+    parser.add_argument(
+        "--subtitle",
+        action="store_true",
+        help="开启双语字幕状态写盘（默认 data/live/subtitle.json）",
+    )
+    parser.add_argument(
+        "--subtitle-path",
+        type=str,
+        default="",
+        help="字幕 JSON 路径（配合 --subtitle；默认 data/live/subtitle.json）",
+    )
     args = parser.parse_args(argv)
 
     if args.list_loopback:
@@ -116,6 +127,13 @@ def main(argv: list[str] | None = None) -> int:
             tgt_lang="en",
         )
 
+    subtitle_writer = None
+    if args.subtitle:
+        from app.subtitle import DEFAULT_SUBTITLE_PATH, SubtitleWriter
+
+        sp = args.subtitle_path.strip()
+        subtitle_writer = SubtitleWriter(sp if sp else DEFAULT_SUBTITLE_PATH)
+
     pipe = None
     try:
         pipe = TranslatePipeline(
@@ -123,6 +141,7 @@ def main(argv: list[str] | None = None) -> int:
             harvest=harvest,
             mic_probe=MicProbe(),
             session_recorder=session_recorder,
+            subtitle_writer=subtitle_writer,
         )
 
         if args.mode == "file":

@@ -118,9 +118,10 @@ class DualTrackEngine:
         # 双工固定方向（mic=zh, loopback=en）；None → detect_lang
         self.force_src_lang = force_src_lang
         self.label = label or ""
-        # 仅旁路（如 HarvestWriter / MicProbe）；不在关键延迟路径上。
+        # 仅旁路（如 HarvestWriter / MicProbe / SubtitleWriter）；不在关键延迟路径上。
         self.on_utt_final = None
         self._mic_probe = None
+        self.subtitle_writer = None
         self.endpoint = create_endpoint()
         tag = f" {self.label}" if self.label else ""
         print(f"[vad{tag}] backend={vad_backend_label(self.endpoint)}")
@@ -881,6 +882,9 @@ class DualTrackEngine:
                 print(
                     f"[partial {partial.ms:.0f}ms #{seq} samples={partial.audio_samples}] {text}"
                 )
+                sw = self.subtitle_writer
+                if sw is not None:
+                    sw.speaking(text)
                 if has_repeated_span(text):
                     self._loop_hits = int(getattr(self, "_loop_hits", 0) or 0) + 1
                 else:
@@ -1151,6 +1155,9 @@ class DualTrackEngine:
 
         self.stats.source = display_src
         self.stats.translated = " ".join(self.translated_bits).strip()
+        sw = self.subtitle_writer
+        if sw is not None:
+            sw.final(self.stats.source, self.stats.translated)
         if self.utt_t0:
             self.stats.utt_wall_ms = (time.perf_counter() - self.utt_t0) * 1000
         ft = " forced_trunc" if self._forced_truncation else ""

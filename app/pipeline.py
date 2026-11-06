@@ -56,6 +56,7 @@ class TranslatePipeline:
         harvest=None,
         mic_probe=None,
         session_recorder=None,
+        subtitle_writer=None,
     ) -> None:  # noqa: ANN001
         print(
             f"加载模型中（CPU）ASR={config.ASR_BACKEND} MT={config.MT_BACKEND} …"
@@ -70,6 +71,8 @@ class TranslatePipeline:
         self.mic_probe = mic_probe
         # 会后重译旁路录音（降噪前；见 app/session_record.py）
         self.session_recorder = session_recorder
+        # 双语字幕旁路（见 app/subtitle.py）；默认 None → 热路径零开销
+        self.subtitle_writer = subtitle_writer
         if self.tts:
             if self.tts.output_device is not None:
                 print(f"TTS 输出设备 index={self.tts.output_device}")
@@ -98,6 +101,8 @@ class TranslatePipeline:
             self.session_recorder.attach_engine(engine)
         if self.mic_probe is not None:
             self.mic_probe.attach_engine(engine)
+        if self.subtitle_writer is not None:
+            engine.subtitle_writer = self.subtitle_writer
 
     def close(self) -> None:
         if self.session_recorder is not None:
@@ -109,6 +114,12 @@ class TranslatePipeline:
         if self.mic_probe is not None:
             self.mic_probe.close()
             self.mic_probe = None
+        if self.subtitle_writer is not None:
+            try:
+                self.subtitle_writer.close()
+            except Exception as exc:  # noqa: BLE001
+                print(f"[subtitle] close error: {exc}")
+            self.subtitle_writer = None
 
     def process_audio(self, audio: np.ndarray, play: bool = True) -> TurnResult | None:
         audio = np.asarray(audio, dtype=np.float32).reshape(-1)
