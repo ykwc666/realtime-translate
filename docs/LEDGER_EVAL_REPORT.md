@@ -1,5 +1,12 @@
 # 可分账评测报告（真实语音）
 
+> ⚠️ **本文是 2026-11-04 的快照，数字已过时。**
+> 当时卡在「大量句子 ASR 全空」，AMI pipeline 通过率只有 8.3%、WER 0.917。
+> 空 ASR 与切句修复后，当前数字（2026-11-06 复跑，判定零翻转）：
+> **AMI 27/48 = 56.25%，WER 0.4433；FLEURS 11/12 = 91.67%，WER 0.1352；MT-only 45/48。**
+> 以 `docs/ledger_eval_summary.json` 为准；分层与归因见 `docs/BOOT_TIMING.md` 同目录的
+> `docs/EN_ZH_ACCURACY.md`。下文表格仅作历史对照，**不要再引用其中的 8.3% / 0.917**。
+
 日期：2026-11-04  
 判定口径：全部为 **model-judge**（非人工）。落盘可复算：`docs/ledger_eval_*.json*`、`docs/ledger_asr_oneshot*.json*`、`docs/mt_decode_ab*.json*`、`docs/ami_cut_diagnosis.json`、`docs/ledger_review_15.jsonl`。
 
