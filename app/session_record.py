@@ -86,6 +86,8 @@ class SessionRecorder:
         self._warned = False
         self._sf: sf.SoundFile | None = None
         self._live_n = 0
+        self._pending_stats: Any | None = None
+        self._pending_t_wall: str | None = None
         try:
             self._sf = sf.SoundFile(
                 str(self.wav_path),
@@ -130,23 +132,40 @@ class SessionRecorder:
         engine.on_utt_final = _cb
 
     def emit_live(self, stats: Any) -> None:
+        # src 全空无信息量，不挂起；挂起当前条，下一条/close 再 snapshot（等 TTFA 回填）
+        if not str(getattr(stats, "source", "") or "").strip():
+            return
+        t_wall = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with self._lock:
+            self._flush_pending_unlocked()
+            self._pending_stats = stats
+            self._pending_t_wall = t_wall
+
+    def _flush_pending_unlocked(self) -> None:
+        if self._pending_stats is None:
+            return
         row = row_from_stats(
-            stats, mode=self.mode, source_desc=f"session:{self.dir.name}"
+            self._pending_stats,
+            mode=self.mode,
+            source_desc=f"session:{self.dir.name}",
+            t_wall=self._pending_t_wall,
         )
-        # src 全空无信息量，不写行；src 有内容但 tgt 空仍保留
+        self._pending_stats = None
+        self._pending_t_wall = None
         if not str(row.get("src") or "").strip():
             return
         try:
-            with self._lock:
-                with self.live_path.open("a", encoding="utf-8") as f:
-                    f.write(json.dumps(row, ensure_ascii=False) + "\n")
-                self._live_n += 1
+            with self.live_path.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(row, ensure_ascii=False) + "\n")
+            self._live_n += 1
         except Exception as exc:  # noqa: BLE001
             if not self._warned:
                 self._warned = True
                 print(f"[record] live.jsonl 写入失败: {exc}")
 
     def close(self) -> None:
+        with self._lock:
+            self._flush_pending_unlocked()
         duration = float(self._n_samples) / float(self.sample_rate) if self.sample_rate else 0.0
         with self._lock:
             if self._sf is not None:

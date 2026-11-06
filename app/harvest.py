@@ -14,6 +14,9 @@
   source_desc             CLI 传入的声源说明
 
 热路径：仅 put_nowait。daemon 线程负责 open/write/flush，采集/finalize 不因磁盘 IO 阻塞。close() 排空队列。
+
+落盘策略：finalize 时先挂起当前 stats，下一条到来（或 close）再 snapshot——
+给 TTS 回调时间回填 latency_device_ttfa_ms，避免拍到全 null。
 """
 from __future__ import annotations
 
@@ -90,6 +93,8 @@ class HarvestWriter:
         self._n = 0
         self._lock = threading.Lock()
         self._stop = threading.Event()
+        self._pending_stats: Any | None = None
+        self._pending_t_wall: str | None = None
         self._thread = threading.Thread(
             target=self._run, name="harvest-writer", daemon=True
         )
@@ -98,8 +103,14 @@ class HarvestWriter:
         print(f"[harvest] mode={mode!r} source={source_desc!r}")
 
     def emit_from_stats(self, stats: Any) -> None:
-        row = row_from_stats(stats, mode=self.mode, source_desc=self.source_desc)
-        self.emit(row)
+        # src 全空无信息量，不挂起；src 有内容但 tgt 空仍保留
+        if not str(getattr(stats, "source", "") or "").strip():
+            return
+        t_wall = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with self._lock:
+            self._flush_pending_unlocked()
+            self._pending_stats = stats
+            self._pending_t_wall = t_wall
 
     def emit(self, row: dict) -> None:
         # src 全空无信息量，不写行；src 有内容但 tgt 空仍保留
@@ -109,6 +120,24 @@ class HarvestWriter:
             self._q.put_nowait(row)
         except queue.Full:
             # 无界 Queue 不会 Full；保留分支以防万一
+            print("[harvest] queue full, drop row")
+
+    def _flush_pending_unlocked(self) -> None:
+        if self._pending_stats is None:
+            return
+        row = row_from_stats(
+            self._pending_stats,
+            mode=self.mode,
+            source_desc=self.source_desc,
+            t_wall=self._pending_t_wall,
+        )
+        self._pending_stats = None
+        self._pending_t_wall = None
+        if not str(row.get("src") or "").strip():
+            return
+        try:
+            self._q.put_nowait(row)
+        except queue.Full:
             print("[harvest] queue full, drop row")
 
     def _run(self) -> None:
@@ -123,6 +152,8 @@ class HarvestWriter:
                     self._n += 1
 
     def close(self) -> None:
+        with self._lock:
+            self._flush_pending_unlocked()
         self._q.put(None)
         self._thread.join(timeout=5.0)
         with self._lock:
