@@ -2,10 +2,12 @@
 
 用法：
   .venv\\Scripts\\python.exe scripts\\eval_dialogue_mslt.py
+  .venv\\Scripts\\python.exe scripts\\eval_dialogue_mslt.py --manifest data\\dialogue_corpus_dev\\manifest.jsonl --out-dir data\\eval\\dialogue_mslt_dev
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -25,10 +27,8 @@ from app.audio_io import load_wav  # noqa: E402
 from app.dual_track import DualTrackEngine  # noqa: E402
 from app.pipeline import TranslatePipeline  # noqa: E402
 
-MANIFEST = ROOT / "data" / "dialogue_corpus" / "manifest.jsonl"
-OUT_DIR = ROOT / "data" / "eval" / "dialogue_mslt"
-DETAIL = OUT_DIR / "detail.jsonl"
-SUMMARY = OUT_DIR / "summary.json"
+DEFAULT_MANIFEST = ROOT / "data" / "dialogue_corpus" / "manifest.jsonl"
+DEFAULT_OUT_DIR = ROOT / "data" / "eval" / "dialogue_mslt"
 SR = int(config.SAMPLE_RATE)
 BLOCK = int(SR * 0.1)
 
@@ -111,6 +111,18 @@ def mt_usable(direction: str, ref_tgt: str, hyp_tgt: str) -> tuple[str, str]:
     return "wrong", f"zh_overlap={overlap:.2f}"
 
 
+def _utt_dict(finished) -> dict:
+    return {
+        "src": finished.source or "",
+        "tgt": finished.translated or "",
+        "audio_sec": float(finished.audio_sec_final or 0),
+        "cut_reason": getattr(finished, "probe_cut_reason", None),
+        "asr_online": getattr(finished, "asr_online", None),
+        "asr_offline": getattr(finished, "asr_offline", None),
+        "arbiter_pick": getattr(finished, "arbiter_pick", None),
+    }
+
+
 def run_one(pipe: TranslatePipeline, wav: Path, *, force_src: str) -> list[dict]:
     raw = load_wav(str(wav), target_sr=SR)
     pad_n = int(0.5 * SR)
@@ -133,29 +145,47 @@ def run_one(pipe: TranslatePipeline, wav: Path, *, force_src: str) -> list[dict]
     for i in range(0, audio.size, BLOCK):
         finished = engine.feed_chunk(audio[i : i + BLOCK], allow_async_partial=False)
         if finished is not None:
-            utts.append(
-                {
-                    "src": finished.source or "",
-                    "tgt": finished.translated or "",
-                    "audio_sec": float(finished.audio_sec_final or 0),
-                    "cut_reason": getattr(finished, "probe_cut_reason", None),
-                }
-            )
+            utts.append(_utt_dict(finished))
     if engine.in_speech and engine.buf.size:
         pad = np.zeros(int(config.VAD_SILENCE_SEC * SR) + 1600, np.float32)
         for _ in range(32):
             finished = engine.feed_chunk(pad, allow_async_partial=False)
             if finished is not None:
-                utts.append(
-                    {
-                        "src": finished.source or "",
-                        "tgt": finished.translated or "",
-                        "audio_sec": float(finished.audio_sec_final or 0),
-                        "cut_reason": getattr(finished, "probe_cut_reason", None),
-                    }
-                )
+                utts.append(_utt_dict(finished))
                 break
     return utts
+
+
+def _fragment_dup(utts: list[dict], *, direction: str) -> bool:
+    """相邻 utt 源文高度重叠（包含或 Jaccard≥0.8）。"""
+    srcs = [(u.get("src") or "").strip() for u in utts if (u.get("src") or "").strip()]
+    if len(srcs) < 2:
+        return False
+    for a, b in zip(srcs, srcs[1:]):
+        if direction == "zh_en":
+            ta, tb = set(_norm_zh_chars(a)), set(_norm_zh_chars(b))
+        else:
+            ta, tb = set(_norm_en_words(a)), set(_norm_en_words(b))
+        if not ta or not tb:
+            continue
+        if a in b or b in a:
+            return True
+        j = len(ta & tb) / float(len(ta | tb))
+        if j >= 0.8:
+            return True
+    return False
+
+
+def _join_obs(utts: list[dict]) -> tuple[str | None, str | None, str | None]:
+    """条目级：取最长 utt 的双假设（长句听错对照用）。"""
+    if not utts:
+        return None, None, None
+    best = max(utts, key=lambda u: len(u.get("src") or ""))
+    return (
+        best.get("asr_online"),
+        best.get("asr_offline"),
+        best.get("arbiter_pick"),
+    )
 
 
 def _agg(rows: list[dict]) -> dict:
@@ -174,9 +204,10 @@ def _agg(rows: list[dict]) -> dict:
         if len(r.get("asr_hyp") or "") > max(8, 3 * len(r.get("src_ref") or ""))
     )
     asr_ok = sum(1 for e in asr if e <= 0.35)
-    # 译文质量：只在识别尚可时统计（排除 ASR 听错导致的假 MT 失败）
     given = [r for r in rows if float(r["asr_err"]) <= 0.35]
     given_ok = sum(1 for r in given if r["mt_verdict"] == "ok")
+    frag_lost = sum(1 for r in rows if bool(r.get("fragment_lost")))
+    frag_dup = sum(1 for r in rows if bool(r.get("fragment_dup")))
     n = len(rows)
     return {
         "n": n,
@@ -201,39 +232,70 @@ def _agg(rows: list[dict]) -> dict:
         "incomplete_asr_rate": round(incomplete / n, 4),
         "empty_asr": empty,
         "empty_asr_rate": round(empty / n, 4),
+        "fragment_lost": frag_lost,
+        "fragment_lost_rate": round(frag_lost / n, 4),
+        "fragment_dup": frag_dup,
+        "fragment_dup_rate": round(frag_dup / n, 4),
     }
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--manifest",
+        type=str,
+        default=str(DEFAULT_MANIFEST),
+        help="manifest.jsonl 路径（wav 相对该文件所在目录）",
+    )
+    ap.add_argument(
+        "--out-dir",
+        type=str,
+        default=str(DEFAULT_OUT_DIR),
+        help="detail/summary 输出目录",
+    )
+    args = ap.parse_args()
+
+    manifest = Path(args.manifest)
+    if not manifest.is_absolute():
+        manifest = ROOT / manifest
+    out_dir = Path(args.out_dir)
+    if not out_dir.is_absolute():
+        out_dir = ROOT / out_dir
+    detail_path = out_dir / "detail.jsonl"
+    summary_path = out_dir / "summary.json"
+    corpus_root = manifest.parent
+
     items = [
         json.loads(l)
-        for l in MANIFEST.read_text(encoding="utf-8").splitlines()
+        for l in manifest.read_text(encoding="utf-8").splitlines()
         if l.strip()
     ]
     if len(items) < 40:
-        print(f"[abort] manifest too small: {len(items)}")
+        print(f"[abort] manifest too small: {len(items)} ({manifest})")
         return 1
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"loading pipeline… n={len(items)}")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    print(f"loading pipeline… n={len(items)} manifest={manifest}")
     pipe = TranslatePipeline(enable_tts=False, tts_warmup_langs=())
 
     detail: list[dict] = []
     for i, item in enumerate(items):
         direction = item["direction"]
         force_src = "zh" if direction == "zh_en" else "en"
-        wav = ROOT / "data" / "dialogue_corpus" / item["wav"]
+        wav = corpus_root / item["wav"]
         print(f"[{i+1}/{len(items)}] {item['id']} {direction}")
         utts = run_one(pipe, wav, force_src=force_src)
         src_join = " ".join(u["src"] for u in utts if u.get("src")).strip()
         if direction == "zh_en":
-            # 中文 ASR 拼接不要硬插空格
             src_join = "".join(u["src"] for u in utts if u.get("src")).strip()
         tgt_join = " ".join(u["tgt"] for u in utts if u.get("tgt")).strip()
         err = asr_error(direction, item["src_ref"], src_join)
         cov = asr_coverage(direction, item["src_ref"], src_join)
         verdict, reason = mt_usable(direction, item["tgt_ref"], tgt_join)
         has_short = any(float(u.get("audio_sec") or 0) < 1.0 for u in utts)
+        obs_on, obs_off, obs_pick = _join_obs(utts)
+        frag_lost = bool(cov < 0.8)
+        frag_dup = _fragment_dup(utts, direction=direction)
         row = {
             "id": item["id"],
             "direction": direction,
@@ -247,6 +309,11 @@ def main() -> int:
             "mt_reason": reason,
             "n_utts": len(utts),
             "has_short_utt": has_short,
+            "asr_online": obs_on,
+            "asr_offline": obs_off,
+            "arbiter_pick": obs_pick,
+            "fragment_lost": frag_lost,
+            "fragment_dup": frag_dup,
             "utts": utts,
         }
         detail.append(row)
@@ -259,19 +326,20 @@ def main() -> int:
     }
     summary = {
         "n": len(detail),
+        "manifest": str(manifest),
         "by_direction": by_dir,
         "note": "当前 KPI=双人对话；AMI 非 KPI。asr_err: zh_en=CER, en_zh=WER",
     }
 
-    with DETAIL.open("w", encoding="utf-8") as f:
+    with detail_path.open("w", encoding="utf-8") as f:
         for r in detail:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    SUMMARY.write_text(
+    summary_path.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
-    print(f"wrote {DETAIL}")
-    print(f"wrote {SUMMARY}")
+    print(f"wrote {detail_path}")
+    print(f"wrote {summary_path}")
     return 0
 
 

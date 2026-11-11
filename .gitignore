@@ -21,6 +21,7 @@ data/sessions/
 data/eval/
 data/dialogue_corpus/MSLT_Corpus.zip
 data/dialogue_corpus/raw/
+data/dialogue_corpus_dev/
 
 # 编辑器/系统
 .vscode/

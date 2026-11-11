@@ -7,6 +7,7 @@ MSLT 布局（实测）：
 
 用法：
   .venv\\Scripts\\python.exe scripts\\import_mslt_dialogue.py --zip data\\dialogue_corpus\\MSLT_Corpus.zip
+  .venv\\Scripts\\python.exe scripts\\import_mslt_dialogue.py --out data\\dialogue_corpus_dev --prefer-split Dev
 """
 
 from __future__ import annotations
@@ -20,9 +21,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "data" / "dialogue_corpus"
-RAW = OUT / "raw"
-MANIFEST = OUT / "manifest.jsonl"
+DEFAULT_OUT = ROOT / "data" / "dialogue_corpus"
 
 # 文件夹名含 EN/ZH；中文音频扩展名为 ch
 _RE_WAV = re.compile(
@@ -100,7 +99,18 @@ def main() -> int:
     ap.add_argument(
         "--zip",
         type=str,
-        default=str(OUT / "MSLT_Corpus.zip"),
+        default=str(DEFAULT_OUT / "MSLT_Corpus.zip"),
+    )
+    ap.add_argument(
+        "--out",
+        type=str,
+        default=str(DEFAULT_OUT),
+        help="输出目录（默认 data/dialogue_corpus；Dev holdout 用独立目录）",
+    )
+    ap.add_argument(
+        "--force",
+        action="store_true",
+        help="目标目录已有 manifest.jsonl 时允许覆盖（会清空 raw/）",
     )
     ap.add_argument("--n-zh-en", type=int, default=30)
     ap.add_argument("--n-en-zh", type=int, default=30)
@@ -112,10 +122,22 @@ def main() -> int:
     if not zpath.is_file():
         raise SystemExit(f"找不到 zip: {zpath}")
 
-    OUT.mkdir(parents=True, exist_ok=True)
-    if RAW.exists():
-        shutil.rmtree(RAW)
-    RAW.mkdir(parents=True)
+    out = Path(args.out)
+    if not out.is_absolute():
+        out = ROOT / out
+    raw = out / "raw"
+    manifest = out / "manifest.jsonl"
+
+    if manifest.is_file() and not args.force:
+        raise SystemExit(
+            f"[mslt] 拒绝覆盖：已存在 {manifest}。"
+            f" 换 --out 或显式传 --force（会清空 {raw}）。"
+        )
+
+    out.mkdir(parents=True, exist_ok=True)
+    if raw.exists():
+        shutil.rmtree(raw)
+    raw.mkdir(parents=True)
 
     rnd = random.Random(args.seed)
     rows: list[dict] = []
@@ -139,32 +161,33 @@ def main() -> int:
                 if not src_ref or not tgt_ref:
                     continue
                 did = f"mslt_{direction}_{taken:03d}"
-                dest = RAW / f"{did}.wav"
+                dest = raw / f"{did}.wav"
                 with zf.open(c["wav_member"]) as src, dest.open("wb") as dst:
                     shutil.copyfileobj(src, dst)
                 rows.append(
                     {
                         "id": did,
-                        "wav": str(dest.relative_to(OUT)).replace("\\", "/"),
+                        "wav": str(dest.relative_to(out)).replace("\\", "/"),
                         "speaker": c["speaker"],
                         "direction": direction,
                         "src_ref": src_ref,
                         "tgt_ref": tgt_ref,
                         "notes": f"MSLT {c['stem']}",
                         "source_corpus": "MSLT_v1.1",
+                        "prefer_split": args.prefer_split,
                     }
                 )
                 taken += 1
             print(f"[mslt] {direction}: take={taken}")
 
-    with MANIFEST.open("w", encoding="utf-8") as f:
+    with manifest.open("w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
     n_zh = sum(1 for r in rows if r["direction"] == "zh_en")
     n_en = sum(1 for r in rows if r["direction"] == "en_zh")
     missing = sum(1 for r in rows if not r["src_ref"] or not r["tgt_ref"])
-    print(f"[mslt] wrote {MANIFEST}")
+    print(f"[mslt] wrote {manifest}")
     print(f"[mslt] zh_en={n_zh} en_zh={n_en} total={len(rows)} missing_ref={missing}")
     if n_zh < args.n_zh_en or n_en < args.n_en_zh:
         print("[mslt] FAIL: not enough samples")
