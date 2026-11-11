@@ -26,8 +26,12 @@ python scripts\retranscribe.py latest
 | `transcript.md` / `.srt` / `.jsonl` | 会后双语定稿 |
 | `report.json` | 耗时、分块、`timestamps: approximate`、live 对照 |
 
-**时间戳**：块内多句时在字符比例种子附近找能量谷切分（`report.timestamps=energy_split`）；
-找不到谷则回退字符比例。**不是** forced alignment。A/B：`scripts/ab_post_timestamps.py`。
+**时间戳**：
+- **块边界**：`split_chunks` 在 ±3s 内找 200ms 能量最低处切开——这条在真实音频上也成立。
+- **块内多句**：在字符比例种子附近找能量谷（阈值 `_SILENCE_RMS*2`）。合成音/安静录音上常能切中；
+  **真实远场/会议底噪多数走字数比例回退**（`approximate` / `energy_split+approximate`），
+  别以为所有句子都按能量谷对齐了。**不是** forced alignment。
+- A/B：`scripts/ab_post_timestamps.py`。
 
 ## 设计要点
 
