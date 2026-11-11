@@ -313,6 +313,83 @@ def _alloc_timestamps(
     return out
 
 
+def _alloc_timestamps_energy(
+    sentences: list[str],
+    audio_slice: np.ndarray,
+    t0: float,
+    t1: float,
+    sr: int,
+    *,
+    search_sec: float = 0.6,
+) -> tuple[list[tuple[float, float, str]], str]:
+    """块内句界：在字符比例种子附近找能量谷；找不到则回退比例。
+
+    返回 (stamped, mode)，mode ∈ {energy_split, approximate, energy_split+approximate}。
+    """
+    approx = _alloc_timestamps(sentences, t0, t1)
+    if len(sentences) <= 1:
+        return approx, "approximate"
+    piece = np.asarray(audio_slice, dtype=np.float32).reshape(-1)
+    energies = _frame_energy(piece, sr)
+    if energies.size < 2:
+        return approx, "approximate"
+
+    frame_sec = float(_ENERGY_WIN_SEC)
+    n_cuts = len(sentences) - 1
+    cut_times: list[float] = []
+    modes: list[str] = []
+    prev = t0
+    for i in range(n_cuts):
+        seed = float(approx[i][1])
+        remaining = n_cuts - i
+        min_cut = prev + 0.05
+        max_cut = t1 - 0.05 * remaining
+        if max_cut <= min_cut:
+            cut_times.append(min(max(seed, prev), t1))
+            modes.append("approx")
+            prev = cut_times[-1]
+            continue
+        lo = max(min_cut, seed - search_sec)
+        hi = min(max_cut, seed + search_sec)
+        lo_f = max(0, int((lo - t0) / frame_sec))
+        hi_f = min(int(energies.size), int((hi - t0) / frame_sec) + 1)
+        if hi_f <= lo_f + 1:
+            cut = min(max(seed, min_cut), max_cut)
+            cut_times.append(cut)
+            modes.append("approx")
+        else:
+            region = energies[lo_f:hi_f]
+            j = int(np.argmin(region))
+            e = float(region[j])
+            if e < _SILENCE_RMS * 2.0:
+                cut = t0 + (lo_f + j + 0.5) * frame_sec
+                cut = min(max(cut, min_cut), max_cut)
+                cut_times.append(cut)
+                modes.append("energy")
+            else:
+                cut = min(max(seed, min_cut), max_cut)
+                cut_times.append(cut)
+                modes.append("approx")
+        prev = cut_times[-1]
+
+    out: list[tuple[float, float, str]] = []
+    cursor = t0
+    for i, s in enumerate(sentences):
+        end = cut_times[i] if i < len(cut_times) else t1
+        if i == len(sentences) - 1:
+            end = t1
+        out.append((cursor, end, s))
+        cursor = end
+
+    if all(m == "energy" for m in modes):
+        tag = "energy_split"
+    elif any(m == "energy" for m in modes):
+        tag = "energy_split+approximate"
+    else:
+        tag = "approximate"
+    return out, tag
+
+
 def _norm_cmp(text: str) -> str:
     return re.sub(r"[^\w\u4e00-\u9fff]+", "", (text or "").lower())
 
@@ -446,6 +523,7 @@ def retranscribe_audio(
     mt_ms_sum = 0.0
     empty_asr = 0
     idx = 0
+    ts_tags: list[str] = []
 
     for ci, (a, b) in enumerate(chunks):
         piece = audio[a:b]
@@ -460,7 +538,8 @@ def retranscribe_audio(
             empty_asr += 1
             continue
         sents = split_sentences(text)
-        stamped = _alloc_timestamps(sents, t0, t1)
+        stamped, ts_tag = _alloc_timestamps_energy(sents, piece, t0, t1, sr)
+        ts_tags.append(ts_tag)
         # 整块 asr_ms 均摊到句
         per_asr = float(res.ms) / max(1, len(stamped))
         for st0, st1, src in stamped:
@@ -482,6 +561,15 @@ def retranscribe_audio(
             )
             idx += 1
 
+    if not ts_tags:
+        timestamps_mode = "approximate"
+    elif all(t == "energy_split" for t in ts_tags):
+        timestamps_mode = "energy_split"
+    elif all(t == "approximate" for t in ts_tags):
+        timestamps_mode = "approximate"
+    else:
+        timestamps_mode = "energy_split+approximate"
+
     report = {
         "duration": round(audio.size / float(sr), 3),
         "chunks": len(chunks),
@@ -491,7 +579,7 @@ def retranscribe_audio(
         "asr_ms": round(asr_ms_sum, 1),
         "mt_ms": round(mt_ms_sum, 1),
         "wall_ms": round((time.perf_counter() - t_wall0) * 1000, 1),
-        "timestamps": "approximate",
+        "timestamps": timestamps_mode,
         "sample_rate": sr,
     }
     # 避免误导：本地创建的实例可丢弃引用

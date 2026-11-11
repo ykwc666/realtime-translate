@@ -28,6 +28,7 @@
 | 2026-11-06 | 启动统一口径 `[boot]` | 是 | 进程总 27.6s（含 TTS） | `BOOT_TIMING.md` |
 | 2026-11-06 | CT2 tokenizer 换 sentencepiece | 是 | 模型初始化中位 −4.3s，166 条 DIFF=0 | `BOOT_TIMING.md` |
 | 2026-11-11 | TTS 按 mode 只预热目标音色 | 是 | vad 省中文音色 ~7s；`ab_tts_warmup_langs` | `BOOT_TIMING.md` |
+| 2026-11-11 | 会后句界能量谷时间戳 | 是 | `ab_post_timestamps` MAE 优于字符比例 | `OFFLINE_RETRANSCRIBE.md` |
 
 ## 检查点约定
 

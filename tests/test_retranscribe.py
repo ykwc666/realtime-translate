@@ -3,7 +3,12 @@ from __future__ import annotations
 
 import numpy as np
 
-from app.retranscribe import _alloc_timestamps, split_chunks, split_sentences
+from app.retranscribe import (
+    _alloc_timestamps,
+    _alloc_timestamps_energy,
+    split_chunks,
+    split_sentences,
+)
 
 
 def test_split_chunks_alternating_speech_silence() -> None:
@@ -52,3 +57,21 @@ def test_alloc_timestamps_covers_span() -> None:
     assert abs(stamped[0][0] - 1.0) < 1e-6
     assert abs(stamped[-1][1] - 5.0) < 1e-6
     assert stamped[0][1] == stamped[1][0]
+
+
+def test_alloc_timestamps_energy_cuts_in_silence() -> None:
+    sr = 16000
+    # 1.0s 语音 + 0.8s 静音 + 1.0s 语音；句界应落在静音窗
+    speech_a = (0.05 * np.sin(2 * np.pi * 220 * np.arange(sr) / sr)).astype(np.float32)
+    silence = np.zeros(int(0.8 * sr), dtype=np.float32)
+    speech_b = (0.05 * np.sin(2 * np.pi * 330 * np.arange(sr) / sr)).astype(np.float32)
+    audio = np.concatenate([speech_a, silence, speech_b])
+    t0, t1 = 0.0, audio.size / float(sr)
+    stamped, mode = _alloc_timestamps_energy(
+        ["第一句内容啊", "第二句内容啊"], audio, t0, t1, sr
+    )
+    assert len(stamped) == 2
+    assert stamped[0][1] == stamped[1][0]
+    cut = stamped[0][1]
+    assert 1.0 - 0.15 <= cut <= 1.8 + 0.15
+    assert mode in ("energy_split", "energy_split+approximate")

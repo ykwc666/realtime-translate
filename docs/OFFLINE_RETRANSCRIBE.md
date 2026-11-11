@@ -26,7 +26,8 @@ python scripts\retranscribe.py latest
 | `transcript.md` / `.srt` / `.jsonl` | 会后双语定稿 |
 | `report.json` | 耗时、分块、`timestamps: approximate`、live 对照 |
 
-**时间戳按字符比例在块内分摊，是近似，不是 forced alignment。**
+**时间戳**：块内多句时在字符比例种子附近找能量谷切分（`report.timestamps=energy_split`）；
+找不到谷则回退字符比例。**不是** forced alignment。A/B：`scripts/ab_post_timestamps.py`。
 
 ## 设计要点
 
