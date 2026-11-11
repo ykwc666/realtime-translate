@@ -107,6 +107,10 @@ class DualTrackStats:
     tts_stream_reused: bool | None = None
     tts_interrupted: bool | None = None
     speculate_hit: bool = False
+    # 观测：2pass 双假设（不改变仲裁；供 eval detail）
+    asr_online: str | None = None
+    asr_offline: str | None = None
+    arbiter_pick: str | None = None  # online | offline | merge
     source: str = ""
     translated: str = ""
     # 观测（harvest）：postedit 前 MT 文本；final MT 跑完前为 null
@@ -643,7 +647,13 @@ class DualTrackEngine:
                     job["offline_text"] = (res.text or "").strip()
                     job["offline_ms"] = float(res.ms)
                 else:
-                    job["res"] = self.asr.transcribe_with_2pass(snap)
+                    on, off, merged = self.asr.transcribe_with_2pass_parts(snap)
+                    job["res"] = merged
+                    job["online_text"] = (on.text or "").strip()
+                    job["offline_text"] = (
+                        (off.text or "").strip() if off is not None else ""
+                    )
+                    job["offline_ms"] = float(off.ms) if off is not None else 0.0
             except Exception as exc:  # noqa: BLE001
                 print(f"[ASR spec error] {exc}")
             finally:
@@ -657,6 +667,31 @@ class DualTrackEngine:
             f"audio_sec={audio_sec:.2f} pred_decode_ms={pred_ms:.0f} "
             f"samples={snap.size} utt_starts={self._spec_starts_utt}{kind_s}]"
         )
+
+    def _stamp_asr_obs(
+        self,
+        online: str | None,
+        offline: str | None,
+        merged: str | None,
+    ) -> None:
+        """只写观测字段；不改变 MT 用的 source。"""
+        on = (online or "").strip() or None
+        off = (offline or "").strip() or None
+        m = (merged or "").strip()
+        self.stats.asr_online = on
+        self.stats.asr_offline = off
+        if off is None and on is None:
+            self.stats.arbiter_pick = None
+        elif off is None:
+            self.stats.arbiter_pick = "online"
+        elif on is None:
+            self.stats.arbiter_pick = "offline"
+        elif m == off:
+            self.stats.arbiter_pick = "offline"
+        elif m == on:
+            self.stats.arbiter_pick = "online"
+        else:
+            self.stats.arbiter_pick = "merge"
 
     def _take_speculate(self, audio: np.ndarray):
         job = self._spec
@@ -790,6 +825,9 @@ class DualTrackEngine:
             f"[ASR spec hit {res.ms:.0f}ms waited={waited:.0f}ms] "
             f"{spec_t!r}"
         )
+        # 观测：full 2pass 投机的双假设（不改 hit 文本）
+        self._obs_spec_online = str(job.get("online_text") or "").strip() or None
+        self._obs_spec_offline = str(job.get("offline_text") or "").strip() or None
         return res
 
     def _announce_utt(self) -> None:
@@ -1095,6 +1133,8 @@ class DualTrackEngine:
 
         # Offline re-arm：online finalize 与 drain offline hint 并行，
         # 使 CUT wall ≈ max(online, offline_remain)，非相加。
+        obs_on: str | None = None
+        obs_off: str | None = None
         pending = self._spec
         if (
             pending is not None
@@ -1121,6 +1161,8 @@ class DualTrackEngine:
                     online, spec.offline_text, spec.offline_ms
                 )
                 self.stats.speculate_hit = True
+                obs_on = (online.text or "").strip() or None
+                obs_off = (spec.offline_text or "").strip() or None
             elif isinstance(online, AsrResult):
                 # Offline miss/timeout — stream 已 flush；只需 offline
                 off = self.asr.transcribe_offline_only(audio)
@@ -1128,9 +1170,15 @@ class DualTrackEngine:
                     online, off.text, off.ms
                 )
                 self.stats.speculate_hit = False
+                obs_on = (online.text or "").strip() or None
+                obs_off = (off.text or "").strip() or None
             else:
-                final = self.asr.finalize_stream(audio, self._asr_state)
+                on_r, off_r, final = self.asr.finalize_stream_pair(
+                    audio, self._asr_state
+                )
                 self.stats.speculate_hit = False
+                obs_on = (on_r.text or "").strip() or None
+                obs_off = (off_r.text or "").strip() if off_r is not None else None
         else:
             spec = self._take_speculate(audio)
             if isinstance(spec, SpecOfflineHint):
@@ -1139,19 +1187,30 @@ class DualTrackEngine:
                     online, spec.offline_text, spec.offline_ms
                 )
                 self.stats.speculate_hit = True
+                obs_on = (online.text or "").strip() or None
+                obs_off = (spec.offline_text or "").strip() or None
             elif isinstance(spec, AsrResult):
                 final = spec
                 self.stats.speculate_hit = True
                 # 放弃 live stream；下一句新建 AsrIncState
                 self._asr_state.finished = True
+                obs_on = getattr(self, "_obs_spec_online", None)
+                obs_off = getattr(self, "_obs_spec_offline", None)
+                self._obs_spec_online = None
+                self._obs_spec_offline = None
             else:
-                final = self.asr.finalize_stream(audio, self._asr_state)
+                on_r, off_r, final = self.asr.finalize_stream_pair(
+                    audio, self._asr_state
+                )
                 self.stats.speculate_hit = False
+                obs_on = (on_r.text or "").strip() or None
+                obs_off = (off_r.text or "").strip() if off_r is not None else None
 
         self.stats.asr_ms.append(final.ms)
         self.stats.asr_model_samples.append(final.audio_samples)
         self.stats.t_asr_done_ms = (time.perf_counter() - self._t_speech_end) * 1000
         raw_final = (final.text or "").strip()
+        self._stamp_asr_obs(obs_on, obs_off, raw_final)
         full = prefer_final_asr(self._last_partial_text, raw_final)
         tag = ""
         if self.stats.speculate_hit:

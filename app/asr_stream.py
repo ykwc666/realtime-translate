@@ -348,22 +348,32 @@ class StreamingAsr:
             offline = offline_fn()
         return online, offline
 
-    def transcribe_with_2pass(self, audio: np.ndarray) -> AsrResult:
-        """投机定稿用的独立 oneshot（+ SenseVoice）；不占用 live state。"""
+    def transcribe_with_2pass_parts(
+        self, audio: np.ndarray
+    ) -> tuple[AsrResult, AsrResult | None, AsrResult]:
+        """oneshot 2pass；(online, offline|None, merged)。合并规则同 transcribe_with_2pass。"""
         audio = np.asarray(audio, dtype=np.float32).reshape(-1)
         if audio.size == 0:
-            return AsrResult("", 0.0, 0)
+            empty = AsrResult("", 0.0, 0)
+            return empty, None, empty
         if self.is_true_streaming:
             if not self._2pass or self.recognizer is None:
-                return self._transcribe_paraformer_online_oneshot(audio)
+                one = self._transcribe_paraformer_online_oneshot(audio)
+                return one, None, one
             online, offline = self._run_2pass_pair(
                 lambda: self._transcribe_paraformer_online_oneshot(audio),
                 lambda: self._transcribe_sherpa_offline(audio),
             )
-            merged = prefer_2pass_asr(online.text, offline.text)
+            merged_t = prefer_2pass_asr(online.text, offline.text)
             ms = float(online.ms) + float(offline.ms)
-            return AsrResult(merged, ms, int(audio.size))
-        return self.transcribe(audio)
+            return online, offline, AsrResult(merged_t, ms, int(audio.size))
+        one = self.transcribe(audio)
+        return one, None, one
+
+    def transcribe_with_2pass(self, audio: np.ndarray) -> AsrResult:
+        """投机定稿用的独立 oneshot（+ SenseVoice）；不占用 live state。"""
+        _on, _off, merged = self.transcribe_with_2pass_parts(audio)
+        return merged
 
     def transcribe_offline_only(self, audio: np.ndarray) -> AsrResult:
         """仅 SenseVoice/离线路径 — 用于 re-arm 投机（无 Paraformer oneshot）。"""
@@ -401,28 +411,43 @@ class StreamingAsr:
             )
         return AsrResult(merged, ms, int(online.audio_samples))
 
-    def finalize_stream(
+    def finalize_stream_pair(
         self, full_audio: np.ndarray, state: AsrIncState
-    ) -> AsrResult:
+    ) -> tuple[AsrResult, AsrResult | None, AsrResult]:
+        """与 finalize_stream 相同合并；额外返回 (online, offline|None, merged)。
+
+        只供观测（eval 双假设）；不改变 prefer_2pass / 配置。
+        """
         full_audio = np.asarray(full_audio, dtype=np.float32).reshape(-1)
         if not self.is_true_streaming:
-            return self.transcribe(full_audio)
+            one = self.transcribe(full_audio)
+            return one, None, one
         if not self._2pass or self.recognizer is None or full_audio.size == 0:
-            return self._finalize_paraformer_online(full_audio, state)
+            online = self._finalize_paraformer_online(full_audio, state)
+            return online, None, online
         online, offline = self._run_2pass_pair(
             lambda: self._finalize_paraformer_online(full_audio, state),
             lambda: self._transcribe_sherpa_offline(full_audio),
         )
         stream_t = (online.text or "").strip()
         off_t = (offline.text or "").strip()
-        merged = prefer_2pass_asr(stream_t, off_t)
+        merged_t = prefer_2pass_asr(stream_t, off_t)
         ms = float(online.ms) + float(offline.ms)
-        if merged != stream_t:
+        merged = AsrResult(merged_t, ms, int(full_audio.size))
+        return online, offline, merged
+
+    def finalize_stream(
+        self, full_audio: np.ndarray, state: AsrIncState
+    ) -> AsrResult:
+        online, offline, merged = self.finalize_stream_pair(full_audio, state)
+        stream_t = (online.text or "").strip()
+        merged_t = (merged.text or "").strip()
+        if offline is not None and merged_t != stream_t:
             print(
                 f"[ASR 2pass offline {offline.ms:.0f}ms] "
-                f"{stream_t!r} → {merged!r}"
+                f"{stream_t!r} → {merged_t!r}"
             )
-        return AsrResult(merged, ms, online.audio_samples)
+        return merged
 
     @staticmethod
     def _mark_paraformer_final(stream) -> bool:
