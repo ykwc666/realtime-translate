@@ -49,8 +49,15 @@
 | Paraformer + SenseVoice 加载 | 4.1s | 15% |
 | MT（CT2 ×2）+ 标点 | 1.1s | 4% |
 
-`start.bat` 走 `--mode vad`，即**中→英**，只会朗读英文；`zh` 音色加载的 7.6s 在当前模式下用不到。
-按需只预热目标语言可再省约 7.3s（`TtsPlayer._load` 本身已是按语言懒加载，首次用到中文时会自动补）。
+`start.bat` 走 `--mode vad`，即**中→英**。自 2026-11-11 起按 mode 只预热目标音色：
+
+| mode | 预热 |
+|---|---|
+| `vad` / `ptt` / `file` / `dualsim` | `en` |
+| `loopback` | `zh` |
+| `duplex` | `zh`+`en` |
+
+未预热语言仍走 `TtsPlayer._load` 懒加载。A/B：`scripts/ab_tts_warmup_langs.py`（闸门：en-only 中位预热 ≤ both−5.0s）。
 
 ## 四、CT2 首次构造为什么会抖 0.7–6.4s
 

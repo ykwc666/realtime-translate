@@ -27,6 +27,7 @@
 | 2026-11-06 | device TTFA 落盘回填 | 是（度量） | 非空率 0%→94.7%，出声 p50 673 / p90 1222 | `BOOT_TIMING.md` / `CURSOR_TASK_TTFA_WARMUP.md` |
 | 2026-11-06 | 启动统一口径 `[boot]` | 是 | 进程总 27.6s（含 TTS） | `BOOT_TIMING.md` |
 | 2026-11-06 | CT2 tokenizer 换 sentencepiece | 是 | 模型初始化中位 −4.3s，166 条 DIFF=0 | `BOOT_TIMING.md` |
+| 2026-11-11 | TTS 按 mode 只预热目标音色 | 是 | vad 省中文音色 ~7s；`ab_tts_warmup_langs` | `BOOT_TIMING.md` |
 
 ## 检查点约定
 

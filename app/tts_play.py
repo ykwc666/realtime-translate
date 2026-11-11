@@ -140,10 +140,14 @@ class TtsPlayer:
         )
         return self._voices[lang], name
 
-    def warmup(self) -> dict[str, float]:
-        """加载中英音色并做一次短合成，预热首次真实调用。"""
+    def warmup(self, langs: tuple[str, ...] = ("zh", "en")) -> dict[str, float]:
+        """按需加载音色并做一次短合成；未列出的语言仍走懒加载 ``_load``。"""
+        sample = {"zh": "测试", "en": "test"}
         costs: dict[str, float] = {}
-        for lang, text in (("zh", "测试"), ("en", "test")):
+        for lang in langs:
+            text = sample.get(lang)
+            if text is None:
+                continue
             t0 = time.perf_counter()
             self._load(lang)
             _ = self.synthesize(text, lang, save_wav=False)

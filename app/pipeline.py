@@ -58,6 +58,7 @@ class TranslatePipeline:
         session_recorder=None,
         subtitle_writer=None,
         process_t0: float | None = None,
+        tts_warmup_langs: tuple[str, ...] | None = None,
     ) -> None:  # noqa: ANN001
         print(
             f"加载模型中（CPU）ASR={config.ASR_BACKEND} MT={config.MT_BACKEND} …"
@@ -79,11 +80,12 @@ class TranslatePipeline:
                 print(f"TTS 输出设备 index={self.tts.output_device}")
             else:
                 print("TTS 输出设备=系统默认（可用 TTS_OUTPUT_DEVICE_NAME 与环回分离）")
-            print("TTS 预热（中英）…")
-            costs = self.tts.warmup()
-            print(
-                f"TTS 预热完成 zh={costs.get('zh', 0):.0f}ms en={costs.get('en', 0):.0f}ms"
-            )
+            langs = tts_warmup_langs if tts_warmup_langs is not None else ("zh", "en")
+            label = "+".join(langs) if langs else "none"
+            print(f"TTS 预热（{label}）…")
+            costs = self.tts.warmup(langs)
+            parts = [f"{k}={costs.get(k, 0):.0f}ms" for k in langs if k in costs]
+            print(f"TTS 预热完成 {' '.join(parts)}")
         # ASR/MT tiny warmup（避开 TM 命中句，确保 CT2 两边都热）
         _ = self.translator.translate("你好，世界")
         _ = self.translator.translate("hello world")

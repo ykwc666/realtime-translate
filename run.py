@@ -153,6 +153,14 @@ def main(argv: list[str] | None = None) -> int:
 
             subtitle_httpd, _ = serve_in_thread(state_path=subtitle_writer.path)
 
+    # vad/ptt/file/dualsim：主路径中→英，只预热 en；loopback 对端→中只预热 zh；duplex 双语
+    if args.mode == "loopback":
+        tts_warmup_langs: tuple[str, ...] = ("zh",)
+    elif args.mode == "duplex":
+        tts_warmup_langs = ("zh", "en")
+    else:
+        tts_warmup_langs = ("en",)
+
     pipe = None
     try:
         pipe = TranslatePipeline(
@@ -162,6 +170,7 @@ def main(argv: list[str] | None = None) -> int:
             session_recorder=session_recorder,
             subtitle_writer=subtitle_writer,
             process_t0=PROCESS_T0,
+            tts_warmup_langs=tts_warmup_langs,
         )
 
         if args.mode == "file":
