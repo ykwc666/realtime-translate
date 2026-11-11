@@ -6,22 +6,22 @@ wav: `D:\xuanjian\realtime-translate\cache\ab_weekday\accept_phrases.wav`
 ## campaign 1
 
 - n: 有声 5 / 总行 5
-- p50: 2.570s → 2.541s (probe on → off)
-- p90: 2.718s → 2.569s
-- 5 轮 Δ: 1.91% / 5.78% / 1.13% / 3.29% / 0.96%
-- median Δ: 1.91%
+- p50: 2.649s → 2.634s (probe on → off)
+- p90: 2.742s → 2.699s
+- 5 轮 Δ: 0.01% / 1.67% / 4.34% / 0.27% / 0.59%
+- median Δ: 0.59%
 
 ## campaign 2
 
 - n: 有声 5 / 总行 5
-- p50: 2.570s → 2.492s (probe on → off)
-- p90: 2.594s → 2.630s
-- 5 轮 Δ: 1.57% / 2.78% / 2.31% / 5.86% / 2.30%
-- median Δ: 2.31%
+- p50: 2.625s → 2.610s (probe on → off)
+- p90: 2.703s → 2.665s
+- 5 轮 Δ: 1.55% / 3.40% / 0.14% / 1.48% / 2.78%
+- median Δ: 1.55%
 
 ## 尺子复现
 
-两次 campaign 的 p50_off 相对差 = **2.00%**（验收 ≤3%）
+两次 campaign 的 p50_off 相对差 = **0.91%**（验收 ≤3%）
 
 ## 复现命令
 

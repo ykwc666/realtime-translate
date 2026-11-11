@@ -14,7 +14,7 @@
 | 1 | 尺子：`gate_realtime_regression.py` 分进程×5 轮中位；交 n/p50/p90；两次 p50≤3% | **完成** `GATE_REALTIME_OK`（见 `docs/GATE_REALTIME_RULER.md`） |
 | 2 | 双人对话 KPI 集：用 **MSLT** 公开语料抽样 40–60（非自录） | **完成** `manifest.jsonl` 60 条（zh_en 30 + en_zh 30）；zip 已本地 |
 | 3 | 降噪 A/B（`CURSOR_TASK_DENOISE_AB.md` + 音量比 + 分场景结论；生产保持关） | **完成 · 否决**（见 `docs/DENOISE_AB.md`）；`MIC_DENOISE=False` |
-| 4 | 对话硬骨头：先统计半句占比再改；弱信号只许旁路默认关；不动 VAD 三阈值 | **基线已修正**（导入曾截断 T2/T3 首行）：真洞=**zh→en 译文可用 37%**，其次 ASR 57%、碎切 17%；见 `DIALOGUE_BASELINE_MSLT.md` |
+| 4 | 对话硬骨头：先统计半句占比再改；弱信号只许旁路默认关；不动 VAD 三阈值 | **zh→en 译文闸门已过**：端到端 ok **70%**（37%→70%）；**识别尚可时译文 ok 19/19=100%**；空识别 0。下一刀=ASR 63%、碎切；见 `DIALOGUE_BASELINE_MSLT.md` |
 
 ## 明确不做
 

@@ -66,3 +66,9 @@
 {"dir": "en-zh", "src": "I thought we agreed not to change the API until after the rollout.", "tgt": "我以为我们说好了上线前先不动 API。"}
 {"dir": "en-zh", "src": "Gonna jump off in a sec.", "tgt": "我马上先挂一下。"}
 {"dir": "en-zh", "src": "Sorry, you broke up there for a bit.", "tgt": "不好意思，刚才你那边断了一会儿。"}
+{"dir": "zh-en", "src": "对", "tgt": "Right."}
+{"dir": "zh-en", "src": "嗯", "tgt": "Yeah."}
+{"dir": "zh-en", "src": "是的", "tgt": "Yes."}
+{"dir": "zh-en", "src": "好吧", "tgt": "Okay."}
+{"dir": "zh-en", "src": "嗨你好", "tgt": "Hi, how are you?"}
+{"dir": "zh-en", "src": "你好啊", "tgt": "Hi, how are you?"}

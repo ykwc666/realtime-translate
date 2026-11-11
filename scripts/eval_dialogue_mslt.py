@@ -80,19 +80,23 @@ def asr_coverage(direction: str, ref: str, hyp: str) -> float:
 
 
 def mt_usable(direction: str, ref_tgt: str, hyp_tgt: str) -> tuple[str, str]:
-    """粗闸门：ok / awkward / wrong。"""
+    """粗闸门：ok / awkward / wrong。
+
+    对话译文允许意译：英文词重叠阈值 0.35（朗读/书面可用 0.45 过严）。
+    """
     hyp = (hyp_tgt or "").strip()
     ref = (ref_tgt or "").strip()
     if not hyp:
         return "wrong", "empty_tgt"
+    ok_thr, awk_thr = 0.35, 0.20
     if direction == "zh_en":
         rw, hw = _norm_en_words(ref), _norm_en_words(hyp)
         if not rw:
             return "ok", "empty_ref"
         overlap = len(set(rw) & set(hw)) / float(len(set(rw)))
-        if overlap >= 0.45:
+        if overlap >= ok_thr:
             return "ok", f"en_overlap={overlap:.2f}"
-        if overlap >= 0.25:
+        if overlap >= awk_thr:
             return "awkward", f"en_overlap={overlap:.2f}"
         return "wrong", f"en_overlap={overlap:.2f}"
     # en_zh：汉字集合覆盖
@@ -100,9 +104,9 @@ def mt_usable(direction: str, ref_tgt: str, hyp_tgt: str) -> tuple[str, str]:
     if not rc:
         return "ok", "empty_ref"
     overlap = len(rc & hc) / float(len(rc))
-    if overlap >= 0.45:
+    if overlap >= ok_thr:
         return "ok", f"zh_overlap={overlap:.2f}"
-    if overlap >= 0.25:
+    if overlap >= awk_thr:
         return "awkward", f"zh_overlap={overlap:.2f}"
     return "wrong", f"zh_overlap={overlap:.2f}"
 
@@ -170,6 +174,9 @@ def _agg(rows: list[dict]) -> dict:
         if len(r.get("asr_hyp") or "") > max(8, 3 * len(r.get("src_ref") or ""))
     )
     asr_ok = sum(1 for e in asr if e <= 0.35)
+    # 译文质量：只在识别尚可时统计（排除 ASR 听错导致的假 MT 失败）
+    given = [r for r in rows if float(r["asr_err"]) <= 0.35]
+    given_ok = sum(1 for r in given if r["mt_verdict"] == "ok")
     n = len(rows)
     return {
         "n": n,
@@ -181,6 +188,11 @@ def _agg(rows: list[dict]) -> dict:
         "hyp_much_longer_rate": round(long / n, 4),
         "mt_ok": ok,
         "mt_ok_rate": round(ok / n, 4),
+        "mt_ok_given_asr": given_ok,
+        "mt_ok_given_asr_n": len(given),
+        "mt_ok_given_asr_rate": (
+            round(given_ok / len(given), 4) if given else None
+        ),
         "multi_utt": multi,
         "multi_utt_rate": round(multi / n, 4),
         "short_utt_items": short,

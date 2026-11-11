@@ -124,6 +124,8 @@ ASR_SPECULATE_MAX_STARTS = 3
 ASR_SPECULATE_REARM_MODE = "offline"
 # 句尾有效字数低于此则跳过 MT（挡「就」类噪声碎句）
 MIN_FINAL_ASR_CHARS = 2
+# 例外：对话常用单字回应仍要译（「对/嗯/好」）；勿把任意单字噪声放行
+MIN_FINAL_ASR_SHORT_OK = frozenset("对嗯好是行哦啊嗨喂嘿呀喔噢呐")
 # 单句最长秒数，超时强制收句
 VAD_MAX_UTT_SEC = 15.0
 # 开说后若一直无 ASR 字，按噪声早弃（秒）——避免空句卡满 MAX_UTT
@@ -212,7 +214,8 @@ MT_NO_REPEAT_NGRAM = 3
 MT_REPETITION_PENALTY = 1.1
 # 若 >0 且源文字数 ≥ 此值，改用 MT_DECODE_BEAM_LONG / ngram / penalty。
 # 0 = 始终用上面三个旋钮（不按长度分流）。
-MT_BEAM_MIN_SRC_CHARS = 0
+# 对话长句开 beam=3（短句仍 greedy，控延迟）
+MT_BEAM_MIN_SRC_CHARS = 20
 MT_DECODE_BEAM_LONG = 3
 MT_NO_REPEAT_NGRAM_LONG = 3
 MT_REPETITION_PENALTY_LONG = 1.1

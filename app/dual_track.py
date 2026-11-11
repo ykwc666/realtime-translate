@@ -46,6 +46,20 @@ from .vad_stream import SpeechSegment, create_endpoint, vad_backend_label
 
 _UTT_STATS_BOUND = 16
 
+# 中文方向下 SenseVoice 常把短回应听成日语假名；映射后再走短回应 MT。
+_KANA_AFFIRM_TO_ZH = {
+    "うん": "嗯",
+    "うむ": "嗯",
+    "ええ": "嗯",
+    "いん": "嗯",
+    "ん": "嗯",
+    "はい": "对",
+    "はっ": "对",
+    # 单拍「な」在中文方向几乎总是短噪声/短回应误听
+    "な": "嗯",
+    "なっ": "嗯",
+}
+
 
 @dataclass
 class SpecOfflineHint:
@@ -418,6 +432,52 @@ class DualTrackEngine:
             emit_path=self._probe_emit_path
             or getattr(self.endpoint, "last_emit_path", None),
         )
+
+    def _try_offline_rescue_before_empty_abort(self):
+        """online partial 一直为空时，用 SenseVoice 离线救短回应，避免直接丢句。
+
+        不改 VAD 三阈值；只在即将 empty_abort 时多一次 offline。
+        """
+        audio = self.buf.asarray()
+        if audio.size < int(0.15 * config.SAMPLE_RATE):
+            return None
+        try:
+            off = self.asr.transcribe_offline_only(audio)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[ASR offline rescue error] {exc}")
+            return None
+        text = (off.text or "").strip()
+        content = re.sub(r"[\s。？！?.!,，、]+", "", text)
+        if not content:
+            return None
+        mapped = None
+        if self.force_src_lang == "zh" and re.fullmatch(
+            r"[\u3040-\u30ffァ-ヶー]+", content
+        ):
+            mapped = _KANA_AFFIRM_TO_ZH.get(content)
+            if not mapped:
+                return None
+            text = mapped
+            content = mapped
+        cjk_n = len(re.findall(r"[\u4e00-\u9fff]", text))
+        if self.force_src_lang == "zh" and cjk_n == 0:
+            return None
+        min_chars = int(getattr(config, "MIN_FINAL_ASR_CHARS", 2))
+        short_ok = getattr(config, "MIN_FINAL_ASR_SHORT_OK", frozenset()) or frozenset()
+        if len(content) < min_chars and content not in short_ok:
+            return None
+        note = f"{off.text!r}→{text!r}" if mapped else repr(text)
+        print(f"--- 空 partial 离线救回 ({note}) ---")
+        self._last_partial_text = text
+        self._probe_cut_reason = "offline_rescue"
+        self._forced_truncation = True
+        seg = SpeechSegment(
+            audio=audio,
+            start_sample=0,
+            end_sample=int(audio.size),
+        )
+        self.endpoint.reset()
+        return self._finalize_utt(seg)
 
     def _begin_utt(self, *, preserve_hold: bool = False) -> None:
         """开始新一句。
@@ -1129,8 +1189,36 @@ class DualTrackEngine:
             return out
 
         content = re.sub(r"[^\w\u4e00-\u9fff]+", "", full, flags=re.UNICODE)
+        # 假名短噪声：中文方向下把常见短回应映射成 嗯/对；其余跳过 MT
+        kana_only = bool(content and re.fullmatch(r"[\u3040-\u30ffァ-ヶー]+", content))
+        if kana_only and self.force_src_lang == "zh":
+            mapped = _KANA_AFFIRM_TO_ZH.get(content)
+            if mapped:
+                print(f"--- 假名短回应映射 {full!r} → {mapped!r} ---")
+                full = mapped
+                content = mapped
+                kana_only = False
+        cjk_n = len(re.findall(r"[\u4e00-\u9fff]", full or ""))
+        wrong_lang_zh = (
+            self.force_src_lang == "zh" and content and cjk_n == 0
+        )
+        if kana_only or wrong_lang_zh:
+            print(f"--- 非目标语短噪声，跳过 MT/TTS ({full!r}) ---")
+            self.stats.source = full
+            self.stats.translated = ""
+            if self.utt_t0:
+                self.stats.utt_wall_ms = (time.perf_counter() - self.utt_t0) * 1000
+            out = self.stats
+            if not self._probe_cut_reason:
+                self._probe_cut_reason = "vad_endpoint"
+            self._stamp_probe_on_stats(out)
+            self._notify_utt_final(out)
+            self.endpoint.reset()
+            self.reset_utt()
+            return out
         min_chars = int(getattr(config, "MIN_FINAL_ASR_CHARS", 2))
-        if len(content) < min_chars:
+        short_ok = getattr(config, "MIN_FINAL_ASR_SHORT_OK", frozenset()) or frozenset()
+        if len(content) < min_chars and content not in short_ok:
             print(f"--- 过短识别，跳过 MT/TTS ({full!r}) ---")
             self.stats.source = full
             self.stats.translated = ""
@@ -1144,6 +1232,8 @@ class DualTrackEngine:
             self.endpoint.reset()
             self.reset_utt()
             return out
+        if len(content) < min_chars and content in short_ok:
+            print(f"--- 短回应放行 MT ({full!r}) ---")
 
         with self._lock:
             self.tracker.finalize(full, translated_src="")
@@ -1310,6 +1400,10 @@ class DualTrackEngine:
                     and empty_abort > 0
                     and self.audio_sec >= empty_abort
                 ):
+                    # 在线 partial 空时先离线救一次（短回应「对/嗯」常被 online 漏掉）
+                    rescued = self._try_offline_rescue_before_empty_abort()
+                    if rescued is not None:
+                        return rescued
                     if self._utt_announced:
                         print(f"--- 丢弃空录音（噪声 {self.audio_sec:.1f}s）---")
                     self._probe_cut_reason = "empty_abort"
