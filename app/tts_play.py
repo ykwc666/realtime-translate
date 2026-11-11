@@ -85,7 +85,9 @@ class TtsPlayer:
         self.out_dir = out_dir or (config.CACHE_DIR / "tts")
         self.out_dir.mkdir(parents=True, exist_ok=True)
         self._voices: dict[str, PiperVoice] = {}
+        self._voice_lock = threading.Lock()  # _load / 后台预载 互斥
         self._warmed = False
+        self._preload_thread: threading.Thread | None = None
         self._io_lock = threading.Lock()  # duplex：mic+环回共用同一播放器
         self._stop = threading.Event()
         self._gen = 0  # stop/invalidate 时递增以丢弃过期 PCM
@@ -123,22 +125,25 @@ class TtsPlayer:
         return resolve_output_device(None)
 
     def _load(self, lang: str) -> tuple[PiperVoice, str]:
-        if lang not in self._voices:
-            model = config.PIPER_VOICE_ZH if lang == "zh" else config.PIPER_VOICE_EN
-            if not model.exists():
-                raise FileNotFoundError(
-                    f"缺少 Piper 音色: {model}\n请运行: python scripts/download_piper_voices.py"
+        with self._voice_lock:
+            if lang not in self._voices:
+                model = config.PIPER_VOICE_ZH if lang == "zh" else config.PIPER_VOICE_EN
+                if not model.exists():
+                    raise FileNotFoundError(
+                        f"缺少 Piper 音色: {model}\n请运行: python scripts/download_piper_voices.py"
+                    )
+                cfg = Path(str(model) + ".json")
+                self._voices[lang] = PiperVoice.load(
+                    str(model),
+                    config_path=str(cfg) if cfg.exists() else None,
+                    use_cuda=False,
                 )
-            cfg = Path(str(model) + ".json")
-            self._voices[lang] = PiperVoice.load(
-                str(model),
-                config_path=str(cfg) if cfg.exists() else None,
-                use_cuda=False,
+            name = (
+                config.PIPER_VOICE_ZH.name
+                if lang == "zh"
+                else config.PIPER_VOICE_EN.name
             )
-        name = (
-            config.PIPER_VOICE_ZH.name if lang == "zh" else config.PIPER_VOICE_EN.name
-        )
-        return self._voices[lang], name
+            return self._voices[lang], name
 
     def warmup(self, langs: tuple[str, ...] = ("zh", "en")) -> dict[str, float]:
         """按需加载音色并做一次短合成；未列出的语言仍走懒加载 ``_load``。"""
@@ -169,9 +174,56 @@ class TtsPlayer:
         self._warmed = True
         return costs
 
+    def preload_background(self, langs: tuple[str, ...]) -> None:
+        """在后台加载未预热的音色，避免首播路径上同步 ``_load`` 卡 7s+。
+
+        ``dualsim`` / ``file`` / ``ptt`` 同步只预热 en（方向按内容检测），
+        同时后台预载 zh；首播若线程未完成，仍会在 ``_load`` 上等锁，但不再
+        把整段加载塞进 speak 热路径的「第一次才发现要加载」语义里——调用方
+        应在模型就绪后、真正开口前尽早调用本方法。
+        """
+        need = tuple(lang for lang in langs if lang and lang not in self._voices)
+        if not need:
+            return
+        if self._preload_thread is not None and self._preload_thread.is_alive():
+            return
+
+        sample = {"zh": "测试", "en": "test"}
+
+        def _job() -> None:
+            for lang in need:
+                if self._stop.is_set():
+                    return
+                try:
+                    t0 = time.perf_counter()
+                    self._load(lang)
+                    text = sample.get(lang)
+                    if text:
+                        _ = self.synthesize(text, lang, save_wav=False)
+                    ms = (time.perf_counter() - t0) * 1000
+                    print(f"[TTS] 后台预载完成 {lang}={ms:.0f}ms", flush=True)
+                except Exception as exc:  # noqa: BLE001
+                    print(f"[TTS] 后台预载失败 {lang}: {exc}", flush=True)
+
+        self._preload_thread = threading.Thread(
+            target=_job, name="tts-preload-bg", daemon=True
+        )
+        self._preload_thread.start()
+
+    def wait_preload(self, timeout: float | None = 120.0) -> bool:
+        """等后台预载结束。返回是否已结束（超时则为 False）。"""
+        th = self._preload_thread
+        if th is None:
+            return True
+        th.join(timeout=timeout)
+        return not th.is_alive()
+
     def close(self) -> None:
         """释放持久流；可多次调用。"""
         self._stop.set()
+        th = self._preload_thread
+        if th is not None and th.is_alive():
+            th.join(timeout=30.0)
         self._gen += 1
         self._persist_need_pcm = False
         self._persist_drain()

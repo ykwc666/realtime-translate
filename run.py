@@ -153,13 +153,20 @@ def main(argv: list[str] | None = None) -> int:
 
             subtitle_httpd, _ = serve_in_thread(state_path=subtitle_writer.path)
 
-    # vad/ptt/file/dualsim：主路径中→英，只预热 en；loopback 对端→中只预热 zh；duplex 双语
+    # vad：固定中→英，只预热 en。
+    # ptt/file/dualsim：方向按内容检测——同步预热 en，后台预载 zh，开口前等齐，
+    # 避免英文 wav 首播中文时懒加载卡 ~7s（CURSOR_PROMPT_MEASURE_PROTOCOL）。
+    # loopback：对端→中只预热 zh；duplex：双语同步预热。
+    tts_preload_bg_langs: tuple[str, ...] = ()
     if args.mode == "loopback":
         tts_warmup_langs: tuple[str, ...] = ("zh",)
     elif args.mode == "duplex":
         tts_warmup_langs = ("zh", "en")
+    elif args.mode == "vad":
+        tts_warmup_langs = ("en",)
     else:
         tts_warmup_langs = ("en",)
+        tts_preload_bg_langs = ("zh",)
 
     pipe = None
     try:
@@ -171,6 +178,7 @@ def main(argv: list[str] | None = None) -> int:
             subtitle_writer=subtitle_writer,
             process_t0=PROCESS_T0,
             tts_warmup_langs=tts_warmup_langs,
+            tts_preload_bg_langs=tts_preload_bg_langs,
         )
 
         if args.mode == "file":

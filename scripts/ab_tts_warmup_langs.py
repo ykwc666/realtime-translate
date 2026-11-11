@@ -54,7 +54,7 @@ def main() -> int:
         f"delta={delta:.2f}s (need en≤both−5.0 → delta≥5.0)"
     )
 
-    # lazy-load zh after en-only
+    # lazy-load zh after en-only（对照：冷路径）
     tts = TtsPlayer()
     tts.warmup(("en",))
     t1 = time.perf_counter()
@@ -63,7 +63,18 @@ def main() -> int:
     tts.close()
     print(f"zh lazy-load after en-only: {zh_lazy:.0f}ms (ok if no exception)")
 
-    ok = med_en <= (med_both - 5.0)
+    # bg preload + wait：开口路径不应再付一次完整加载
+    tts = TtsPlayer()
+    tts.warmup(("en",))
+    tts.preload_background(("zh",))
+    assert tts.wait_preload(timeout=120.0)
+    t2 = time.perf_counter()
+    _ = tts.synthesize("测试", "zh", save_wav=False)
+    zh_after_bg = (time.perf_counter() - t2) * 1000
+    tts.close()
+    print(f"zh synthesize after bg preload: {zh_after_bg:.0f}ms")
+
+    ok = med_en <= (med_both - 5.0) and zh_after_bg < max(1500.0, zh_lazy * 0.35)
     print(f"GATE: {'PASS' if ok else 'FAIL'}")
     return 0 if ok else 1
 

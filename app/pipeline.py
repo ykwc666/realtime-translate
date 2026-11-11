@@ -59,6 +59,7 @@ class TranslatePipeline:
         subtitle_writer=None,
         process_t0: float | None = None,
         tts_warmup_langs: tuple[str, ...] | None = None,
+        tts_preload_bg_langs: tuple[str, ...] = (),
     ) -> None:  # noqa: ANN001
         print(
             f"加载模型中（CPU）ASR={config.ASR_BACKEND} MT={config.MT_BACKEND} …"
@@ -86,6 +87,14 @@ class TranslatePipeline:
             costs = self.tts.warmup(langs)
             parts = [f"{k}={costs.get(k, 0):.0f}ms" for k in langs if k in costs]
             print(f"TTS 预热完成 {' '.join(parts)}")
+            # 方向按内容检测时：同步只热主音色，另一侧后台预载，
+            # 避免首播路径上同步 _load 卡 ~7s（CURSOR_PROMPT_MEASURE_PROTOCOL）
+            if tts_preload_bg_langs:
+                print(
+                    f"TTS 后台预载 {'+'.join(tts_preload_bg_langs)}…",
+                    flush=True,
+                )
+                self.tts.preload_background(tuple(tts_preload_bg_langs))
         # ASR/MT tiny warmup（避开 TM 命中句，确保 CT2 两边都热）
         _ = self.translator.translate("你好，世界")
         _ = self.translator.translate("hello world")
@@ -105,6 +114,19 @@ class TranslatePipeline:
                 flush=True,
             )
         print("优化记录见 docs/OPTIMIZATION_LOG.md ；测速: python scripts/bench.py --tag ...")
+
+    def _wait_tts_preload(self) -> None:
+        """开口前等后台音色预载完，避免首句 speak 路径同步加载。"""
+        if self.tts is None:
+            return
+        th = getattr(self.tts, "_preload_thread", None)
+        if th is None or not th.is_alive():
+            # 可能已完成；再 join 一次无害
+            self.tts.wait_preload(timeout=0.0)
+            return
+        print("[TTS] 等待后台预载完成（不把加载放进首播路径）…", flush=True)
+        if not self.tts.wait_preload(timeout=120.0):
+            print("[TTS] 后台预载等待超时，继续（可能首播仍会同步加载）", flush=True)
 
     def _attach_engine(self, engine: DualTrackEngine) -> None:
         if self.harvest is not None:
@@ -169,6 +191,7 @@ class TranslatePipeline:
         )
 
     def run_file(self, path: str, play: bool = True) -> list[TurnResult]:
+        self._wait_tts_preload()
         audio = load_wav(path)
         segs = segment_audio(audio)
         segs_audio = [s.audio for s in segs] if segs else [audio]
@@ -181,6 +204,7 @@ class TranslatePipeline:
         return results
 
     def run_ptt(self) -> None:
+        self._wait_tts_preload()
         print("半双工 PTT：每轮录音，说完按 Enter；Ctrl+C 退出")
         while True:
             try:
@@ -362,6 +386,7 @@ class TranslatePipeline:
 
     def run_dualsim(self, path: str, play: bool = False) -> list:
         """离线双轨仿真：将 wav 分块喂入（无麦）。"""
+        self._wait_tts_preload()
         audio = load_wav(path)
         block = int(config.SAMPLE_RATE * 0.1)
         chunks = [
