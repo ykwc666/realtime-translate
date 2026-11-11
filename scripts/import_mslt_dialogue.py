@@ -33,24 +33,28 @@ _RE_WAV = re.compile(
 
 
 def _read_member(zf: zipfile.ZipFile, name: str) -> str:
+    """读完整 .snt（T2/T3 常为多行一句一段；禁止只取首行）。"""
     try:
         data = zf.read(name)
     except KeyError:
         return ""
     # MSLT .snt 实测多为 UTF-16 LE（含 BOM）；少数可能 UTF-8
-    text = ""
     if data.startswith(b"\xff\xfe") or data.startswith(b"\xfe\xff"):
         text = data.decode("utf-16", errors="ignore")
     elif b"\x00" in data[:64]:
         text = data.decode("utf-16-le", errors="ignore")
     else:
         text = data.decode("utf-8", errors="ignore")
-    text = text.strip()
-    for line in text.splitlines():
-        line = line.strip()
-        if line:
-            return line
-    return text
+    # 去掉标注噪声标记，保留全文
+    text = text.replace("<NON/>", " ").replace("<SPN/>", " ")
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    if not lines:
+        return ""
+    # 中文行直接拼接；英文行用空格
+    sample = "".join(lines)
+    if any("\u4e00" <= ch <= "\u9fff" for ch in sample):
+        return "".join(lines)
+    return " ".join(lines)
 
 
 def _collect_candidates(zf: zipfile.ZipFile) -> dict[str, list[dict]]:
