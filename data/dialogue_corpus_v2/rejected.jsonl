@@ -1,0 +1,647 @@
+{"id": null, "notes": "MSLT MSLT_Test_CH_0011", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "喂。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0016", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0020", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "一。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0022", "reason": "pair_mismatch", "pair_sim": 0.32, "t1": "<NPS><UNIN/> <UNIN/></NPS> 对，<LM>yes.</LM> [laughter] <NPS><UNIN/> <UNIN/></NPS> [laughter]，嗯？", "t2": "对。Yes？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0023", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0024", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0025", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哦  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0026", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0028", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0030", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。<NPS><UNIN/> <UNIN/> <UNIN/> <UNIN/> <UNIN/></NPS>", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0031", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哇哦。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0032", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "噢。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0039", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>Ray.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0044", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0045", "reason": "pair_mismatch", "pair_sim": 0.2, "t1": "让我想一想  ，呃。", "t2": "我最喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0049", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊啊！", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0050", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0053", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对吧？", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0055", "reason": "pair_mismatch", "pair_sim": 0.3529, "t1": "[laughter]，呃我觉得哎哟  ！", "t2": "我觉得！", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0066", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯和。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0069", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>flower.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0070", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "田酸鸡 <LM></LM>。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0071", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "叫叫那个。", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0076", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我不太喜欢", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0079", "reason": "pair_mismatch", "pair_sim": 0.1538, "t1": "他的土豆不削皮。", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0083", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>very.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0089", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "像。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0095", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "非常的好吃。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0096", "reason": "pair_mismatch", "pair_sim": 0.2222, "t1": "我们下次可以去找找。", "t2": "我想去那个牛排馆吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0097", "reason": "pair_mismatch", "pair_sim": 0.2, "t1": "也去一下吧。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0099", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "黑黑鱼。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0106", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0107", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哪个大学？", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0120", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0121", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0125", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0126", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0128", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0136", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<UNSURE>咦</UNSURE>。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0141", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0142", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0143", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0145", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0150", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0159", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0161", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗨嗨你好吗  ？", "t2": "也有朋友是。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0162", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我能听到  。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0168", "reason": "pair_mismatch", "pair_sim": 0.25, "t1": "其他的吧就是会传一些什么假货之类的。", "t2": "那边的宿舍是怎么安排的呢？几个人？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0169", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0170", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0171", "reason": "pair_mismatch", "pair_sim": 0.4706, "t1": "呃，话题偏了 [laughter]  。", "t2": "话题偏了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0174", "reason": "pair_mismatch", "pair_sim": 0.2222, "t1": "所以我经常去商场买。", "t2": "我想去那个牛排馆吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0178", "reason": "empty_tier", "pair_sim": 0.0, "t1": "好吧。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0180", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0182", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "没买过。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0185", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0186", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "因为你懒 [laughter]  。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0187", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0188", "reason": "empty_tier", "pair_sim": 0.0, "t1": "好吧。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0189", "reason": "pair_mismatch", "pair_sim": 0.0769, "t1": "<NPS><UNIN/></NPS> 我还是比较喜欢去西单和中关  。", "t2": "我想每个城市都有它的特色吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0191", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哦  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0194", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我觉得网上好像。", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0195", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0198", "reason": "empty_tier", "pair_sim": 0.0, "t1": "你好。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0200", "reason": "empty_tier", "pair_sim": 0.0, "t1": "你好！", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0201", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "能听到吗？", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0203", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0204", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "每天都听吗？", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0205", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，可以听到。", "t2": "怎么样呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0207", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0210", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>okay.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0215", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0216", "reason": "pair_mismatch", "pair_sim": 0.1, "t1": "他是一个很棒的慈善家。", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0217", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "一二一两百块钱就可以听一场演唱会了。", "t2": "那边的宿舍是怎么安排的呢？几个人？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0219", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯我最喜欢的是周杰伦。", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0220", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "所以听起来很特别。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0221", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0222", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那我比较喜欢韩磊。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0223", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃还能<EU/>  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0227", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "八七八年八九年了  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0228", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0229", "reason": "pair_mismatch", "pair_sim": 0.1, "t1": "第二期的还是第三期的？", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0231", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你再说一遍。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0232", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0237", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我的老板来支持的。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0238", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>okay.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0245", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>hello.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0246", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯是的。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0248", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0249", "reason": "empty_tier", "pair_sim": 0.0, "t1": "噢  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0250", "reason": "empty_tier", "pair_sim": 0.0, "t1": "这个。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0255", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "如。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0257", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "中国在。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0258", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "反腐败。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0259", "reason": "pair_mismatch", "pair_sim": 0.1538, "t1": "执政然后其他的。", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0260", "reason": "pair_mismatch", "pair_sim": 0.0833, "t1": "一个执政党在中国来说我觉得。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0263", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "部门是。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0264", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "嗯要去。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0270", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "议题从这些议题。", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0271", "reason": "pair_mismatch", "pair_sim": 0.0714, "t1": "从老百姓来看那那有些确实是为。", "t2": "因为那边吃的比较多，选择比较多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0272", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0274", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "可也不是近几年了。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0276", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "铁饭碗。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0279", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "我觉得。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0281", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "听得到吗？", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0282", "reason": "pair_mismatch", "pair_sim": 0.4286, "t1": "[laughter]，肯定是  。", "t2": "肯定是。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0283", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，戏。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0284", "reason": "pair_mismatch", "pair_sim": 0.1429, "t1": "因为它看起来很白。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0285", "reason": "pair_mismatch", "pair_sim": 0.1905, "t1": "呃，并不是说真的会受一些  。", "t2": "目前没有一些新的渠道。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0287", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0288", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "猪肝泡饭  。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0292", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0293", "reason": "pair_mismatch", "pair_sim": 0.0571, "t1": "你一个月你一个月大的时候就买了这只狗。", "t2": "你是住在学生宿舍呢？还是住在校园外面？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0294", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "而且长得也不可爱 [laughter]。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0295", "reason": "empty_tier", "pair_sim": 0.0, "t1": "大胆  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0296", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那么大。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0297", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0299", "reason": "empty_tier", "pair_sim": 0.0, "t1": "现在。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0300", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "不太想。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0301", "reason": "empty_tier", "pair_sim": 0.0, "t1": "那那。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0302", "reason": "empty_tier", "pair_sim": 0.0, "t1": "但是。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0303", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那你训练过训练过那只狗吗？", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0306", "reason": "pair_mismatch", "pair_sim": 0.4138, "t1": "[laughter]，那，那他，他就喜，他喜欢，他喜欢宠物吗  ？", "t2": "他喜欢宠物吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0307", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "怎么能处理的  ？", "t2": "最后一个问题。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0308", "reason": "pair_mismatch", "pair_sim": 0.1333, "t1": "那只那只狗的便便  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0310", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，很可  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0312", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0314", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0316", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "还有什么？还有猪  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0318", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "又算禁锢他自由了  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0319", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "特别是蛇皮。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0322", "reason": "empty_tier", "pair_sim": 0.0, "t1": "喂，<LM></LM>。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0329", "reason": "empty_tier", "pair_sim": 0.0, "t1": "拜拜。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0335", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我，我记得我哎。", "t2": "金鱼是可爱。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0340", "reason": "empty_tier", "pair_sim": 0.0, "t1": "但是。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0346", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "对的对的。", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0349", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你你当时是怎么解决的？", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0351", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃然后我只在那里做了一年。", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0352", "reason": "pair_mismatch", "pair_sim": 0.1875, "t1": "我自己也是这样觉得的大学应该是一个。", "t2": "那边的宿舍是怎么安排的呢？几个人？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0363", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，运动激烈的一些项目。", "t2": "你不用看这个翻译了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0368", "reason": "pair_mismatch", "pair_sim": 0.1026, "t1": "嗯，所以导致到后来的时候可能在这方面不是很用心。", "t2": "你经常用什么样的？这个汁来蘸这个肉呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0371", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "只有春夏再无秋冬。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0372", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯那你的在自己的家里会呃。", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0373", "reason": "pair_mismatch", "pair_sim": 0.0833, "t1": "一只一种白色的中型犬在家里。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0376", "reason": "empty_tier", "pair_sim": 0.0, "t1": "[laughter]，呃。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0377", "reason": "pair_mismatch", "pair_sim": 0.1667, "t1": "一问三不确实是挺惹人喜爱的。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0379", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哦  ？", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0380", "reason": "pair_mismatch", "pair_sim": 0.0952, "t1": "哦，你一周左右去一次对吧  ？", "t2": "目前没有一些新的渠道。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0381", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "对对，新新电影然后您就想去看。", "t2": "而且那个在澳大利亚是没有的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0382", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0386", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0387", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那您您说  。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0388", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0389", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0391", "reason": "empty_tier", "pair_sim": 0.0, "t1": "是的。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0397", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0399", "reason": "pair_mismatch", "pair_sim": 0.1111, "t1": "要有一定的这个缓冲。", "t2": "我想去那个牛排馆吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0402", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "对对对  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0403", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对对。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0405", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0407", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0409", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "对对对。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0410", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那您在。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0412", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0413", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哦哦。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0414", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯嗯。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0415", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对对。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0416", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0419", "reason": "pair_mismatch", "pair_sim": 0.2, "t1": "<UNIN/> 对对对对我。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0421", "reason": "pair_mismatch", "pair_sim": 0.2857, "t1": "[laughter]，是的是的。", "t2": "是的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0422", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0427", "reason": "pair_mismatch", "pair_sim": 0.1667, "t1": "就这意思啊   呃。", "t2": "你知道这个吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0430", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯对对  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0431", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "对就说。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0432", "reason": "pair_mismatch", "pair_sim": 0.4615, "t1": "嗯，对对对，[laughter]，是的是的，嗯，对，可是。", "t2": "对。是的。对，可是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0433", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0436", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哎，断电了  。", "t2": "那就好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0437", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "打算换一家。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0438", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0440", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯   那你现在呢？", "t2": "比较有信誉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0442", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "生活消费是比较高  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0443", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0444", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哦。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0446", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0447", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0449", "reason": "pair_mismatch", "pair_sim": 0.1818, "t1": "嗯你有什么看好的股票吗？", "t2": "我觉得比较好的，我就去找。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0452", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0453", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我也是这么想的 [laughter]  。", "t2": "终于吃多蒜了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0454", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦，了解。", "t2": "我想", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0455", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那你对金融方面感兴趣吗？", "t2": "我觉得比较好的，我就去找。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0462", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0466", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0468", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0472", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0473", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，不知道你哦。", "t2": "金鱼是可爱。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0474", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0479", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0480", "reason": "pair_mismatch", "pair_sim": 0.2222, "t1": "那些东西太扯吧就是  。", "t2": "那是因为我们数据少。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0481", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0482", "reason": "empty_tier", "pair_sim": 0.0, "t1": "[laughter]   呃嗯。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0483", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0492", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，对对。", "t2": "我想", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0494", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，对  。", "t2": "行，好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0495", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，对对对  。", "t2": "那就好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0496", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0498", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0499", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "听得到  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0501", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，啥我现在是大学生吗。", "t2": "你不用看这个翻译了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0502", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，你也是吧？", "t2": "怎么样呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0507", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哎哟是啊因为<EU/>  。", "t2": "最后一个问题。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0510", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊，是啊是啊。", "t2": "怎么样呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0511", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0513", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0516", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "就还好  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0517", "reason": "empty_tier", "pair_sim": 0.0, "t1": "是啊。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0519", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0524", "reason": "pair_mismatch", "pair_sim": 0.1667, "t1": "然后就开到那个天山里头去了。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0528", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "天山山脉   [laughter]。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0533", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "大概有十五年。", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0534", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0536", "reason": "empty_tier", "pair_sim": 0.0, "t1": "伊犁。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0537", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "伊犁河谷。", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0538", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "特别凉快。", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0539", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0540", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "这，以长江的一部分啊  。", "t2": "对。我也想回忆起来了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0541", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>an sister.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0542", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0545", "reason": "empty_tier", "pair_sim": 0.0, "t1": "然后。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0550", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "意大利语我都有学。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0552", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0553", "reason": "empty_tier", "pair_sim": 0.0, "t1": "你好 <LM></LM>。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0554", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯我可以听见  。", "t2": "最后一个问题。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0556", "reason": "pair_mismatch", "pair_sim": 0.0909, "t1": "你中午的饭是自己做的吗  ？", "t2": "每学期会修很多门课程吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0557", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你现在回家会给家里人做饭吗  ？", "t2": "我想每个城市都有它的特色吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0558", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你平时总出去吃饭吗  ？", "t2": "那是因为我们数据少。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0561", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0562", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你特别喜欢哪一种肉  ？", "t2": "那是因为我们数据少。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0563", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0565", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0576", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那你经常去按摩吗？", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0577", "reason": "pair_mismatch", "pair_sim": 0.1176, "t1": "哦，你不喜欢按摩是吗？", "t2": "还有就是那个腾讯。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0578", "reason": "pair_mismatch", "pair_sim": 0.1053, "t1": "对，那你经常去健身房吗？", "t2": "你不用看这个翻译了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0583", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0584", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "的。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0588", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0590", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你喜欢慢跑吗？", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0591", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那你身材很好吗？", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0593", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>yes, I like it also, I also like it.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0594", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "噢，嗯  。", "t2": "行，好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0595", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯，<LM></LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0602", "reason": "empty_tier", "pair_sim": 0.0, "t1": "噢  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0605", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，你喜欢摇滚吗  ？", "t2": "好，我应该说中文。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0607", "reason": "pair_mismatch", "pair_sim": 0.0952, "t1": "呃，就是说你喜欢的歌手吗  ？", "t2": "目前没有一些新的渠道。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0613", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那你最喜欢什么<EU/>。", "t2": "终于吃多蒜了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0614", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "就就是我怎么得到他们的是吗？", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0616", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0617", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，你能再说一遍吗。", "t2": "我以前做笔译的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0621", "reason": "pair_mismatch", "pair_sim": 0.1111, "t1": "你有过想养过宠物吗？", "t2": "我想去那个牛排馆吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0623", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0627", "reason": "pair_mismatch", "pair_sim": 0.1, "t1": "所以每天会带很多泥啊。", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0628", "reason": "pair_mismatch", "pair_sim": 0.1667, "t1": "带一个盒子是在户外面你是说。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0631", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "这种属于在就是大的狗。", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0633", "reason": "pair_mismatch", "pair_sim": 0.25, "t1": "为什么我一定要一只宠物是吗？", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0636", "reason": "empty_tier", "pair_sim": 0.0, "t1": "是  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0637", "reason": "pair_mismatch", "pair_sim": 0.087, "t1": "会有会会有所帮助吧我觉得  。", "t2": "这个月就没看到有快递了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0640", "reason": "empty_tier", "pair_sim": 0.0, "t1": "足球。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0643", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "都非常享受。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0644", "reason": "pair_mismatch", "pair_sim": 0.1667, "t1": "下来之后你会流很多汗但是。", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0645", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0646", "reason": "pair_mismatch", "pair_sim": 0.0571, "t1": "但是也会也会可能会提高你的耐力啊你的。", "t2": "你是住在学生宿舍呢？还是住在校园外面？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0648", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0649", "reason": "pair_mismatch", "pair_sim": 0.2222, "t1": "我们都有时间的时候  。", "t2": "那是因为我们数据少。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0650", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0655", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃呃。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0656", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我觉得  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0657", "reason": "pair_mismatch", "pair_sim": 0.125, "t1": "还是少数，但是我还是。", "t2": "我想是的。两次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0662", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你也知道姚明  。", "t2": "最后一个问题。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0663", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0665", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0666", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯   呃。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0669", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0673", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯比如说呢？哪种。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0674", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "新的品种嗯。", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0676", "reason": "pair_mismatch", "pair_sim": 0.1176, "t1": "嗯可能是我对家乡的了解太少 [laughter]。", "t2": "我想每个城市都有它的特色吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0678", "reason": "pair_mismatch", "pair_sim": 0.2727, "t1": "然后好吃的话就多吃一点。", "t2": "我觉得比较好的，我就去找。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0680", "reason": "pair_mismatch", "pair_sim": 0.1429, "t1": "不太喜欢吃有味道的比如说蒜呐  。", "t2": "因为不需要的东西，我是不会买的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0681", "reason": "pair_mismatch", "pair_sim": 0.1875, "t1": "嗯你是说把吃的弄的满个办公室都是吗？", "t2": "那边的宿舍是怎么安排的呢？几个人？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0685", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊   啊能听见就好  。", "t2": "然后在这个行业。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0691", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "喂。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0692", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0693", "reason": "pair_mismatch", "pair_sim": 0.1, "t1": "<UNIN/> 场的话，我还一次都没去过    。", "t2": "对。我父母就不太会定。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0694", "reason": "empty_tier", "pair_sim": 0.0, "t1": "噢  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0695", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "知道这些问题的答案  。", "t2": "那是因为我们数据少。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0697", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0699", "reason": "pair_mismatch", "pair_sim": 0.069, "t1": "呃，这可能只是喜欢他们的几首歌吧  。", "t2": "你对于自己的准备效果有信心吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0700", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "<SU/>嗯不是非常喜欢这种音乐类型  。", "t2": "我想每个城市都有它的特色吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0701", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，软件  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0703", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0704", "reason": "pair_mismatch", "pair_sim": 0.1026, "t1": "嗯，在工作的时候可能听音乐是不大好 <NPS>[laughter]</NPS>  。", "t2": "其实我对于这个音乐分类没有什么。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0705", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "大概平时只有    。", "t2": "最后一个问题。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0706", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "学习的过程中我也听音乐吧  。", "t2": "这个月就没看到有快递了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0707", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，消遣吗  ？", "t2": "那就好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0709", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "一个北京人  。", "t2": "也有朋友是。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0712", "reason": "empty_tier", "pair_sim": 0.0, "t1": "还有  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0717", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0719", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，喜欢  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0720", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "听着听着就好听了  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0721", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，就像  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0722", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那公司内部的  。", "t2": "最后一个问题。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0724", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "尖叫直来  。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0727", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "<UNIN/> 听得这个热泪盈眶  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0729", "reason": "pair_mismatch", "pair_sim": 0.2667, "t1": "嗯，好的 [laughter]，好的  。", "t2": "好的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0739", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0747", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "挑，先挑起事的学生都被逮捕了  。", "t2": "我需要点什么来个结束吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0748", "reason": "pair_mismatch", "pair_sim": 0.1538, "t1": "是的，以前的话说到上一届总统。", "t2": "而且那个在澳大利亚是没有的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0751", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，效果的  。", "t2": "那就好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0752", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "可以再说一遍吗  ？", "t2": "终于吃多蒜了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0757", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0758", "reason": "pair_mismatch", "pair_sim": 0.25, "t1": "是啊，人多就会有这样的问题。", "t2": "对啊。从没有养过其他的宠物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0761", "reason": "pair_mismatch", "pair_sim": 0.2857, "t1": "嗯，不好的  。", "t2": "那就好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0766", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，对  。", "t2": "行，好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0772", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0773", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "[laughter]   你将来会找一个工作你觉得？", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0775", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0776", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0777", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0778", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0779", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0780", "reason": "pair_mismatch", "pair_sim": 0.15, "t1": "你觉得你自己将来想找一个什么样最满意的工作？", "t2": "好像我的同学们，每个人都在说工作压力好大。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0783", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0784", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0785", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "你买过。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0786", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我说你买的是多少？", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0787", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0789", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0790", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0791", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0792", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0793", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0797", "reason": "empty_tier", "pair_sim": 0.0, "t1": "你好！", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0806", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "一。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0808", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃你在大学读什么专业呢？", "t2": "我觉得比较好的，我就去找。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0809", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0811", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0812", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，我来自四川。", "t2": "金鱼是可爱。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0816", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，确实。", "t2": "我想", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0817", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0819", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0824", "reason": "empty_tier", "pair_sim": 0.0, "t1": "是的。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0825", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "[laughter]，是的。", "t2": "是的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0835", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0836", "reason": "empty_tier", "pair_sim": 0.0, "t1": "你好  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0838", "reason": "pair_mismatch", "pair_sim": 0.1333, "t1": "你能听见我说话吗  ？", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0841", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你可以听见我说话吗？现在。", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0848", "reason": "pair_mismatch", "pair_sim": 0.1333, "t1": "你能听见我说话吗  ？", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0850", "reason": "pair_mismatch", "pair_sim": 0.125, "t1": "你能听到的话就说话听不到就不要说话  。", "t2": "古巨基就好好的做主持人就好了啊。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0851", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦，我最近去了。", "t2": "金鱼是可爱。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0852", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你可以在西湖边吃饭  。", "t2": "那是因为我们数据少。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0854", "reason": "pair_mismatch", "pair_sim": 0.0625, "t1": "那你一定品尝过不少美味的当地小吃吧  ？", "t2": "古巨基就好好的做主持人就好了啊。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0855", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那你喜欢湖南的  。", "t2": "终于吃多蒜了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0860", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那你怎么跟别人交流呀？", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0867", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0871", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯能能听到   呃。", "t2": "你知道这个吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0872", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对先。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0875", "reason": "pair_mismatch", "pair_sim": 0.2667, "t1": "嗯你平常还看别的  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0876", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0877", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "其实我只会蛙泳 [laughter]  。", "t2": "终于吃多蒜了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0881", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0882", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "<UNIN/> <UNIN/> <UNIN/> 刘翔退出了  。", "t2": "也有朋友是。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0885", "reason": "empty_tier", "pair_sim": 0.0, "t1": "噢  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0886", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯对  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0887", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "人很多  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0888", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0889", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0890", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0896", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0897", "reason": "empty_tier", "pair_sim": 0.0, "t1": "库里  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0898", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "然后他。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0899", "reason": "empty_tier", "pair_sim": 0.0, "t1": "他那。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0900", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "他那一节投进了九个三分  。", "t2": "每学期会修很多门课程吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0906", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0908", "reason": "empty_tier", "pair_sim": 0.0, "t1": "所以。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0909", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0910", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0911", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "然后还有就是。", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0912", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0914", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "等一下  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0921", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊！", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0923", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "喂，听得清吗？", "t2": "怎么样呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0926", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "现在听得到吗？", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0928", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0930", "reason": "pair_mismatch", "pair_sim": 0.0714, "t1": "上面的那个意识有点弱 [laughter]  。", "t2": "宋冬野的。大陆歌手唱的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0931", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0932", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "听不清我说话了吗？", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0934", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊啊。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0936", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，没有吗  。", "t2": "那就好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0942", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0943", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊，行吧  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0944", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0947", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "你信佛教吗？", "t2": "我也很喜欢。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0949", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0953", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。嗯。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0956", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0959", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0960", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0961", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0963", "reason": "pair_mismatch", "pair_sim": 0.0667, "t1": "然后你还有什么关于旅行的问题吗？", "t2": "而充实我们的业余时间和休闲时间。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0964", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "我们刚刚聊到了。", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0966", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "的比较多。", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0967", "reason": "pair_mismatch", "pair_sim": 0.125, "t1": "寒暑假都会去那一年就能去上两次呢  。", "t2": "你在那里有没有品尝当地特色美食呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0968", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯   嗯呃   嗯。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0971", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "所以我们家也没有宠物。", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0972", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0973", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0975", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0977", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0978", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0980", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0982", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯嗯嗯  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0988", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃，<LM>my English name is, </LM>   呃，Tang", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0990", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0991", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哦  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0993", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>yeah.</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0994", "reason": "empty_tier", "pair_sim": 0.0, "t1": "四个。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0995", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0996", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0997", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，计算机科学与技术  。", "t2": "对。我也想回忆起来了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0998", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，计算机科学与技术  。", "t2": "对。我也想回忆起来了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_0999", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1000", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，是的  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1001", "reason": "empty_tier", "pair_sim": 0.0, "t1": "呃  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1004", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "四四千六    。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1005", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "噢，其实也差不多 [laughter]  。", "t2": "好，我应该说中文。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1006", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦，他一般就。", "t2": "怎么样呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1009", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1010", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1013", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1015", "reason": "pair_mismatch", "pair_sim": 0.4706, "t1": "嗯，  一般般吧 [laughter]。", "t2": "一般般吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1018", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1019", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯哼  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1020", "reason": "empty_tier", "pair_sim": 0.0, "t1": "没有 [laughter]。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1021", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1023", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1024", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦，没太听清。", "t2": "怎么样呢？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1025", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1027", "reason": "empty_tier", "pair_sim": 0.0, "t1": "是的。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1031", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，对  。", "t2": "行，好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1035", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "因为，嗯。", "t2": "觉得", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1040", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1041", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1044", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1045", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1046", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1051", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1052", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，稍等  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1053", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1054", "reason": "pair_mismatch", "pair_sim": 0.1667, "t1": "对那个做烧烤都是挺有帮助的。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1055", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  ，呃。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1057", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1062", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1063", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1065", "reason": "empty_tier", "pair_sim": 0.0, "t1": "你好。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1066", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，今天想和你好。", "t2": "其实那个工作", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1067", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，没错<EU/>。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1068", "reason": "empty_tier", "pair_sim": 0.0, "t1": "您好。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1069", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1073", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，您您上一次去住店是旅行吗？", "t2": "像之前发生的外滩那样的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1074", "reason": "empty_tier", "pair_sim": 0.0, "t1": "您好。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1076", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "但是价格有一些贵。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1082", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，没错  。", "t2": "好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1084", "reason": "pair_mismatch", "pair_sim": 0.1538, "t1": "你觉得是这样吗？", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1086", "reason": "pair_mismatch", "pair_sim": 0.1429, "t1": "帮你去打理的话可能会省很多心  。", "t2": "因为不需要的东西，我是不会买的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1087", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1088", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1090", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1092", "reason": "empty_tier", "pair_sim": 0.0, "t1": "再见  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1107", "reason": "pair_mismatch", "pair_sim": 0.1935, "t1": "你们家呢？你们家也是只有你一个人吗？", "t2": "那边的宿舍是怎么安排的呢？几个人？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1108", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊哦  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1110", "reason": "pair_mismatch", "pair_sim": 0.1143, "t1": "我现在好都是有这个问题你老家是哪里的？", "t2": "你是住在学生宿舍呢？还是住在校园外面？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1111", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "的。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1112", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊一起去弹琴的好朋友所以。", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1113", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "他还是有一些有一些小伙伴，嗯。", "t2": "开始做饭就做得很熟练了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1114", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1116", "reason": "pair_mismatch", "pair_sim": 0.2, "t1": "好像小孩压力还挺大的  。", "t2": "宋冬野的。大陆歌手唱的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1117", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那个因为。", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1119", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哦嗯。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1120", "reason": "pair_mismatch", "pair_sim": 0.1818, "t1": "哦，也是蛮早的。", "t2": "金鱼是可爱。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1124", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1125", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "[laughter]，我们。", "t2": "是的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1127", "reason": "pair_mismatch", "pair_sim": 0.0435, "t1": "到现在还能记得一些有的时候会吹一段笛子的呃曲子。", "t2": "我建议你可以去京都，因为这是我非常喜欢的一个城市。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1130", "reason": "pair_mismatch", "pair_sim": 0.0667, "t1": "然后我买了鱼缸然后还要种草然后呢。", "t2": "我是一直和我的父母住在一起的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1131", "reason": "pair_mismatch", "pair_sim": 0.0833, "t1": "我还没养到小小鱼的那个时候。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1133", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1135", "reason": "empty_tier", "pair_sim": 0.0, "t1": "哇，  呃。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1138", "reason": "pair_mismatch", "pair_sim": 0.0556, "t1": "那一定很疲惫吧？如果说一天都要上课的话。", "t2": "你有劝过父母买什么投资或理财的产品吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1139", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哦。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1142", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "哇。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1144", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "噢。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1146", "reason": "pair_mismatch", "pair_sim": 0.25, "t1": "是的是的  。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1148", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "噢。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1149", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1151", "reason": "pair_mismatch", "pair_sim": 0.3077, "t1": "嗯，[laughter]，是的。", "t2": "是的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1154", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1155", "reason": "empty_tier", "pair_sim": 0.0, "t1": "噢，  那。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1156", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "<NPS><UNIN/></NPS>   嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1157", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1158", "reason": "empty_tier", "pair_sim": 0.0, "t1": "您说。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1161", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "那。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1162", "reason": "pair_mismatch", "pair_sim": 0.1333, "t1": "啊 <UNIN/> <UNIN/> 知道了你的妈妈  。", "t2": "杰克逊的歌也很", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1165", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1168", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯但是有一点。", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1169", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1171", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "啊喜欢听音乐  。", "t2": "最后一个问题。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1172", "reason": "pair_mismatch", "pair_sim": 0.1143, "t1": "嗯是的是的就一定要好好的去享受它嗯是。", "t2": "你是住在学生宿舍呢？还是住在校园外面？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1173", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。  <UNIN/> [laughter]", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1174", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯您说  。", "t2": "最近。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1176", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "嗯是   是是   嗯。", "t2": "是。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1181", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1182", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1183", "reason": "pair_mismatch", "pair_sim": 0.25, "t1": "呃这个是？", "t2": "但是他们", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1185", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯 [laughter]，是。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1186", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1187", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1188", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯耶。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1190", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1191", "reason": "pair_mismatch", "pair_sim": 0.1333, "t1": "有买股票的习惯嘛  ？", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1192", "reason": "pair_mismatch", "pair_sim": 0.1538, "t1": "我也这样认为的。", "t2": "男的是高富帅。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1194", "reason": "empty_tier", "pair_sim": 0.0, "t1": "对  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1198", "reason": "pair_mismatch", "pair_sim": 0.0833, "t1": "我不太理解你是说的什么意思。", "t2": "就是两个人共享一间是吗？", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1199", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯对是对嗯怎么起。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1200", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "倾向于做选择。", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1201", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1202", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯，但是你 <UNIN/>。", "t2": "那就好。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1203", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "对吗嗯。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1204", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯因为真的是。", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1206", "reason": "pair_mismatch", "pair_sim": 0.05, "t1": "<SU/>落实可信的那么我觉得网络购物是很快捷方便的。", "t2": "好像我的同学们，每个人都在说工作压力好大。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1208", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯    。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1209", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1210", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "<UNIN/> 嗯是的。", "t2": "我去过。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1211", "reason": "pair_mismatch", "pair_sim": 0.1333, "t1": "只是稍稍了解一点  。", "t2": "你介绍一下你的", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1213", "reason": "pair_mismatch", "pair_sim": 0.1429, "t1": "我呃好的我能刚刚能听到你说话  。", "t2": "因为不需要的东西，我是不会买的。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1216", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1219", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1221", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯，嗯，  呃。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1222", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1223", "reason": "pair_mismatch", "pair_sim": 0.1429, "t1": "那您知道奥巴马是哪个政党的吗？", "t2": "因为那边吃的比较多，选择比较多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1225", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯嗯。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1226", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯嗯。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1233", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "而被，呃。", "t2": "觉得", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1234", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1235", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1236", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1237", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1239", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "工作竞争力怎么样呢？", "t2": "我想去那个牛排馆吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1240", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1244", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯。", "t2": "对。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1245", "reason": "empty_tier", "pair_sim": 0.0, "t1": "好的。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1247", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "嗯嗯嗯嗯  。", "t2": "然后，就是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1248", "reason": "empty_tier", "pair_sim": 0.0, "t1": "嗯   嗯嗯。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1249", "reason": "empty_tier", "pair_sim": 0.0, "t1": "啊  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1252", "reason": "empty_tier", "pair_sim": 0.0, "t1": "好的  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1253", "reason": "pair_mismatch", "pair_sim": 0.1111, "t1": "我们刚才聊到哪里啦？", "t2": "我想去那个牛排馆吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1255", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，这种公司一般都会。", "t2": "还有就是那个腾讯。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1256", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "更新换代会比较快。", "t2": "它叫火烧香蕉。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1258", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "这种的视频网站  。", "t2": "终于吃多蒜了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1260", "reason": "empty_tier", "pair_sim": 0.0, "t1": "优酷  。", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1263", "reason": "pair_mismatch", "pair_sim": 0.0833, "t1": "因为上面认识的朋友比较少。", "t2": "日本对这方面研究不是很多。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1264", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "呃，还可以吧  。", "t2": "话题偏了。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1266", "reason": "pair_mismatch", "pair_sim": 0.1176, "t1": "呃，没有他才去的百度。", "t2": "还有就是那个腾讯。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1268", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "而且这些偏差。", "t2": "比较方便购物。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1270", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "而且像衣服这类东西，基本上。", "t2": "我到现在也不太懂。什么是", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1272", "reason": "empty_tier", "pair_sim": 0.0, "t1": "<LM>happy</LM>", "t2": "", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1279", "reason": "pair_mismatch", "pair_sim": 0.0909, "t1": "因为现在好多人开始代购。", "t2": "我觉得比较好的，我就去找。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_CH_1284", "reason": "pair_mismatch", "pair_sim": 0.0, "t1": "但是他只有十秒钟只能。", "t2": "差不多两个星期一次吧。", "direction": "zh_en"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0049", "reason": "empty_tier", "pair_sim": 0.0, "t1": "hum", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0089", "reason": "pair_mismatch", "pair_sim": 0.381, "t1": "it is, it is, man. like,   li<EU/> like, you know, like,   I, I<EU/>", "t2": "It is, man. I", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0098", "reason": "pair_mismatch", "pair_sim": 0.1115, "t1": "yeah, definitely, definitely, and, I don't like that. that's why, like, that's why I want, that's one of the reasons why I don't wanna go back to school.   I mean some other varying, different reasons, but,   that is one of the reasons as well, like, because they, they drain you, not only they charge you so much for tutition, but they charge you for like, yo, I need the books to, help me graduate, so I don't understand why you charge me so much, and then I gotta pay so much for books, and I pay you so much for housing and all this crap. nah, come on.", "t2": "Yeah, definitely, and I don't like that. that's why I want That's one of the reasons why I don't wanna go back to school. I mean, some other varying different reasons, but that is one of the reasons as well. because they drain you. not only they charge you so much for tutition, but they charge you for Yo, I need the books to help me graduate, so I don't understand why you charge me so much. And then I gotta pay so much for books, and I pay you so much for housing and all this crap. Come on.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0104", "reason": "pair_mismatch", "pair_sim": 0.4639, "t1": "yeah. and that's changed. that's funny, that's changed. because it wasn't like that. [laughter] because the rich people couldn't get financial aid because you were rich. I remember when I my parents told me to do that, I couldn't get it because they looked at my back<EU/> my parents' background. I was like, I can't get financial aid? they looked at your background. now it's changed. like, it's true. now it's changed because they want to see if you can at least afford to pay it back. that's what they're looking at. so you at least afford to pay it back. it's crazy.", "t2": "Yeah, and that's changed. That's funny that's changed because it wasn't like that. Because the rich people couldn't get financial aid because you were rich. I remember when my parents told me to do that. I couldn't get it because they looked at my back my parents' background. I was like, I can't get financial aid? They looked at your background. Now it's changed. It's true. Now, it's changed because they want to see if you can at least afford to pay it back. That's what they're looking at. So you at least afford to pay it back. It's crazy.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0153", "reason": "pair_mismatch", "pair_sim": 0.4286, "t1": "ohh [laughter]", "t2": "Ohh.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0189", "reason": "pair_mismatch", "pair_sim": 0.2857, "t1": "[laughter] okay, okay. [laughter]", "t2": "Okay.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0202", "reason": "empty_tier", "pair_sim": 0.0, "t1": "uh ohh.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0235", "reason": "pair_mismatch", "pair_sim": 0.2727, "t1": "[laughter] ohh, <UNIN/> [laughter]", "t2": "Ohh.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0248", "reason": "pair_mismatch", "pair_sim": 0.0094, "t1": "love your country! but we do, we do the same thing back home, so what am I supposed to say, right?", "t2": "Yeah, that's actually what they don't like here. I would sometimes be like, in my kindergarten, why are we doing it this way? This makes no sense. They would come to me the day before we had Halloween. they were, like, ohh can you help us like set up for Halloween tomorrow? what do you mean tomorrow? like, you realize like it's tomorrow, right? ohh, yeah, ohh. what's the big deal? like, I have a life after school, thank you very much. I don't do overtime for free.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0258", "reason": "pair_mismatch", "pair_sim": 0.2987, "t1": "yeah, that's actually what they don't like here. I would, like, uhh, sometimes, like, be, like, why are we doing, like in my kindergarten, why are we doing it this way? why are we doing it this way? this makes no sense, like. they would come to me the day before, like, we had Halloween. they were, like, ohh can you help us like set up for Halloween tomorrow? what do you mean tomorrow? like, you realize like it's tomorrow, right? ohh, yeah, ohh. what's the big deal? like, I have a life after school, thank you very much. I don't do overtime for free.", "t2": "Yeah, that's actually what they don't like here. I would sometimes be like, in my kindergarten, why are we doing it this way? This makes no sense. They would come to me the day before we had Halloween. They were like, ohh, can you help us set up for Halloween tomorrow? What do you mean tomorrow? You realize it's tomorrow, right? Ohh, yeah. Ohh, what's the big deal? I have a life after school, thank you very much. I don't do overtime for free.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0266", "reason": "pair_mismatch", "pair_sim": 0.1279, "t1": "and I hate<EU/>, I really hate the feeling when you eat, like, a ton of meat. I much<EU/>,   like, when we go to eat with my friends, and the rest of my <UNIN/>, it's like, get<EU/>, please, like order tons of vegetables, 'cause that's what I like to eat.   I just want a piece of meat, just for flavor, but I just want more vegetables.", "t2": "And I really hate the feeling when you eat a ton of meat. I much like when we go to eat with my friends. and the rest of my It's like, please order tons of vegetables 'cause that's what I like to eat. I just want a piece of meat, just for flavor, but I just want more vegetables.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0275", "reason": "pair_mismatch", "pair_sim": 0.0721, "t1": "yeah. I, I think that's kind of what university is about. is not only are you learning about yourself, but you're also learning, like, what does your professor want from you, and how do you communicate with others? how do you, you know, build rapport with other people? how do you work as a team? and", "t2": "Yeah. I think that's what university is about, is not only are you learning about yourself, but you're also learning what does your professor want from you, and how do you communicate with others? How do you build rapport with other people? How do you work as a team? and", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0282", "reason": "empty_tier", "pair_sim": 0.0, "t1": "um.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0295", "reason": "pair_mismatch", "pair_sim": 0.1162, "t1": "[laughter] my, my roommate, uh, Destiny, that I ended up living with the l<EU/>, the last three years,   we used to laugh at the roommate contract because we always had this policy, you just ask each other, just talk to each other, and [laughter] so, any, anything on the contract, we would, we would just write, ask,   and uh, yeah, it was kinda funny.", "t2": "my roommate, Destiny, that I ended up living with the last three years We used to laugh at the roommate contract because we always had this policy, you just ask each other, just talk to each other. And so anything on the contract, we would just write, ask. And yeah, it was kinda funny.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0452", "reason": "pair_mismatch", "pair_sim": 0.2291, "t1": "yeah. I lik<EU/> lik<EU/> like, you know, like, a new one that's not, like, you know, super old school but it it's still plays that vinyl sound and I think that that'll that's it gives the room a different feeling than having like, you know, sp<EU/>, like, big speakers. it's different type of sound and different type of feeling there. you know, have one room with the <UNIN/> with the vinyl uh record player and then one room with, you know, the surround sound speakers, you know, so it's different vibes.", "t2": "Yeah. A new one that's not, super old school but it still plays that vinyl sound and I think that it gives the room a different feeling than having big speakers. It's different type of sound and different type of feeling there. Have one room with the vinyl record player and then one room with the surround sound speakers, so it's different vibes.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0457", "reason": "pair_mismatch", "pair_sim": 0.346, "t1": "this type of rap music that talks about like killing and death and stuff.   it's really bad, like, some of the artists are like really gruesome they tell stories of like rapes or murders different things like this that's called horrorcore and usually the beat is ready ready strong too, really good beat. yeah.", "t2": "This type of rap music that talks about killing and death and stuff. It's really bad. Some of the artists are really gruesome, they tell stories of rapes or murders, different things like this. That's called horrorcore and usually the beat is really strong too, really good beat. Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0467", "reason": "pair_mismatch", "pair_sim": 0.3478, "t1": "yeah, yeah, yeah. ohh di<EU/> di<EU/>", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0471", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "yeah, yeah, yeah, yeah, yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0485", "reason": "pair_mismatch", "pair_sim": 0.1879, "t1": "yeah, they c<EU/> they can't spell it, yeah. but anyways, yeah, I I just listen, I, uh, we call him yay, uh, I mean, you know, I like chicago, you know, 'cause he's from Chicago and stuff and, uh   uh, yeah yeah, he's from Chicago, uh, now he's you know, he is spending a lot of time in, like, New York and wherever, Los Angeles, France with every pissing off fr<EU/> French people but I like him though, uh", "t2": "Yeah. They can't spell it, yeah. But anyways, I just listen, I, we call him. I like chicago, 'cause he's from Chicago and stuff. Yeah, he's from Chicago. Now he is spending a lot of time in New York and wherever, Los Angeles, France. with every pissing off fr French people but I like him though, uh", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0525", "reason": "pair_mismatch", "pair_sim": 0.01, "t1": "mhm, I see, I see. um, I think I really want a dog, and my parents have always said that I could get a new dog, after like I graduate, so when I graduated high school, my dad was like, ohh, you can get a, new, or you can get a dog, but then, he was like, ohh, wait, you, after you graduate college you can get a dog. and the's like after you graduate law school you can get a dog. but then he never got me a dog, you know.", "t2": "I see, I see. I think I really want a dog, and my parents have always said that I could get a new dog, after I graduate, so when I graduated high school, my dad was like, you can get a new car or you can get a dog. But then he was like, ohh, wait, after you graduate college you can get a dog. And the's after you graduate law school, you can get a dog. But then he never got me a dog, you know.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0528", "reason": "pair_mismatch", "pair_sim": 0.4073, "t1": "I mean they're very beautiful, and I think they're very popular probably just because they're so beautiful. um, I think I prefer smaller dogs, like, uh, um,   what is it, what is it called? like a Pomeranian? I think so. yeah, they're cute. but I also like a bigger one, like the shiba inu, the Japanese one.", "t2": "They're very beautiful, and I think they're very popular probably just because they're so beautiful. I think I prefer smaller dogs, like, what is it called? A Pomeranian? I think so. Yeah. They're cute, but I also like a bigger one, like the shiba inu, the Japanese one.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0585", "reason": "pair_mismatch", "pair_sim": 0.0604, "t1": "yeah so that was like so sad, because I was like my first act<EU/>, like my own pet and so that was like, that was so sad for me [laughter] I remember when I was little I like cried about it for a really long time but then I got another one but that hamster was too aggressive because like every time you would try to like pick it up it would try to bite you so like there is, I don't know it wasn't like fun to have that hamster so.", "t2": "Yeah, so, that was so sad, because it was my own pet. And so that was so sad for me. I remember when I was little I cried about it for a really long time, But, then I got another one. But that hamster was too aggressive, because every time you would try to pick it up, it would try to bite you. so, there is I don't know. It wasn't fun to have that hamster. so", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0594", "reason": "pair_mismatch", "pair_sim": 0.1414, "t1": "ohh yeah, so every time I go to my friend's house, like her sister wanted a ferret, but then like after a month, she didn't want the ferret anymore. so, like, my friend has to take care of it all the time now. and like, every time I go to her house, yeah, it smells so bad. but I always just thought it was because it poops everywhere, and, like, she doesn't take care of it that often, so like, yeah, I don't know.", "t2": "Ohh, yeah. So, every time I go to my friend's house. Her sister wanted a ferret, but then after a month, she didn't want the ferret anymore. So, my friend has to take care of it all the time now. And every time I go to her house, yeah, it smells so bad. But, I always just thought it was because it poops everywhere. and she doesn't take care of it that often. So, yeah, I don't know.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0608", "reason": "pair_mismatch", "pair_sim": 0.1166, "t1": "yeah,   I know what you mean,   I know what you mean. I stayed in a hotel in Shiyan this summer and it was funny because it was a very upscale hotel but kind of like so so service and I know in the states, um, that's sort of how hotels try to distinguish each other is with or distinguish one from another is with good serv<EU/>", "t2": "Yeah, I know what you mean. I stayed in a hotel in Xian this summer, and it was funny because it was a very upscale hotel, but so so service. And I know in the states, that's how hotels try to distinguish each other is with, or distinguish one from another is with good service.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0613", "reason": "pair_mismatch", "pair_sim": 0.3943, "t1": "yeah I didn't realize that, that's a really good thing and also too the wifi, if you're not on the upper level you have to pay kind of like sixty, si<EU/> si<EU/> a certain fee. I mean it's not that much but it's still like you've gotta be kidding me this is the twenty, this is two thousand fifteen you can't have wifi in the rooms, for free?", "t2": "Yeah, I didn't realize that. That's a really good thing, and also the wifi. If you're not on the upper level, you have to pay sixty, a certain fee. I mean, it's not that much, but it's still like, you've gotta be kidding me. This is the twenty, this is two thousand fifteen. You can't have wifi in the rooms for free?", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0625", "reason": "pair_mismatch", "pair_sim": 0.4917, "t1": "well I actually had them all. I was, I was on a trip with a group of,   uhh, people so they, I was, I was actually, I didn't have to pay for anything, which was really nice, but, uhh, at the Holiday Inn I remember it was something like, maybe, I think it was two thousand Kwai, and, or, maybe it's, it's a lot higher than, like, one night stay or something. um,   so.", "t2": "I actually had them all. I was on a trip with a group of people. so they I was actually I didn't have to pay for anything, which was really nice. But, at the Holiday Inn, I remember it was, I think it was two thousand Kwai. And, maybe it's a lot higher than a one night stay or something. so", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0678", "reason": "pair_mismatch", "pair_sim": 0.0435, "t1": "you know what one thing I've been trying to do that I know relates to finance a lot, is budget. I really want a budget because I wanna go on, like, I wanna go around the world and I know I need money to do that. so I need to, like, this year, this year, starting, like, now, I've been writing down my, um, how much money I've been spending every day. um, so I really wanna budget this semester and next semester so I can have a ton of m<EU/> enough money to make plans to do a lot of fun stuff.", "t2": "One thing I've been trying to do that I know relates to finance a lot, is budget. I really want a budget because I wanna go on, I wanna go around the world, and I know I need money to do that. So, I need to this year. Starting now, I've been writing down how much money I've been spending every day. So, I really wanna budget this semester and next semester, so I can have enough money to make plans to do a lot of fun stuff.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0686", "reason": "empty_tier", "pair_sim": 0.0, "t1": "uh <UNIN/>", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0713", "reason": "pair_mismatch", "pair_sim": 0.2876, "t1": "ah the pay, I think it was like eight twenty five an hour. and you only have to work on the weekends. um I wound up saving up money for school supplies, but I haven't really invested any in anything with that kind of money because it was just such a short term. it was only for like the weekends of October.", "t2": "The pay, I think it was eight twenty five an hour. And you only have to work on the weekends. I wound up saving up money for school supplies, but I haven't really invested any in anything with that kind of money because it was just such a short term. It was only for the weekends of October.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0729", "reason": "empty_tier", "pair_sim": 0.0, "t1": "ohh.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0741", "reason": "pair_mismatch", "pair_sim": 0.0256, "t1": "so like you're able to take a house, or you, like buy your own house. but when people have bad credit they can't like get a house in their name, or anything like that. but when you have good credit, you can. so I guess a   because a finance lady from Syracuse was, um, she had a class on it. well just a lecture one day, and she was talking about that. like that's a way for students to build good credit score is through loans.", "t2": "so, you're able to take a house, or you, buy your own house. But when people have bad credit they can't get a house in their name, or anything like that. But when you have good credit, you can. So I guess because a finance lady from Syracuse she had a class on it. Well just a lecture one day, and she was talking about that. That's a way for students to build good credit score, through loans.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0775", "reason": "pair_mismatch", "pair_sim": 0.3806, "t1": "ohh, it's a purple line and so basically near that s<EU/> that subway station they have, uh, Vietnamese restaurant and, uh, you can eat fish head and it's very good. yes, yes and it's like the, um, the restaurant is very modern, very cute, extremely cheap and the dishes are amazing. everything that comes out of the kitchen is a piece of art.", "t2": "It's a purple line and so basically near that subway station they have a Vietnamese restaurant and, you can eat fish head and it's very good. Yes and the restaurant is very modern, very cute, extremely cheap and the dishes are amazing. Everything that comes out of the kitchen is a piece of art.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0786", "reason": "empty_tier", "pair_sim": 0.0, "t1": "um.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0791", "reason": "pair_mismatch", "pair_sim": 0.4377, "t1": "now on Facebook they give you, like, notifications for, like, things that aren't necessarily directed, like, it's not, like, a direct message to you. you know what I mean? like, when somebody else<EU/> somebody else, like, posts pictures and stuff that not even of you, think it still shows up as, like, a notification. I think, like, what I, when I started seeing those I was just, like, yeah I don't really care about [laughter] Facebook that much anymore.", "t2": "Now on Facebook they give you notifications for things that aren't necessarily directed. It's not a direct message to you. You know what I mean? When somebody else posts pictures and stuff that not even of you, it still shows up as a notification. When I started seeing those I was just, like, yeah I don't really care about Facebook that much anymore.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0805", "reason": "pair_mismatch", "pair_sim": 0.4762, "t1": "ohh weird [laughter]", "t2": "Weird.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0806", "reason": "pair_mismatch", "pair_sim": 0.4, "t1": "yeah, yeah yeah yeah", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0821", "reason": "pair_mismatch", "pair_sim": 0.446, "t1": "it's pretty cool, uh, it's B. A., B. A. D. O. O.. and, uh, it does, like, searches for people nearby. and I was like, ohh, this person is like five, uh, miles from you, or I mean, much smaller, like in like ten meters or something like that. [laughter] you know, whatever, but it's pretty great. so I've met people through there, and, uh, I like those ones just for making friends, you know. if you want to meet someone new. and, of course, being in other country, it's harder to find someone that speaks your language.", "t2": "It's pretty cool. It's B. A. B. A. D. O. O.. It does searches for people nearby. And I was l like, this person is five miles from you, or much smaller, in ten meters or something like that. You know, whatever, but it's pretty great. So I've met people through there. I like those ones just for making friends, you know. If you want to meet someone new and of course, being in another country, it's harder to find someone that speaks your language.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0831", "reason": "empty_tier", "pair_sim": 0.0, "t1": "mhm.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0835", "reason": "empty_tier", "pair_sim": 0.0, "t1": "mhm.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0836", "reason": "pair_mismatch", "pair_sim": 0.3463, "t1": "yeah, and like I think there are a lot of, and like I've also seen a lot of, like, you know, articles on the web, online, you know, um, what it's like, of you know, people have talked about a lot, like, people like trolls will say these really mean things, and then, like, make, you know, people make other people, like, self conscious about themselves, or feel bad about themselves, and like it's just, like, not a good way to interact with people, I think.", "t2": "Yeah. And I've also seen a lot of articles on the web, online, of you know, people have talked about a lot, people like trolls will say these really mean things, and then make other people self conscious about themselves, or feel bad about themselves. And it's just not a good way to interact with people, I think.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0859", "reason": "pair_mismatch", "pair_sim": 0.1642, "t1": "right, well, I think, you know, a lot of time, it depends on what you, you're sending, because a lot of times if you're sending, you know, like a super, like, just a picture, you know, sometimes it's better to only have a couple seconds to look at it, because, like, if you look at it for too long, it's kind of weird, I think, a lot of times, but like", "t2": "Right. Well a lot of time, it depends on what you're sending, because a lot of times if you're sending just a picture, you know, sometimes it's better to only have a couple seconds to look at it. Because if you look at it for too long, it's kind of weird. i think, a lot of times, but like", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0895", "reason": "pair_mismatch", "pair_sim": 0.4211, "t1": "[laughter] ohh, jeez.", "t2": "Jeez.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0951", "reason": "pair_mismatch", "pair_sim": 0.2432, "t1": "I think to successfully compare prices for physical stores you have to have like a team of people, and you'd all have to like, be calling each other, and like, sending each other like pictures of different prices of different things, you know? so you could e<EU/>, like, do it all in one go, 'cause otherwise you have to drive from store to store, and that takes, forever.", "t2": "I think to successfully compare prices for physical stores you have to have a team of people, and you'd all have to be calling each other and sending each other pictures of different prices of different things, you know? So you could do it all in one go, 'cause otherwise you have to drive from store to store, and that takes, forever.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_0965", "reason": "pair_mismatch", "pair_sim": 0.1836, "t1": "yeah, um, what is y<EU/>, what is your favorite store, actually? like, for clothes shopping, where would you go? I, like, for me I have, um, if I'm gonna do like, pants, I'll probably go to Target, but if I wanna do shirts I could go somewhere like Ru Twenty One, or, I like to go to Hot Topic, because they have really awesome, graphic T. 's., a lot of cool bands and stuff <UNIN/> shirts.", "t2": "Yeah. What is your favorite store, actually? For clothes shopping, where would you go? For me, I'm gonna do pants, I'll probably go to Target, but if I wanna do shirts I could go somewhere like Ru Twenty One, or, I like to go to Hot Topic, because they have really awesome, graphic T. 's. A lot of cool bands and stuff shirts.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1035", "reason": "empty_tier", "pair_sim": 0.0, "t1": "ohh", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1043", "reason": "empty_tier", "pair_sim": 0.0, "t1": "um", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1049", "reason": "pair_mismatch", "pair_sim": 0.4444, "t1": "ohh yeah, ohh yeah", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1062", "reason": "pair_mismatch", "pair_sim": 0.4494, "t1": "and then they actually make pretty good money and they've been trying to like set up recently they've been trying to set up leagues where you know the kids actually play each other could now that it's all the tools like practice like every day just like practice for they have nothing to look towards to like a game or anything you know what I mean", "t2": "and then they actually make pretty good money and they've been trying to set up recently. They've been trying to set up leagues where the kids actually play each other. Cause now it's all the tools like practice every day, just practice. They have nothing to look towards to like a game or anything, you know what I mean.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1090", "reason": "pair_mismatch", "pair_sim": 0.4, "t1": "[laughter] yeah yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1100", "reason": "pair_mismatch", "pair_sim": 0.271, "t1": "they they are and and these guys, I was like one kid had on his T-shirt had like some like uh basketball on it had it had Brooklyn written all over, like, your shirt says America. one dude had another like Miami Beach written on. I was like, you're an America and then the third one had a Batman shirt and I was like and Batman's American so what do you", "t2": "They are these guys. I was like one kid had on his T-shirt had some like basketball on, it had Brooklyn written all over. Your shirt says America. One dude had another, like Miami Beach written on. I was like, you're an American and then the third one had a Batman shirt and I was like and Batman's American so what do you", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1107", "reason": "pair_mismatch", "pair_sim": 0.3274, "t1": "yeah, you see that a lot, um, yeah but the Koreans do like to play baseball, um. sometimes, you know, I used to live around here around Wudaokou, I mean I kinda still do   but um, I see like, every Sunday they get together and have um, if you go to a rest<EU/> Korean restaurant around here on a Sunday afternoon, you'll see a <UNIN/> lot of guys with baseball uniforms. you know, they play in the morning go eat together and stuff.", "t2": "Yeah. You see that a lot. Yeah but the Koreans do like to play baseball sometimes. I used to live around here around Wudaokou. I mean I kinda still do but I see like, every Sunday they get together and if you go to a Korean restaurant around here on a Sunday afternoon, you'll see a lot of guys with baseball uniforms. You know, they play in the morning go eat together and stuff.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1110", "reason": "pair_mismatch", "pair_sim": 0.027, "t1": "ohh, two guys so I played I was playing on two Chinese teams and then, um, of a sudden though, the first game and I was like about the tear this kid up and, uh, I wish I had some like, uh, he just hit me really hard in a very dirty play but man my my cleat just got caught in the turf there and and I tore my ACL.", "t2": "Two guys. So I was playing on two Chinese teams and then, all of a sudden though, the first game and I was about to tear this kid up and I wish I had some. He just hit me really hard in a very dirty play but man my cleat just got caught in the turf there and and I tore my ACL.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1149", "reason": "empty_tier", "pair_sim": 0.0, "t1": "mhm", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1165", "reason": "pair_mismatch", "pair_sim": 0.4615, "t1": "ohh, so, so, wow.", "t2": "Wow.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1207", "reason": "pair_mismatch", "pair_sim": 0.4, "t1": "[laughter] yeah, yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1247", "reason": "pair_mismatch", "pair_sim": 0.4, "t1": "<UNIN/>, yeah, yeah, yeah, yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1262", "reason": "empty_tier", "pair_sim": 0.0, "t1": "yoo-hoo.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1269", "reason": "pair_mismatch", "pair_sim": 0.4503, "t1": "yeah, yeah, yeah. so same thing about my mother, you know. you can't stop her to stop nagging and complaining about life and be a dramatic. so my brother got tired of it. he's like you know what, I'm not helping her out anymore. I'm sick of it. I'm trying to live like a happy life now that I'm graduated from school, and uh, ever since he got married, he hasn't spoken to my mother or I ever again. and uh, my mother was struggling really bad recently with uh, with money. so you know, it's hard.", "t2": "Yeah. So same thing about my mother. You can't stop her nagging and complaining about life and being dramatic. So my brother got tired of it. He's like you know what, I'm not helping her out anymore. I'm sick of it. I'm trying to live a happy life now that I'm graduated from school, and ever since he got married, he hasn't spoken to my mother or I ever again. And my mother was struggling really bad recently with money. so you know, it's hard.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1281", "reason": "pair_mismatch", "pair_sim": 0.3282, "t1": "no way, no, I'm not emotionally drained at all. I'm actually extremely pumped. uh, no, I just, some things came to mind, I was like, you know what, um, like I, I just feel like, uh, I've got a lot of, uh, the traveling bug out of me, and I mean like that's what I wanted to do mostly was when I came out here, I just wanted to tra<EU/>", "t2": "No way. I'm not emotionally drained at all. I'm actually extremely pumped. Some things came to mind, I was like, you know what, I just feel, I've got a lot of the traveling bug out of me. And I mean that's what I wanted to do mostly was when I came out here, I just wanted to travel.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1351", "reason": "pair_mismatch", "pair_sim": 0.3333, "t1": "yeah, yeah, yeah, yeah, yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1644", "reason": "pair_mismatch", "pair_sim": 0.4, "t1": "yeah, yeah, yeah, yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1667", "reason": "pair_mismatch", "pair_sim": 0.1071, "t1": "[laughter] so [laughter] so, uh, they were pretty safe, you know, I mean, th<EU/> they were supplying the sheriff's department with whiskey so so they had had some pretty safe, uh, connections there in Dallas but yeah, my grandpa almost got arrested by the FBI one time. the FBI found where they were, uh, make and stuff and he was about to pull in as the FBI was a cutting the lock on the chain on the gate and he saw it from a distance so he didn't he didn't pull into the driveway just kept on going.", "t2": "They were pretty safe, you know. I mean they were supplying the sheriff's department with whiskey so they had some pretty safe connections there in Dallas. But yeah, my grandpa almost got arrested by the FBI one time. The FBI found where they were making stuff and he was about to pull in as the FBI was a cutting the lock on the chain on the gate. And he saw it from a distance so he didn't didn't pull into the driveway just kept on going.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1721", "reason": "pair_mismatch", "pair_sim": 0.4695, "t1": "and, um, I got bronchitis while we were in   Rome,   and we didn't realize it was as bad as it was until we got to Taranto and, like, I couldn't breathe at night,   and like, my grandma had to keep making these like poul<EU/>, poultices, whatever they're called and, like,   I used to have like breathing treatments that she'd make me do,   and then it was just, like, really frustrating because, like", "t2": "And I got bronchitis while we were in Rome. And we didn't realize it was as bad as it was until we got to Toronto. And I couldn't breathe at night, and my grandma had to keep making these poultices, whatever they're called. And I used to have breathing treatments that she'd make me do. and then it was just really frustrating because", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1763", "reason": "pair_mismatch", "pair_sim": 0.2857, "t1": "yeah, yeah, yeah, yeah, yeah, yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1855", "reason": "empty_tier", "pair_sim": 0.0, "t1": "mhm. mhm.", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1937", "reason": "pair_mismatch", "pair_sim": 0.4375, "t1": "um, let's see, let's see, let's see, um,", "t2": "Let's see.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1971", "reason": "pair_mismatch", "pair_sim": 0.4, "t1": "yeah, [laughter] yeah.", "t2": "Yeah.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_1998", "reason": "empty_tier", "pair_sim": 0.0, "t1": "hmm, so uhh", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_2000", "reason": "pair_mismatch", "pair_sim": 0.4286, "t1": "[laughter] I guess. [laughter]", "t2": "I guess.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_2004", "reason": "empty_tier", "pair_sim": 0.0, "t1": "ohh. [laughter]", "t2": "", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_2011", "reason": "pair_mismatch", "pair_sim": 0.3267, "t1": "they uhh, it's a, I mean it's a forums website, but I think it's pretty good, not even just for documentaries, but for movies as well. you can just like, you know, they have different what they call SubReddits, which is just a sub forum, and uhh, anyway you can find all kinds of topics, so you could find like movies, or documentaries, and then you just go into different postings and people, you know, suggest movies, and.", "t2": "I mean it's a forums website, but I think it's pretty good, not even just for documentaries, but for movies as well. They have different what they call SubReddits, which is just a sub forum, and you can find all kinds of topics. So you could find movies, or documentaries, and then you just go into different postings and people, suggest movies, and.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_2074", "reason": "pair_mismatch", "pair_sim": 0.4768, "t1": "I enjoy cooking. um, I cook, uh, quite often, actually. um, I cook a lot of dishes with, with rice and chicken, rice and fish, those seem to be the most common, um, combinations for me, just because, you know, rice is pretty healthy and clean, and you know, fish is probably the best type of protein, and meat that you can get for your body.", "t2": "I enjoy cooking. I cook, quite often, actually. I cook a lot of dishes with rice and chicken, rice and fish, those seem to be the most common combinations for me. Just because, you know, rice is pretty healthy and clean, and fish is probably the best type of protein, and meat that you can get for your body.", "direction": "en_zh"}
+{"id": null, "notes": "MSLT MSLT_Test_EN_2089", "reason": "pair_mismatch", "pair_sim": 0.323, "t1": "let's change up the chicken so you know instead of just using like in just like some boiled or steamed chicken I,   I decided to try you know hey barbecue chicken in chicken noodle soup and uh [laughter]   as,   as you could imagine uh just barbeque in soup uh it don't go together with this but worth a try and that's just one of those things I'll never try again.", "t2": "Let's change up the chicken so instead of just using some boiled or steamed chicken, I decided to try barbecue chicken in chicken noodle soup and as you could imagine just barbeque in soup. It don't go together with this but worth a try and that's just one of those things I'll never try again.", "direction": "en_zh"}

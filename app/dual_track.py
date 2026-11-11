@@ -647,13 +647,20 @@ class DualTrackEngine:
                     job["offline_text"] = (res.text or "").strip()
                     job["offline_ms"] = float(res.ms)
                 else:
-                    on, off, merged = self.asr.transcribe_with_2pass_parts(snap)
-                    job["res"] = merged
-                    job["online_text"] = (on.text or "").strip()
-                    job["offline_text"] = (
-                        (off.text or "").strip() if off is not None else ""
-                    )
-                    job["offline_ms"] = float(off.ms) if off is not None else 0.0
+                    # 观测用 parts；测试 mock 可能只有 transcribe_with_2pass
+                    parts = getattr(self.asr, "transcribe_with_2pass_parts", None)
+                    if callable(parts):
+                        on, off, merged = parts(snap)
+                        job["res"] = merged
+                        job["online_text"] = (on.text or "").strip()
+                        job["offline_text"] = (
+                            (off.text or "").strip() if off is not None else ""
+                        )
+                        job["offline_ms"] = (
+                            float(off.ms) if off is not None else 0.0
+                        )
+                    else:
+                        job["res"] = self.asr.transcribe_with_2pass(snap)
             except Exception as exc:  # noqa: BLE001
                 print(f"[ASR spec error] {exc}")
             finally:

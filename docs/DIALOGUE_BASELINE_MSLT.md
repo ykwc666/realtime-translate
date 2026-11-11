@@ -1,5 +1,7 @@
 # 双人对话 KPI 基线（MSLT 60）— 2026-11-11
 
+> **作废：T1/T2 未校验。** 中文近半条目音频对齐 T1、参考却是另一句 T2，旧 asr_ok/mt_ok 含坏题伪分。请改用 [`DIALOGUE_BASELINE_MSLT_V2.md`](DIALOGUE_BASELINE_MSLT_V2.md)。本文仅保留作考古对照。
+
 复现：`.venv\Scripts\python.exe scripts\eval_dialogue_mslt.py`  
 明细：`data/eval/dialogue_mslt/`（gitignore）
 

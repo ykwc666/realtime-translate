@@ -188,6 +188,18 @@ def _join_obs(utts: list[dict]) -> tuple[str | None, str | None, str | None]:
     )
 
 
+def _percentile(vals: list[float], p: float) -> float | None:
+    if not vals:
+        return None
+    xs = sorted(vals)
+    if len(xs) == 1:
+        return round(xs[0], 4)
+    # nearest-rank style
+    idx = int(round((p / 100.0) * (len(xs) - 1)))
+    idx = max(0, min(len(xs) - 1, idx))
+    return round(xs[idx], 4)
+
+
 def _agg(rows: list[dict]) -> dict:
     if not rows:
         return {}
@@ -208,8 +220,13 @@ def _agg(rows: list[dict]) -> dict:
     given_ok = sum(1 for r in given if r["mt_verdict"] == "ok")
     frag_lost = sum(1 for r in rows if bool(r.get("fragment_lost")))
     frag_dup = sum(1 for r in rows if bool(r.get("fragment_dup")))
+    pair_sims = [
+        float(r["pair_sim"])
+        for r in rows
+        if r.get("pair_sim") is not None
+    ]
     n = len(rows)
-    return {
+    out = {
         "n": n,
         "asr_err_mean": round(sum(asr) / n, 4),
         "asr_ok_le_0.35": asr_ok,
@@ -237,6 +254,11 @@ def _agg(rows: list[dict]) -> dict:
         "fragment_dup": frag_dup,
         "fragment_dup_rate": round(frag_dup / n, 4),
     }
+    if pair_sims:
+        out["pair_sim_min"] = round(min(pair_sims), 4)
+        out["pair_sim_p10"] = _percentile(pair_sims, 10)
+        out["pair_sim_p50"] = _percentile(pair_sims, 50)
+    return out
 
 
 def main() -> int:
@@ -296,6 +318,7 @@ def main() -> int:
         obs_on, obs_off, obs_pick = _join_obs(utts)
         frag_lost = bool(cov < 0.8)
         frag_dup = _fragment_dup(utts, direction=direction)
+        pair_sim = item.get("pair_sim")
         row = {
             "id": item["id"],
             "direction": direction,
@@ -314,6 +337,7 @@ def main() -> int:
             "arbiter_pick": obs_pick,
             "fragment_lost": frag_lost,
             "fragment_dup": frag_dup,
+            "pair_sim": pair_sim,
             "utts": utts,
         }
         detail.append(row)
