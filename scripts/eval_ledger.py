@@ -334,7 +334,14 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--skip-a5", action="store_true")
     ap.add_argument("--corpus", default="", help="filter: ami,fleurs,libri")
+    ap.add_argument(
+        "--out-dir",
+        type=Path,
+        default=OUT_DIR,
+        help="write ledger_eval_*.json(l) here (default: docs)",
+    )
     args = ap.parse_args()
+    out_dir = Path(args.out_dir)
 
     rows = [
         json.loads(l)
@@ -485,12 +492,12 @@ def main() -> int:
         "main_corpora": ["ami", "fleurs"],
         "ood_corpora": ["libri"],
     }
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    detail_path = OUT_DIR / "ledger_eval_detail.jsonl"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    detail_path = out_dir / "ledger_eval_detail.jsonl"
     with detail_path.open("w", encoding="utf-8") as f:
         for r in detail:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    sum_path = OUT_DIR / "ledger_eval_summary.json"
+    sum_path = out_dir / "ledger_eval_summary.json"
     sum_path.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
