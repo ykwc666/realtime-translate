@@ -46,7 +46,8 @@ from .vad_stream import SpeechSegment, create_endpoint, vad_backend_label
 
 _UTT_STATS_BOUND = 16
 
-# 中文方向下 SenseVoice 常把短回应听成日语假名；映射后再走短回应 MT。
+# SenseVoice 常把极短回应听成日语假名；按 force_src_lang 映射后再走 MT。
+# key = 去标点后的串（与 finalize 里 content 规范化一致）。
 _KANA_AFFIRM_TO_ZH = {
     "うん": "嗯",
     "うむ": "嗯",
@@ -58,6 +59,11 @@ _KANA_AFFIRM_TO_ZH = {
     # 单拍「な」在中文方向几乎总是短噪声/短回应误听
     "な": "嗯",
     "なっ": "嗯",
+}
+# 英文方向：只写已在 V2 失败里出现过的假名串；映射成英文短词后再 MT/TM。
+_KANA_AFFIRM_TO_EN = {
+    "うん": "Yeah.",
+    "あイ": "Yes.",  # ASR「あ、イ」去标点后
 }
 
 
@@ -455,20 +461,28 @@ class DualTrackEngine:
         if not content:
             return None
         mapped = None
-        if self.force_src_lang == "zh" and re.fullmatch(
-            r"[\u3040-\u30ffァ-ヶー]+", content
-        ):
-            mapped = _KANA_AFFIRM_TO_ZH.get(content)
+        if re.fullmatch(r"[\u3040-\u30ffァ-ヶー]+", content):
+            if self.force_src_lang == "zh":
+                mapped = _KANA_AFFIRM_TO_ZH.get(content)
+            elif self.force_src_lang == "en":
+                mapped = _KANA_AFFIRM_TO_EN.get(content)
             if not mapped:
                 return None
             text = mapped
-            content = mapped
+            content = re.sub(r"[^\w\u4e00-\u9fff]+", "", text, flags=re.UNICODE)
         cjk_n = len(re.findall(r"[\u4e00-\u9fff]", text))
         if self.force_src_lang == "zh" and cjk_n == 0:
             return None
         min_chars = int(getattr(config, "MIN_FINAL_ASR_CHARS", 2))
         short_ok = getattr(config, "MIN_FINAL_ASR_SHORT_OK", frozenset()) or frozenset()
-        if len(content) < min_chars and content not in short_ok:
+        # 英文短词（Yes/Yeah）按字母长度放行
+        en_short_ok = bool(
+            self.force_src_lang == "en"
+            and content
+            and re.fullmatch(r"[A-Za-z]+", content)
+            and len(content) <= 8
+        )
+        if len(content) < min_chars and content not in short_ok and not en_short_ok:
             return None
         note = f"{off.text!r}→{text!r}" if mapped else repr(text)
         print(f"--- 空 partial 离线救回 ({note}) ---")
@@ -1255,14 +1269,20 @@ class DualTrackEngine:
             return out
 
         content = re.sub(r"[^\w\u4e00-\u9fff]+", "", full, flags=re.UNICODE)
-        # 假名短噪声：中文方向下把常见短回应映射成 嗯/对；其余跳过 MT
+        # 假名短噪声：按方向映射成目标语短回应；其余跳过 MT
         kana_only = bool(content and re.fullmatch(r"[\u3040-\u30ffァ-ヶー]+", content))
-        if kana_only and self.force_src_lang == "zh":
-            mapped = _KANA_AFFIRM_TO_ZH.get(content)
+        if kana_only:
+            mapped = None
+            if self.force_src_lang == "zh":
+                mapped = _KANA_AFFIRM_TO_ZH.get(content)
+            elif self.force_src_lang == "en":
+                mapped = _KANA_AFFIRM_TO_EN.get(content)
             if mapped:
                 print(f"--- 假名短回应映射 {full!r} → {mapped!r} ---")
                 full = mapped
-                content = mapped
+                content = re.sub(
+                    r"[^\w\u4e00-\u9fff]+", "", full, flags=re.UNICODE
+                )
                 kana_only = False
         cjk_n = len(re.findall(r"[\u4e00-\u9fff]", full or ""))
         wrong_lang_zh = (

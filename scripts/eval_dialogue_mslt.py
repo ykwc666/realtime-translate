@@ -111,6 +111,75 @@ def mt_usable(direction: str, ref_tgt: str, hyp_tgt: str) -> tuple[str, str]:
     return "wrong", f"zh_overlap={overlap:.2f}"
 
 
+# 对话同义簇（仅用于 sem 口径；不改 0.35 旧闸门）
+_EN_SYN_CLUSTERS: tuple[frozenset[str], ...] = (
+    frozenset({"continue", "keep", "going"}),
+    frozenset({"popular", "penetration", "rate", "common", "widespread"}),
+    frozenset({"right", "yes", "yeah", "exactly", "correct", "ok", "okay"}),
+    frozenset({"good", "well", "nice", "fine", "great"}),
+    frozenset({"talk", "chat", "discuss", "speak"}),
+    frozenset({"smart", "phone", "smartphone", "phones"}),
+)
+_ZH_SYN_CLUSTERS: tuple[frozenset[str], ...] = (
+    frozenset({"对", "是", "啊", "嗯", "没", "错", "好"}),
+    frozenset({"哦", "喔", "噢"}),
+    frozenset({"准", "确", "没", "错"}),
+)
+
+
+def _expand_tokens(tokens: list[str], clusters: tuple[frozenset[str], ...]) -> set[str]:
+    out = set(tokens)
+    for t in tokens:
+        for c in clusters:
+            if t in c:
+                out |= set(c)
+    return out
+
+
+def mt_usable_sem(direction: str, ref_tgt: str, hyp_tgt: str) -> tuple[str, str]:
+    """语义放宽口径：同义/更简洁可 ok；漏译（过短）绝不豁免。
+
+    旧 mt_usable 阈值不变；本函数只作并列报表。
+    """
+    base_v, base_r = mt_usable(direction, ref_tgt, hyp_tgt)
+    hyp = (hyp_tgt or "").strip()
+    ref = (ref_tgt or "").strip()
+    if not hyp:
+        return "wrong", "empty_tgt"
+    if base_v == "ok":
+        return "ok", base_r + "|sem_keep"
+
+    if direction == "zh_en":
+        rw, hw = _norm_en_words(ref), _norm_en_words(hyp)
+        if not rw:
+            return "ok", "empty_ref|sem"
+        # 漏译：译文词数明显短于参考
+        if len(hw) < max(3, int(0.45 * len(rw))):
+            return "wrong", f"sem_trunc hyp={len(hw)} ref={len(rw)}"
+        rs = _expand_tokens(rw, _EN_SYN_CLUSTERS)
+        hs = _expand_tokens(hw, _EN_SYN_CLUSTERS)
+        overlap = len(rs & hs) / float(len(rs))
+        if overlap >= 0.35:
+            return "ok", f"sem_en_overlap={overlap:.2f}"
+        if overlap >= 0.20:
+            return "awkward", f"sem_en_overlap={overlap:.2f}"
+        return base_v, base_r + f"|sem_en={overlap:.2f}"
+
+    rc, hc = _norm_zh_chars(ref), _norm_zh_chars(hyp)
+    if not rc:
+        return "ok", "empty_ref|sem"
+    if len(hc) < max(1, int(0.45 * len(rc))):
+        return "wrong", f"sem_trunc hyp={len(hc)} ref={len(rc)}"
+    rs = _expand_tokens(rc, _ZH_SYN_CLUSTERS)
+    hs = _expand_tokens(hc, _ZH_SYN_CLUSTERS)
+    overlap = len(rs & hs) / float(len(rs))
+    if overlap >= 0.35:
+        return "ok", f"sem_zh_overlap={overlap:.2f}"
+    if overlap >= 0.20:
+        return "awkward", f"sem_zh_overlap={overlap:.2f}"
+    return base_v, base_r + f"|sem_zh={overlap:.2f}"
+
+
 def _utt_dict(finished) -> dict:
     return {
         "src": finished.source or "",
@@ -206,6 +275,7 @@ def _agg(rows: list[dict]) -> dict:
     asr = [min(1.0, float(r["asr_err"])) for r in rows]
     cov = [float(r["asr_coverage"]) for r in rows]
     ok = sum(1 for r in rows if r["mt_verdict"] == "ok")
+    ok_sem = sum(1 for r in rows if r.get("mt_verdict_sem", r["mt_verdict"]) == "ok")
     multi = sum(1 for r in rows if int(r["n_utts"]) >= 2)
     short = sum(1 for r in rows if r["has_short_utt"])
     incomplete = sum(1 for r in rows if float(r["asr_coverage"]) < 0.6)
@@ -236,6 +306,8 @@ def _agg(rows: list[dict]) -> dict:
         "hyp_much_longer_rate": round(long / n, 4),
         "mt_ok": ok,
         "mt_ok_rate": round(ok / n, 4),
+        "mt_ok_sem": ok_sem,
+        "mt_ok_rate_sem": round(ok_sem / n, 4),
         "mt_ok_given_asr": given_ok,
         "mt_ok_given_asr_n": len(given),
         "mt_ok_given_asr_rate": (
@@ -314,6 +386,9 @@ def main() -> int:
         err = asr_error(direction, item["src_ref"], src_join)
         cov = asr_coverage(direction, item["src_ref"], src_join)
         verdict, reason = mt_usable(direction, item["tgt_ref"], tgt_join)
+        verdict_sem, reason_sem = mt_usable_sem(
+            direction, item["tgt_ref"], tgt_join
+        )
         has_short = any(float(u.get("audio_sec") or 0) < 1.0 for u in utts)
         obs_on, obs_off, obs_pick = _join_obs(utts)
         frag_lost = bool(cov < 0.8)
@@ -330,6 +405,8 @@ def main() -> int:
             "asr_coverage": round(cov, 4),
             "mt_verdict": verdict,
             "mt_reason": reason,
+            "mt_verdict_sem": verdict_sem,
+            "mt_reason_sem": reason_sem,
             "n_utts": len(utts),
             "has_short_utt": has_short,
             "asr_online": obs_on,

@@ -72,3 +72,8 @@
 {"dir": "zh-en", "src": "好吧", "tgt": "Okay."}
 {"dir": "zh-en", "src": "嗨你好", "tgt": "Hi, how are you?"}
 {"dir": "zh-en", "src": "你好啊", "tgt": "Hi, how are you?"}
+{"dir": "en-zh", "src": "Right", "tgt": "对。"}
+{"dir": "en-zh", "src": "No", "tgt": "没有。"}
+{"dir": "en-zh", "src": "Nice", "tgt": "很好。"}
+{"dir": "en-zh", "src": "Yeah", "tgt": "是啊。"}
+{"dir": "en-zh", "src": "Exactly", "tgt": "没错。"}
