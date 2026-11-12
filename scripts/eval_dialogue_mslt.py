@@ -228,12 +228,14 @@ def mt_usable_sem(direction: str, ref_tgt: str, hyp_tgt: str) -> tuple[str, str]
 def _utt_dict(finished) -> dict:
     return {
         "src": finished.source or "",
+        "src_raw": getattr(finished, "src_raw", None),
         "tgt": finished.translated or "",
         "audio_sec": float(finished.audio_sec_final or 0),
         "cut_reason": getattr(finished, "probe_cut_reason", None),
         "asr_online": getattr(finished, "asr_online", None),
         "asr_offline": getattr(finished, "asr_offline", None),
         "arbiter_pick": getattr(finished, "arbiter_pick", None),
+        "punct_dropped": bool(getattr(finished, "punct_dropped", False)),
     }
 
 
@@ -429,6 +431,19 @@ def main() -> int:
             src_join = "".join(u["src"] for u in utts if u.get("src")).strip()
         tgt_join = " ".join(u["tgt"] for u in utts if u.get("tgt")).strip()
         err = asr_error(direction, item["src_ref"], src_join)
+        # ASR 原文（标点前）：与 asr_hyp 并列，不替换 KPI
+        if direction == "zh_en":
+            raw_join = "".join(
+                (u.get("src_raw") if u.get("src_raw") is not None else u.get("src") or "")
+                for u in utts
+            ).strip()
+        else:
+            raw_join = " ".join(
+                (u.get("src_raw") if u.get("src_raw") is not None else u.get("src") or "")
+                for u in utts
+                if (u.get("src_raw") if u.get("src_raw") is not None else u.get("src"))
+            ).strip()
+        err_raw = asr_error(direction, item["src_ref"], raw_join)
         cov = asr_coverage(direction, item["src_ref"], src_join)
         verdict, reason = mt_usable(direction, item["tgt_ref"], tgt_join)
         verdict_sem, reason_sem = mt_usable_sem(
@@ -445,8 +460,10 @@ def main() -> int:
             "src_ref": item["src_ref"],
             "tgt_ref": item["tgt_ref"],
             "asr_hyp": src_join,
+            "src_raw": raw_join,
             "mt_hyp": tgt_join,
             "asr_err": round(err, 4),
+            "asr_err_raw": round(err_raw, 4),
             "asr_err_core": (
                 asr_err_core(direction, item["src_ref"], src_join)
                 if direction == "zh_en"

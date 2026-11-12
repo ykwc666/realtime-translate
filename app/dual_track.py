@@ -117,6 +117,9 @@ class DualTrackStats:
     asr_online: str | None = None
     asr_offline: str | None = None
     arbiter_pick: str | None = None  # online | offline | merge
+    # ASR 原文（标点模型之前）；source 仍是展示文本
+    src_raw: str | None = None
+    punct_dropped: bool = False
     source: str = ""
     translated: str = ""
     # 观测（harvest）：postedit 前 MT 文本；final MT 跑完前为 null
@@ -689,6 +692,34 @@ class DualTrackEngine:
             f"samples={snap.size} utt_starts={self._spec_starts_utt}{kind_s}]"
         )
 
+    @staticmethod
+    def _norm_asr_obs_cmp(t: str) -> str:
+        """观测比对用：去标点/空白后再比，避免句号把 offline 误标成 merge。"""
+        return re.sub(r"[^\w\u4e00-\u9fff]+", "", t or "", flags=re.UNICODE).lower()
+
+    @staticmethod
+    def classify_arbiter_pick(
+        online: str | None,
+        offline: str | None,
+        merged: str | None,
+    ) -> str | None:
+        """online | offline | merge；比较前统一去标点（纯观测，不改仲裁）。"""
+        on = (online or "").strip() or None
+        off = (offline or "").strip() or None
+        m = (merged or "").strip()
+        if off is None and on is None:
+            return None
+        if off is None:
+            return "online"
+        if on is None:
+            return "offline"
+        mn = DualTrackEngine._norm_asr_obs_cmp(m)
+        if mn == DualTrackEngine._norm_asr_obs_cmp(off):
+            return "offline"
+        if mn == DualTrackEngine._norm_asr_obs_cmp(on):
+            return "online"
+        return "merge"
+
     def _stamp_asr_obs(
         self,
         online: str | None,
@@ -698,21 +729,9 @@ class DualTrackEngine:
         """只写观测字段；不改变 MT 用的 source。"""
         on = (online or "").strip() or None
         off = (offline or "").strip() or None
-        m = (merged or "").strip()
         self.stats.asr_online = on
         self.stats.asr_offline = off
-        if off is None and on is None:
-            self.stats.arbiter_pick = None
-        elif off is None:
-            self.stats.arbiter_pick = "online"
-        elif on is None:
-            self.stats.arbiter_pick = "offline"
-        elif m == off:
-            self.stats.arbiter_pick = "offline"
-        elif m == on:
-            self.stats.arbiter_pick = "online"
-        else:
-            self.stats.arbiter_pick = "merge"
+        self.stats.arbiter_pick = self.classify_arbiter_pick(on, off, merged)
 
     def _take_speculate(self, audio: np.ndarray):
         job = self._spec
@@ -1253,6 +1272,8 @@ class DualTrackEngine:
                 print("--- 空识别，跳过翻译/播报 ---")
             else:
                 print("--- 空识别（无 partial），仍记 finalize_empty ---")
+            self.stats.src_raw = ""
+            self._stamp_asr_obs(obs_on, obs_off, "")
             self.stats.source = ""
             self.stats.translated = ""
             if self.utt_t0:
@@ -1290,6 +1311,8 @@ class DualTrackEngine:
         )
         if kana_only or wrong_lang_zh:
             print(f"--- 非目标语短噪声，跳过 MT/TTS ({full!r}) ---")
+            self.stats.src_raw = full
+            self._stamp_asr_obs(obs_on, obs_off, full)
             self.stats.source = full
             self.stats.translated = ""
             if self.utt_t0:
@@ -1306,6 +1329,8 @@ class DualTrackEngine:
         short_ok = getattr(config, "MIN_FINAL_ASR_SHORT_OK", frozenset()) or frozenset()
         if len(content) < min_chars and content not in short_ok:
             print(f"--- 过短识别，跳过 MT/TTS ({full!r}) ---")
+            self.stats.src_raw = full
+            self._stamp_asr_obs(obs_on, obs_off, full)
             self.stats.source = full
             self.stats.translated = ""
             if self.utt_t0:
@@ -1326,6 +1351,7 @@ class DualTrackEngine:
         self.translated_bits.clear()
         # MT 吃裸 ASR（切分也只看 ASR 原生标点）；展示标点整句只跑一次。
         # OfflinePunctuation 总会句末化 — 勿把带标点整句喂给 Opus-MT。
+        self.stats.src_raw = full
         self._translate_final(full, mute_cb=mute_cb)
         display_src = full
         if bool(getattr(config, "ASR_PUNCT_DISPLAY", False)):
@@ -1335,6 +1361,15 @@ class DualTrackEngine:
             display_src = dedupe_display_punct(puncted or full)
             if punct_ms > 0 and display_src != full:
                 print(f"[punct {punct_ms:.0f}ms] {full!r} → {display_src!r}")
+            # 观测：标点模型吃掉内容时报警（阈值 4 字，非产品阈值）
+            _n_raw = re.sub(r"[^\w\u4e00-\u9fff]+", "", full, flags=re.UNICODE)
+            _n_disp = re.sub(
+                r"[^\w\u4e00-\u9fff]+", "", display_src, flags=re.UNICODE
+            )
+            _drop_n = len(_n_raw) - len(_n_disp)
+            if _drop_n >= 4:
+                print(f"[punct drop {_drop_n}字] {full!r} → {display_src!r}")
+                self.stats.punct_dropped = True
 
         # P0-3：可选 — 不因播放在音频/feed 线程阻塞。
         if bool(getattr(config, "FINALIZE_WAIT_TTS", True)):
@@ -1344,6 +1379,8 @@ class DualTrackEngine:
             self.tts_ms_sum = sum(self.tts_q.stats.synth_ms)
             self.tts_q.stats.synth_ms.clear()
 
+        # 用最终展示文本覆盖 pick（假名映射 / 标点吞尾才能如实落到 merge）
+        self._stamp_asr_obs(obs_on, obs_off, display_src)
         self.stats.source = display_src
         self.stats.translated = " ".join(self.translated_bits).strip()
         sw = self.subtitle_writer
