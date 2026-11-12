@@ -69,6 +69,51 @@ def asr_error(direction: str, ref: str, hyp: str) -> float:
     return _lev_rate(_norm_en_words(ref), _norm_en_words(hyp))
 
 
+# 语气词：仅诊断口径 asr_err_core 使用；不进 KPI
+FILLER_ZH = set("嗯呃啊哎哦唉呀诶额噢喔")
+
+
+def _lcs_len(a: str, b: str) -> int:
+    """最长公共子序列长度（字符级）。"""
+    if not a or not b:
+        return 0
+    n, m = len(a), len(b)
+    # 滚动一维 DP
+    prev = [0] * (m + 1)
+    for i in range(1, n + 1):
+        cur = [0] * (m + 1)
+        ai = a[i - 1]
+        for j in range(1, m + 1):
+            if ai == b[j - 1]:
+                cur[j] = prev[j - 1] + 1
+            else:
+                cur[j] = prev[j] if prev[j] >= cur[j - 1] else cur[j - 1]
+        prev = cur
+    return prev[m]
+
+
+def _core_zh(text: str) -> str:
+    """去标点 →（有剩余内容时）去语气词 → 连续重复折叠为 1。"""
+    t = "".join(_norm_zh_chars(text))
+    stripped = "".join(ch for ch in t if ch not in FILLER_ZH)
+    if stripped:
+        t = stripped
+    return re.sub(r"(.)\1+", r"\1", t)
+
+
+def asr_err_core(direction: str, ref: str, hyp: str) -> float:
+    """zh_en 诊断口径：内容召回（LCS），不惩罚多字/重复/语气词。
+
+    阈值仍用 0.35，与 KPI asr_err 并列；不进 summary。
+    """
+    if direction != "zh_en":
+        raise ValueError("asr_err_core 本轮只处理 zh_en")
+    r, h = _core_zh(ref), _core_zh(hyp)
+    if not r:
+        return 0.0 if not h else 1.0
+    return round(1.0 - _lcs_len(r, h) / float(len(r)), 3)
+
+
 def asr_coverage(direction: str, ref: str, hyp: str) -> float:
     if direction == "zh_en":
         r, h = _norm_zh_chars(ref), _norm_zh_chars(hyp)
@@ -402,6 +447,11 @@ def main() -> int:
             "asr_hyp": src_join,
             "mt_hyp": tgt_join,
             "asr_err": round(err, 4),
+            "asr_err_core": (
+                asr_err_core(direction, item["src_ref"], src_join)
+                if direction == "zh_en"
+                else None
+            ),
             "asr_coverage": round(cov, 4),
             "mt_verdict": verdict,
             "mt_reason": reason,

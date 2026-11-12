@@ -77,14 +77,16 @@
 
 ## 第 3 步：zh→en ASR 长尾（只诊断）
 
-`data/eval/dialogue_v2/zh_en_asr_tail.json`：Test zh_en `asr_err>0.35` 共 **10** 条。
+> **返工更正**（`CURSOR_TASK_ASR_TAIL_REWORK.md`）：旧 CER 把重复/语气词当成听错；改用 `asr_err_core` 后结论翻转。脚本已入库 `scripts/diag_asr_tail.py`。
 
-| 结论计数 | 值 |
-|---|---:|
-| offline 对、online 错 | **2**（029、027） |
-| 两路都错（含错法不同） | 8 |
+| 集 | `n_asr_fail`（core） | `n_asr_fail_kpi`（旧 CER） | `offline_helps`（core） | `offline_helps_kpi` | verdict |
+|---|---:|---:|---:|---:|---|
+| Test | **2**（026、059） | 10 | **0** | 2 | **STOP_MODEL_CEILING** |
+| Dev | **4** | 13 | **0** | 0 | **STOP_MODEL_CEILING** |
 
-**判定（任务书写死）**：offline_helps ≥ 2 → **允许下一轮小步 A/B 调 offline 权重**（一次一参、双集验证）。本步**未改**任何产品代码 / `ASR_2PASS_*`。
+真正听错的 2 条（Test 026/059）online/offline **两路都错**。旧口径那 2 个「offline 赢」换成 core 后两路都合格，不计分。
+
+**判定**：**不要调 offline 权重**。产品代码 / `ASR_2PASS_*` 本步未改。下一刀更值得看 arbiter merge 变差（记账见返工任务书附录）。
 
 ---
 
