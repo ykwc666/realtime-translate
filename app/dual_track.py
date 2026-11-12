@@ -120,6 +120,7 @@ class DualTrackStats:
     # ASR 原文（标点模型之前）；source 仍是展示文本
     src_raw: str | None = None
     punct_dropped: bool = False
+    punct_fallback: bool = False
     source: str = ""
     translated: str = ""
     # 观测（harvest）：postedit 前 MT 文本；final MT 跑完前为 null
@@ -719,6 +720,25 @@ class DualTrackEngine:
         if mn == DualTrackEngine._norm_asr_obs_cmp(on):
             return "online"
         return "merge"
+
+    @staticmethod
+    def display_drop_chars(full: str, display: str) -> int:
+        """展示文本相对 ASR 原文少几个字（去标点后按字符数）。"""
+        n_raw = DualTrackEngine._norm_asr_obs_cmp(full)
+        n_disp = DualTrackEngine._norm_asr_obs_cmp(display)
+        return len(n_raw) - len(n_disp)
+
+    @staticmethod
+    def pick_display_src(
+        full: str, puncted_display: str, min_drop: int = 4
+    ) -> tuple[str, int]:
+        """返回 (最终展示文本, 丢失字数)；丢失 >= min_drop 时回退 full。"""
+        drop_n = DualTrackEngine.display_drop_chars(full, puncted_display)
+        if not (puncted_display or "").strip():
+            return full, drop_n
+        if drop_n >= min_drop:
+            return full, drop_n
+        return puncted_display, drop_n
 
     def _stamp_asr_obs(
         self,
@@ -1358,18 +1378,17 @@ class DualTrackEngine:
             from .punct import add_punctuation
 
             puncted, punct_ms = add_punctuation(full)
-            display_src = dedupe_display_punct(puncted or full)
-            if punct_ms > 0 and display_src != full:
-                print(f"[punct {punct_ms:.0f}ms] {full!r} → {display_src!r}")
-            # 观测：标点模型吃掉内容时报警（阈值 4 字，非产品阈值）
-            _n_raw = re.sub(r"[^\w\u4e00-\u9fff]+", "", full, flags=re.UNICODE)
-            _n_disp = re.sub(
-                r"[^\w\u4e00-\u9fff]+", "", display_src, flags=re.UNICODE
-            )
-            _drop_n = len(_n_raw) - len(_n_disp)
+            puncted_display = dedupe_display_punct(puncted or full)
+            if punct_ms > 0 and puncted_display != full:
+                print(f"[punct {punct_ms:.0f}ms] {full!r} → {puncted_display!r}")
+            display_src, _drop_n = self.pick_display_src(full, puncted_display)
             if _drop_n >= 4:
-                print(f"[punct drop {_drop_n}字] {full!r} → {display_src!r}")
+                # 检出丢失（即便随后回退，也先记账）
+                print(f"[punct drop {_drop_n}字] {full!r} → {puncted_display!r}")
                 self.stats.punct_dropped = True
+                if display_src == full and puncted_display != full:
+                    self.stats.punct_fallback = True
+                    print(f"[punct guard fallback {_drop_n}字] → {display_src!r}")
 
         # P0-3：可选 — 不因播放在音频/feed 线程阻塞。
         if bool(getattr(config, "FINALIZE_WAIT_TTS", True)):
@@ -1379,7 +1398,7 @@ class DualTrackEngine:
             self.tts_ms_sum = sum(self.tts_q.stats.synth_ms)
             self.tts_q.stats.synth_ms.clear()
 
-        # 用最终展示文本覆盖 pick（假名映射 / 标点吞尾才能如实落到 merge）
+        # 用最终展示文本覆盖 pick（假名映射 / 守卫回退后应为 offline）
         self._stamp_asr_obs(obs_on, obs_off, display_src)
         self.stats.source = display_src
         self.stats.translated = " ".join(self.translated_bits).strip()

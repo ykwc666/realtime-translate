@@ -236,6 +236,7 @@ def _utt_dict(finished) -> dict:
         "asr_offline": getattr(finished, "asr_offline", None),
         "arbiter_pick": getattr(finished, "arbiter_pick", None),
         "punct_dropped": bool(getattr(finished, "punct_dropped", False)),
+        "punct_fallback": bool(getattr(finished, "punct_fallback", False)),
     }
 
 
