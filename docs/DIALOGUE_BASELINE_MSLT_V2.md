@@ -35,6 +35,21 @@ Python：`3.12.0`（Windows，`.venv`）
 
 `pair_sim_min`：Test zh_en 0.556 / en_zh 0.500；Dev zh_en 0.571 / en_zh 0.778（均 ≥0.5）。
 
+### 2.1 当前基线（`275e432`，2026-11-12）— 以这张为准
+
+**读数冻结**：见 [`KPI_FREEZE_DIALOGUE_V2.md`](KPI_FREEZE_DIALOGUE_V2.md)；git tag `dialogue-kpi-v2-freeze` → `275e432`。
+
+上表是 V2 首跑存档。此后 `711800a`（en_zh 短句 TM/假名兜底）、`275e432`（标点吞尾守卫）动过 KPI，现值为：
+
+| 集 | 方向 | n | asr_ok | mt_ok | mt_ok_given_asr (n) | empty_asr | fragment_lost | fragment_dup | asr_err |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **Test v2** | zh_en | 60 | 0.850 | 0.783 | 0.843 (51) | 0 | 0 | 0.017 | 0.2329 |
+| **Test v2** | en_zh | 60 | 0.783 | 0.883 | 0.957 (47) | 0 | 0.050 | 0 | 0.2309 |
+| **Dev v2** | zh_en | 60 | 0.783 | 0.783 | 0.851 (47) | 0 | 0.033 | 0 | 0.2294 |
+| **Dev v2** | en_zh | 60 | 0.767 | 0.750 | 0.870 (46) | 0.017 | 0.133 | 0 | 0.2267 |
+
+变化来源：en_zh 的 `mt_ok` 0.817→0.883（Test）来自 `711800a` 而不是语料；zh_en Test `asr_ok` 0.833→0.850 来自 `275e432` 的吞尾回退（027 一条）。Dev en_zh `mt_ok` 46→45 是 §4.1 说的 1 条抖动（`en_zh_005`），不是回归。
+
 ## 3. 新旧对照（同一判定器）
 
 | 指标（zh_en） | 旧 Test（未校验 T1/T2） | 新 Test v2 |
@@ -56,6 +71,12 @@ Python：`3.12.0`（Windows，`.venv`）
 - **差 = 0.0 pp**
 
 旧 holdout（坏题集）Test 70% vs Dev 46.7% 的鸿沟，主要是语料污染，不是「补丁只对 Test 有效」。given-ASR 两侧仍高（86% / 85%）。
+
+### 4.1 读数注意（两条，写在这里防止以后误判）
+
+1. **噪声地板 1 条**：2pass 投机解码在静音处快照 `self.buf`（`app/dual_track.py:632-660`），命中后 finalize 直接用该快照（`:1227-1234`），快照长度依赖线程调度。实证：`c6e6690` 只改观测字段（diff 全为写 `stats.*`/`print`，无分支改动），同两集重跑仍出现 Test en_zh `asr_err_mean` 0.2309→0.2323→0.2309、`coverage` 0.9684→0.9517、`incomplete_asr` 1→2、`fragment_lost` 2→3；Dev en_zh `coverage` 0.9084↔0.9167。**A/B 只认 ≥2 条的差**，1 条以内不得当结论。详见 `docs/OBS_FIX_REVIEW.md`。
+   `mt_ok` 是 `src` 的下游，同样会抖：`275e432`（守卫只改展示层、Dev 触发 0 次）Dev en_zh `mt_ok` 46→45，唯一新增失败是 `en_zh_005`，其识别文本在两次跑之间从 "going to … because" 变成 "gonna … 'cause"（sem 仍判 ok）。口径：**zh_en 的 `mt_ok` 一条不许变；en_zh 允许 ±1，但必须指到具体某条 utt 的识别文本变化**。
+2. **en_zh 短题不可比**：按参考句长度分桶，Test ≥9 词 27/27、≤2 词 11/15；Dev ≥9 词 22/24、≤2 词 11/16。1 词条目（`dying` / `Ohh.` / `for`）ASR 只有 0 或 1，无部分分，是题目缺陷不是能力缺陷。**报 en_zh 时必须同时给 ≥9 词那一档**，否则短题会把分数拉花。
 
 ## 5. 复现命令
 
