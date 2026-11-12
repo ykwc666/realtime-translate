@@ -157,8 +157,12 @@ VAD_SPEECH_RMS_MIN = 0.035
 VAD_WEAK_GAIN_MAX = 0.0
 VAD_WEAK_GAIN_PEAK_MAX = 0.03
 
-# 播放 TTS 后继续静音麦（秒），盖住扬声器尾音/房间混响，减轻回授
+# 播放 TTS 后继续静音麦（秒），盖住扬声器尾音/房间混响，减轻回授。
+# 仅当 TTS_MUTE_MIC=True 时生效。
 PLAYBACK_MUTE_PAD_SEC = 0.50
+# 播 TTS 时是否静音并清空麦克风队列。
+# False（默认）：戴耳机连续对话不丢下一句；True：扬声器外放防回授（会丢掉播报期间的语音）。
+TTS_MUTE_MIC = False
 # finalize 是否在采集线程 wait TTS 播完（True=旧行为，utt_wall 含播放）。
 # False：播报在 TTS 线程，采集可继续；尾音 pad 改由 tts_queue 在 unmute 前 sleep。
 # A/B（tail_duosimo+真实 TTS）：utt_wall median 2836→713；feed 返回 2516→345；perceived 不变。

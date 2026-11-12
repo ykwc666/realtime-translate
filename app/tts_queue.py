@@ -215,7 +215,10 @@ class TtsQueue:
                     if self._pending == 0 and self._q.empty():
                         self._idle.set()
                 continue
-            if self.mute_cb:
+            mute_mic = bool(getattr(config, "TTS_MUTE_MIC", False)) and (
+                self.mute_cb is not None
+            )
+            if mute_mic:
                 self.mute_cb(True)
             interrupted = False
             try:
@@ -301,7 +304,7 @@ class TtsQueue:
                     )
                 )
             finally:
-                if self.mute_cb:
+                if mute_mic:
                     if not bool(getattr(config, "FINALIZE_WAIT_TTS", True)):
                         pad = float(
                             getattr(config, "PLAYBACK_MUTE_PAD_SEC", 0.0) or 0.0

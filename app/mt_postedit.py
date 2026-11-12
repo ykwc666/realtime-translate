@@ -404,6 +404,14 @@ def _scrub_zh_en_artifacts(src: str, hyp: str) -> str:
         )
         if re.search(r"(?i)\bbig\b", out) and not re.search(r"(?i)\byours\b", out):
             out = re.sub(r"(?i)\bbig\b", "big one of yours", out, count=1)
+    # 「16点31分」Opus 常捏成 1631；要求「点」后带分钟，避免误伤「一点都不」
+    for m in re.finditer(r"(\d{1,2})\s*点\s*(\d{1,2})\s*分", src):
+        h, mi = int(m.group(1)), int(m.group(2))
+        if not (0 <= h <= 23 and 0 <= mi <= 59):
+            continue
+        clock = f"{h}:{mi:02d}"
+        for glued in {f"{h}{mi}", f"{h}{mi:02d}"}:
+            out = re.sub(rf"(?i)\b{re.escape(glued)}\b", clock, out)
     out = re.sub(r"\s{2,}", " ", out).strip()
     return out
 

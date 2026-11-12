@@ -15,7 +15,7 @@
 | 2 | 双人对话 KPI 集：用 **MSLT** 公开语料抽样 40–60（非自录） | **完成** Test/Dev 各 120 条（zh_en 60 + en_zh 60，T1/T2 配对过滤后）；见 `DIALOGUE_BASELINE_MSLT_V2.md` |
 | 3 | 降噪 A/B（`CURSOR_TASK_DENOISE_AB.md` + 音量比 + 分场景结论；生产保持关） | **完成 · 否决**（见 `docs/DENOISE_AB.md`）；`MIC_DENOISE=False` |
 | 4 | 对话硬骨头：先统计半句占比再改；弱信号只许旁路默认关；不动 VAD 三阈值 | **V2 下一刀完成**。OBS_FIX + PUNCT_GUARD。语料 V2 见 `DIALOGUE_BASELINE_MSLT_V2.md` |
-| 5 | 锁基线 → 实麦冒烟 | **读数已冻结**（`dialogue-kpi-v2-freeze` → `275e432`，见 `KPI_FREEZE_DIALOGUE_V2.md`）。下一步：实麦双人互译冒烟（MSLT 不覆盖） |
+| 5 | 锁基线 → 实麦冒烟 → 连续说不丢 | **读数已冻结**（`dialogue-kpi-v2-freeze`）。实麦：`TTS_MUTE_MIC=False` 避免播译文时清空麦克风（见 `CURSOR_TASK_CONTINUOUS_UTT.md`）；时间 `16点31分` postedit |
 
 ## 明确不做
 

@@ -72,6 +72,7 @@ en_zh 按参考句长度分桶（报 en_zh 时必须同时给 ≥9 词那一档�
 4. **1 条噪声地板**：同一份音频、同一份代码跑两次，en_zh 会有 1 条 utt 的识别文本不同（`Dev en_zh 005` 实测 `going to … because` ↔ `gonna … 'cause`），`asr_err` / `coverage` / `mt_ok` 会跟着动 1 条。
 5. **标点守卫阈值按字符数**：英文 ≤3 字母的短词被吃不会触发回退。目前无一例证据（`034` 查证是识别假设不同），所以不动阈值。
 6. **`src_raw` 在假名映射路径不是 ASR 原文**：映射发生在赋值之前，`うん → Yeah.` 一旦命中，`src_raw` 存的是 "Yeah."。本版无此案例，分析时注意。
+7. **连续说话丢字（实麦）**：主因是 TTS 播报时 `mute_cb` 静音并 `drain` 麦克风队列（见 `CURSOR_TASK_CONTINUOUS_UTT.md`）。冻结点之后默认 `TTS_MUTE_MIC=False`（戴耳机）；扬声器外放 TTS 需自行改回 True，并接受播报期间不拾音。
 
 ---
 
